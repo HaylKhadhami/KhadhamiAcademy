@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khadhami Academy — Where Kids Master Technology</title>
+  <meta name="description" content="The premier bilingual educational platform for coding, robotics, AI, and STEM learning. Empowering the next generation of innovators with live classrooms, code playground, and HD video lessons.">
+  <meta name="keywords" content="Khadhami Academy, coding for kids, robotics, STEM education, programming, Python, live classrooms, educational app, bilingual learning, Arabic, English">
+  <meta name="author" content="Hayl Al-Khadhami">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://khadhami.com/">
+  <link rel="alternate" hreflang="en" href="https://khadhami.com/">
+  <link rel="alternate" hreflang="ar" href="https://khadhami.com/?lang=ar">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Khadhami Academy — Where Kids Master Technology">
+  <meta property="og:description" content="The premier bilingual educational platform for coding, robotics, AI, and STEM learning.">
+  <meta property="og:url" content="https://khadhami.com/">
+  <meta property="og:site_name" content="Khadhami Academy">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ar_AR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Khadhami Academy — Where Kids Master Technology">
+  <meta name="twitter:description" content="The premier bilingual educational platform for coding, robotics, AI, and STEM learning.">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0D9488">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════
+       NAVIGATION
+       ════════════════════════════════════ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="Khadhami Academy Home">
+        <!-- Logo SVG -->
+        <svg class="nav__logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
+          <path d="M12 28V12h3l5 8 5-8h3v16h-3V18l-5 7.5L15 18v10h-3z" fill="white"/>
+          <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#0D9488"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs>
+        </svg>
+        <span>Khadhami<span class="text-gradient"> Academy</span></span>
+      </a>
+
+      <div class="nav__links" id="nav-links">
+        <a href="#features" class="nav__link" data-i18n="nav_features">Features</a>
+        <a href="#about" class="nav__link" data-i18n="nav_about">About</a>
+        <a href="#pricing" class="nav__link" data-i18n="nav_pricing">Pricing</a>
+        <a href="#download" class="nav__link" data-i18n="nav_download">Download</a>
+      </div>
+
+      <div class="nav__actions">
+        <!-- Language Toggle -->
+        <button class="btn--icon" id="lang-toggle" aria-label="Switch language" tabindex="0">
+          <span data-i18n="lang_toggle" style="font-size:0.85rem;font-weight:600;">العربية</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="btn--icon" id="theme-toggle" aria-label="Toggle theme" tabindex="0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <!-- Mobile Toggle -->
+        <div class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" role="button" tabindex="0">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════
+       HERO SECTION
+       ════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero__particles">
+      <div class="hero__particle"></div>
+      <div class="hero__particle"></div>
+      <div class="hero__particle"></div>
+    </div>
+
+    <div class="container">
+      <div class="hero__grid">
+        <div class="hero__content">
+          <div class="hero__badge" data-i18n="hero_badge">🚀  #1 Educational Platform for Future Innovators</div>
+          <h1 class="hero__title">
+            <span data-i18n="hero_title_1">Where Kids Master</span><br>
+            <span class="text-gradient" data-i18n="hero_title_2">Technology</span>
+          </h1>
+          <p class="hero__subtitle" data-i18n="hero_subtitle">The premier bilingual academy empowering the next generation with coding, robotics, AI, and hands-on STEM education — all in a safe, child-friendly environment.</p>
+          <div class="hero__actions">
+            <a href="#download" class="btn btn--primary btn--lg" data-i18n="hero_cta_primary">Download Free</a>
+            <a href="#features" class="btn btn--secondary btn--lg" data-i18n="hero_cta_secondary">Explore Features</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__glow"></div>
+          <div class="hero__device">
+            <div class="hero__device-notch"></div>
+            <div class="hero__device-screen">
+              <div class="hero__device-header">
+                <div class="hero__device-dot"></div>
+                <div class="hero__device-line" style="flex:1;"></div>
+              </div>
+              <div class="hero__device-card">
+                <div class="hero__device-line" style="width:80%;margin-bottom:8px;"></div>
+                <div class="hero__device-line" style="width:60%;margin-bottom:12px;"></div>
+                <div class="hero__device-bar" style="width:100%;height:8px;margin-bottom:4px;">
+                  <div class="hero__device-bar--filled" style="width:75%;height:100%;border-radius:3px;"></div>
+                </div>
+              </div>
+              <div class="hero__device-card">
+                <div class="hero__device-line" style="width:90%;margin-bottom:8px;"></div>
+                <div class="hero__device-line" style="width:50%;margin-bottom:12px;"></div>
+                <div class="hero__device-bar" style="width:100%;height:8px;margin-bottom:4px;">
+                  <div class="hero__device-bar--filled" style="width:45%;height:100%;border-radius:3px;"></div>
+                </div>
+              </div>
+              <div class="hero__device-card">
+                <div class="hero__device-line" style="width:70%;margin-bottom:8px;"></div>
+                <div class="hero__device-line" style="width:85%;"></div>
+              </div>
+              <div style="flex:1;"></div>
+              <div style="display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid var(--color-border);">
+                <div class="hero__device-dot" style="width:6px;height:6px;"></div>
+                <div class="hero__device-dot" style="width:6px;height:6px;opacity:0.3;"></div>
+                <div class="hero__device-dot" style="width:6px;height:6px;opacity:0.3;"></div>
+                <div class="hero__device-dot" style="width:6px;height:6px;opacity:0.3;"></div>
+                <div class="hero__device-dot" style="width:6px;height:6px;opacity:0.3;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FEATURES
+       ════════════════════════════════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="features_badge">Features</div>
+        <h2 class="section__title" data-i18n="features_title">Everything Your Child Needs to Thrive</h2>
+        <p class="section__subtitle" data-i18n="features_subtitle">A complete learning ecosystem designed with care, built with precision.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="features__grid">
+        <!-- Feature 1: Live Classrooms -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-1">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_live_title">Live Classrooms</h3>
+          <p class="card__description" data-i18n="feat_live_desc">Real-time interactive sessions with educators. Camera, mic, screen share, whiteboard, emoji reactions — a full virtual classroom experience.</p>
+        </div>
+
+        <!-- Feature 2: Code Playground -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-2">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_code_title">Code Playground</h3>
+          <p class="card__description" data-i18n="feat_code_desc">Built-in code editor supporting Python and Web (HTML/CSS/JS) with live preview, syntax highlighting, and project management.</p>
+        </div>
+
+        <!-- Feature 3: HD Video Lessons -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-3">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_video_title">HD Video Lessons</h3>
+          <p class="card__description" data-i18n="feat_video_desc">Hundreds of curated lessons across programming, math, science, Arabic, English, and Islamic studies — all in stunning HD quality.</p>
+        </div>
+
+        <!-- Feature 4: Offline Learning -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-1">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_offline_title">Offline Learning</h3>
+          <p class="card__description" data-i18n="feat_offline_desc">Download lessons and learn anywhere, anytime — no internet required. Perfect for areas with limited connectivity.</p>
+        </div>
+
+        <!-- Feature 5: Progress Tracking -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-2">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_progress_title">Progress Tracking</h3>
+          <p class="card__description" data-i18n="feat_progress_desc">Visual dashboard with learning streaks, achievements, daily goals, and detailed statistics to keep learners motivated.</p>
+        </div>
+
+        <!-- Feature 6: Parental Controls -->
+        <div class="card card--accent-border feature-card reveal reveal-delay-3">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="card__title" data-i18n="feat_parental_title">Parental Controls</h3>
+          <p class="card__description" data-i18n="feat_parental_desc">PIN-protected settings, daily screen time limits, content restrictions, and a parent trackboard for complete peace of mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       HOW IT WORKS
+       ════════════════════════════════════ -->
+  <section class="section section--alt" id="how-it-works">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="steps_badge">How It Works</div>
+        <h2 class="section__title" data-i18n="steps_title">Start Learning in 3 Simple Steps</h2>
+        <p class="section__subtitle" data-i18n="steps_subtitle">Getting started takes less than 2 minutes.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal reveal-delay-1">
+          <div class="step__number">1</div>
+          <h3 class="step__title" data-i18n="step1_title">Create Account</h3>
+          <p class="step__desc" data-i18n="step1_desc">Sign up as a Student, Educator, or Guest. Parental consent built-in for under-18 learners.</p>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <div class="step__number">2</div>
+          <h3 class="step__title" data-i18n="step2_title">Explore Content</h3>
+          <p class="step__desc" data-i18n="step2_desc">Browse lessons by subject, join live classrooms, or open the Code Playground to start coding.</p>
+        </div>
+        <div class="step reveal reveal-delay-3">
+          <div class="step__number">3</div>
+          <h3 class="step__title" data-i18n="step3_title">Learn &amp; Grow</h3>
+          <p class="step__desc" data-i18n="step3_desc">Track your progress, earn achievements, set daily goals, and watch your skills transform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       VISION & MISSION
+       ════════════════════════════════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="vm_badge">Our Story</div>
+        <h2 class="section__title" data-i18n="vm_title">Built on Purpose, Driven by Vision</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="vm-grid">
+        <div class="card card--glass vm-card reveal reveal-delay-1">
+          <div class="vm-card__emoji">🔭</div>
+          <h3 class="card__title" data-i18n="vision_title">Our Vision</h3>
+          <p class="card__description" data-i18n="vision_desc">To forge a generation of innovators who don't just consume technology, but master it. We envision a future where coding and robotics are as fundamental as reading and writing.</p>
+        </div>
+        <div class="card card--glass vm-card reveal reveal-delay-2">
+          <div class="vm-card__emoji">🚀</div>
+          <h3 class="card__title" data-i18n="mission_title">Our Mission</h3>
+          <p class="card__description" data-i18n="mission_desc">To democratize elite technical education. We blend the precision of industrial engineering with the creativity of childhood, empowering kids to build the future.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       PHILOSOPHY
+       ════════════════════════════════════ -->
+  <section class="section section--alt" id="philosophy">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="phil_badge">Our DNA</div>
+        <h2 class="section__title" data-i18n="phil_title">Excellence by Design</h2>
+        <p class="section__subtitle" data-i18n="phil_subtitle">Our educational approach is rooted in proven engineering and management methodologies.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="philosophy-grid">
+        <div class="card philosophy-card reveal reveal-delay-1">
+          <div class="philosophy-card__icon">🔄</div>
+          <h3 class="card__title" data-i18n="kaizen_title">Kaizen</h3>
+          <span class="badge badge--primary" data-i18n="kaizen_subtitle">Continuous Improvement</span>
+          <p class="card__description" style="margin-top:var(--space-4);" data-i18n="kaizen_desc">Mastery is a journey of small, consistent daily steps — not overnight success.</p>
+        </div>
+
+        <div class="card philosophy-card reveal reveal-delay-2">
+          <div class="philosophy-card__icon">⚡</div>
+          <h3 class="card__title" data-i18n="agile_title">Agile</h3>
+          <span class="badge badge--primary" data-i18n="agile_subtitle">Adaptability</span>
+          <p class="card__description" style="margin-top:var(--space-4);" data-i18n="agile_desc">Our curriculum adapts to the learner's pace, encouraging experimentation and rapid iteration.</p>
+        </div>
+
+        <div class="card philosophy-card reveal reveal-delay-3">
+          <div class="philosophy-card__icon">🎯</div>
+          <h3 class="card__title" data-i18n="sixsigma_title">Six Sigma</h3>
+          <span class="badge badge--primary" data-i18n="sixsigma_subtitle">Quality</span>
+          <p class="card__description" style="margin-top:var(--space-4);" data-i18n="sixsigma_desc">"Zero defects" in understanding — no student is left behind with foundational gaps.</p>
+        </div>
+
+        <div class="card philosophy-card reveal reveal-delay-4">
+          <div class="philosophy-card__icon">🌿</div>
+          <h3 class="card__title" data-i18n="lean_title">Lean</h3>
+          <span class="badge badge--primary" data-i18n="lean_subtitle">Learning</span>
+          <p class="card__description" style="margin-top:var(--space-4);" data-i18n="lean_desc">Maximum value, minimum waste. We focus on high-impact skills that matter in the real world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       STATS
+       ════════════════════════════════════ -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat reveal reveal-delay-1">
+          <div class="stat__number" data-count="5000" data-suffix="+">0</div>
+          <div class="stat__label" data-i18n="stats_students">Active Learners</div>
+        </div>
+        <div class="stat reveal reveal-delay-2">
+          <div class="stat__number" data-count="500" data-suffix="+">0</div>
+          <div class="stat__label" data-i18n="stats_lessons">Video Lessons</div>
+        </div>
+        <div class="stat reveal reveal-delay-3">
+          <div class="stat__number" data-count="25" data-suffix="+">0</div>
+          <div class="stat__label" data-i18n="stats_countries">Countries</div>
+        </div>
+        <div class="stat reveal reveal-delay-4">
+          <div class="stat__number" data-count="1000" data-suffix="+">0</div>
+          <div class="stat__label" data-i18n="stats_hours">Hours of Content</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       PRICING
+       ════════════════════════════════════ -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="pricing_badge">Pricing</div>
+        <h2 class="section__title" data-i18n="pricing_title">Simple, Transparent Pricing</h2>
+        <p class="section__subtitle" data-i18n="pricing_subtitle">Start free, upgrade when you're ready.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Free Plan -->
+        <div class="pricing-card reveal reveal-delay-1">
+          <div class="pricing-card__name" data-i18n="pricing_free">Free</div>
+          <div class="pricing-card__price">
+            <span data-i18n="pricing_free_price">$0</span>
+            <span data-i18n="pricing_free_period">forever</span>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_lessons">Access to free lessons library</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_classroom">Join live classrooms</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_progress">Basic progress tracking</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_comments">Comments &amp; ratings</span>
+            </div>
+            <div class="pricing-card__feature pricing-card__feature--disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span data-i18n="feat_p_offline">Download for offline viewing</span>
+            </div>
+            <div class="pricing-card__feature pricing-card__feature--disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span data-i18n="feat_p_code">Full Code Playground access</span>
+            </div>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" class="btn btn--secondary" style="width:100%;" data-i18n="pricing_cta_free">Get Started</a>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="pricing-card pricing-card--featured reveal reveal-delay-2">
+          <div class="pricing-card__ribbon" data-i18n="pricing_ribbon">Most Popular</div>
+          <div class="pricing-card__name" data-i18n="pricing_pro">Pro</div>
+          <div class="pricing-card__price">
+            <span data-i18n="pricing_pro_price">$4.99</span>
+            <span data-i18n="pricing_pro_period">/month</span>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_all">Unlimited access to all lessons</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_classroom">Join live classrooms</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_offline">Download for offline viewing</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_code">Full Code Playground access</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_hd">HD quality streaming</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_adfree">Ad-free experience</span>
+            </div>
+            <div class="pricing-card__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="feat_p_support">Priority support</span>
+            </div>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" class="btn btn--primary" style="width:100%;" data-i18n="pricing_cta_pro">Upgrade to Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FOUNDER
+       ════════════════════════════════════ -->
+  <section class="section section--alt" id="founder">
+    <div class="container">
+      <div class="section__header reveal">
+        <div class="section__badge" data-i18n="founder_badge">Leadership</div>
+        <h2 class="section__title" data-i18n="founder_title">Meet the Founder</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="founder-card reveal">
+        <div class="founder-card__avatar">HK</div>
+        <div class="founder-card__info">
+          <h3 class="founder-card__name" data-i18n="founder_name">Hayl Al-Khadhami</h3>
+          <div class="founder-card__role" data-i18n="founder_role">Founder &amp; CEO | Automation Engineer &amp; AI Researcher</div>
+          <p class="founder-card__bio" data-i18n="founder_bio">A visionary educator and PhD researcher in Manufacturing Automation, specialized in Industrial Control Systems, Deep Learning, and Computer Vision. Guided by the principles of Industry 4.0, Hayl is dedicated to engineering the next generation of global problem solvers.</p>
+          <div class="founder-card__contact">
+            <a href="mailto:hayl.khadhami@gmail.com">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              hayl.khadhami@gmail.com
+            </a>
+            <span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-i18n="founder_location">Xi'an, China</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       DOWNLOAD CTA
+       ════════════════════════════════════ -->
+  <section class="cta-section" id="download">
+    <div class="container">
+      <div class="cta-section__content reveal">
+        <h2 data-i18n="cta_title">Ready to Shape the Future?</h2>
+        <p class="section__subtitle" data-i18n="cta_subtitle" style="max-width:550px;">Download Khadhami Academy today and give your child the tools to become tomorrow's innovator.</p>
+
+        <div class="store-buttons">
+          <!-- Google Play -->
+          <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" class="store-btn" target="_blank" rel="noopener noreferrer" aria-label="Download on Google Play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.2 12.69l2.498-3.182zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+            <div class="store-btn__text">
+              <span class="store-btn__label" data-i18n="store_google_label">GET IT ON</span>
+              <span class="store-btn__store" data-i18n="store_google_store">Google Play</span>
+            </div>
+          </a>
+
+          <!-- App Store -->
+          <a href="https://apps.apple.com/app/khadhami-academy/id6740044498" class="store-btn" target="_blank" rel="noopener noreferrer" aria-label="Download on App Store">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <div class="store-btn__text">
+              <span class="store-btn__label" data-i18n="store_apple_label">Download on the</span>
+              <span class="store-btn__store" data-i18n="store_apple_store">App Store</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════ -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#" class="nav__logo" style="margin-bottom:var(--space-2);">
+            <svg class="nav__logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="40" height="40" rx="10" fill="url(#logoGrad2)"/>
+              <path d="M12 28V12h3l5 8 5-8h3v16h-3V18l-5 7.5L15 18v10h-3z" fill="white"/>
+              <defs><linearGradient id="logoGrad2" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#0D9488"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs>
+            </svg>
+            <span>Khadhami<span class="text-gradient"> Academy</span></span>
+          </a>
+          <p data-i18n="footer_brand_desc">The premier educational platform for coding, robotics, and STEM learning. Empowering the next generation of innovators.</p>
+        </div>
+
+        <div>
+          <h4 class="footer__heading" data-i18n="footer_product">Product</h4>
+          <a href="#features" class="footer__link" data-i18n="footer_link_features">Features</a>
+          <a href="#pricing" class="footer__link" data-i18n="footer_link_pricing">Pricing</a>
+          <a href="#download" class="footer__link" data-i18n="footer_link_download">Download</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_changelog">Changelog</a>
+        </div>
+
+        <div>
+          <h4 class="footer__heading" data-i18n="footer_company">Company</h4>
+          <a href="#about" class="footer__link" data-i18n="footer_link_about">About Us</a>
+          <a href="mailto:hayl.khadhami@gmail.com" class="footer__link" data-i18n="footer_link_contact">Contact</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_careers">Careers</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_blog">Blog</a>
+        </div>
+
+        <div>
+          <h4 class="footer__heading" data-i18n="footer_legal">Legal</h4>
+          <a href="#" class="footer__link" data-i18n="footer_link_privacy">Privacy Policy</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_terms">Terms of Service</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_cookies">Cookie Policy</a>
+          <a href="#" class="footer__link" data-i18n="footer_link_licenses">Licenses</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span data-i18n="footer_copyright">© 2026 Khadhami Academy. All rights reserved.</span>
+        <div class="footer__social">
+          <!-- GitHub -->
+          <a href="https://github.com/halkhadhami" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+          <!-- Email -->
+          <a href="mailto:hayl.khadhami@gmail.com" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+          <!-- Phone -->
+          <a href="tel:+8615229032051" aria-label="Phone">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

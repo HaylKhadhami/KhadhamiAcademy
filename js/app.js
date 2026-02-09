@@ -1,76 +1,152 @@
-/* ═══════════════════════════════════════
-   Khadhami Academy — Main App
-   ═══════════════════════════════════════ */
+﻿const COOKIE_KEY = "ka-cookie-consent";
 
-document.addEventListener('DOMContentLoaded', () => {
-    // ── Initialize modules ──
-    KATheme.initTheme();
-    KAi18n.initI18n();
-    KAAnimations.initScrollReveal();
-    KAAnimations.animateCounters();
-    KAAnimations.initParallax();
-    KAAnimations.initSmoothScroll();
+function initHeaderState() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
 
-    // ── Nav scroll state ──
-    const nav = document.querySelector('.nav');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-
-        if (currentScroll > 50) {
-            nav.classList.add('nav--scrolled');
-        } else {
-            nav.classList.remove('nav--scrolled');
-        }
-
-        lastScroll = currentScroll;
-    }, { passive: true });
-
-    // ── Mobile nav toggle ──
-    const navToggle = document.querySelector('.nav__toggle');
-    const navLinks = document.querySelector('.nav__links');
-
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-        });
+  const onScroll = () => {
+    if (window.scrollY > 16) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
     }
+  };
 
-    // ── Theme toggle ──
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', KATheme.toggleTheme);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function initMobileNav() {
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("nav-menu");
+  if (!toggle || !menu) return;
+
+  const closeMenu = () => {
+    menu.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  };
+
+  toggle.addEventListener("click", () => {
+    const isOpen = menu.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  });
+
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!menu.classList.contains("open")) return;
+    if (menu.contains(event.target) || toggle.contains(event.target)) return;
+    closeMenu();
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 860) {
+      closeMenu();
     }
+  });
+}
 
-    // ── Language toggle ──
-    const langBtn = document.getElementById('lang-toggle');
-    if (langBtn) {
-        langBtn.addEventListener('click', () => {
-            KAi18n.toggleLanguage();
-        });
+function initNavSpy() {
+  const links = [...document.querySelectorAll(".nav-menu a[href^='#']")];
+  if (!links.length) return;
+
+  const map = new Map();
+  links.forEach((link) => {
+    const id = link.getAttribute("href");
+    if (!id || id === "#") return;
+    const section = document.querySelector(id);
+    if (section) map.set(section, link);
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((link) => link.classList.remove("active"));
+        const targetLink = map.get(entry.target);
+        if (targetLink) targetLink.classList.add("active");
+      });
+    },
+    {
+      threshold: 0.3,
+      rootMargin: "-20% 0px -55% 0px"
     }
+  );
 
-    // ── Close mobile nav on link click ──
-    document.querySelectorAll('.nav__link').forEach(link => {
-        link.addEventListener('click', () => {
-            navToggle?.classList.remove('active');
-            navLinks?.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+  map.forEach((_, section) => observer.observe(section));
+}
+
+function initCookieBanner() {
+  const banner = document.getElementById("cookie-banner");
+  const accept = document.getElementById("cookie-accept");
+  const decline = document.getElementById("cookie-decline");
+  if (!banner || !accept || !decline) return;
+
+  const consent = localStorage.getItem(COOKIE_KEY);
+  if (!consent) {
+    banner.classList.add("show");
+  }
+
+  const close = (value) => {
+    localStorage.setItem(COOKIE_KEY, value);
+    banner.classList.remove("show");
+  };
+
+  accept.addEventListener("click", () => close("accepted"));
+  decline.addEventListener("click", () => close("declined"));
+}
+
+function initControls() {
+  const langButton = document.getElementById("lang-toggle");
+  const themeButton = document.getElementById("theme-toggle");
+
+  if (langButton) {
+    langButton.addEventListener("click", () => {
+      KAi18n.toggleLanguage();
     });
+  }
 
-    // ── Keyboard accessibility for theme/lang ──
-    [themeBtn, langBtn].forEach(btn => {
-        if (btn) {
-            btn.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    btn.click();
-                }
-            });
-        }
+  if (themeButton) {
+    themeButton.addEventListener("click", () => {
+      KATheme.toggleTheme();
     });
+  }
+
+  [langButton, themeButton].forEach((button) => {
+    if (!button) return;
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        button.click();
+      }
+    });
+  });
+}
+
+function initFooterYear() {
+  const yearNode = document.getElementById("year");
+  if (yearNode) {
+    yearNode.textContent = String(new Date().getFullYear());
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  KATheme.initTheme();
+  KAi18n.initI18n();
+
+  KAAnimations.initScrollReveal();
+  KAAnimations.animateCounters();
+  KAAnimations.initSmoothScroll();
+  KAAnimations.initHeroParallax();
+
+  initHeaderState();
+  initMobileNav();
+  initNavSpy();
+  initControls();
+  initCookieBanner();
+  initFooterYear();
 });

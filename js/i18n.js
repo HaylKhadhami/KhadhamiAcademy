@@ -1,348 +1,388 @@
-/* ═══════════════════════════════════════
-   Khadhami Academy — i18n System
-   ═══════════════════════════════════════ */
+﻿const translations = {
+  en: {
+    meta_title: "Khadhami Academy | Future-Ready Learning for Kids",
+    meta_description: "Khadhami Academy is a modern learning platform for coding, AI, robotics, and STEM. Safe by design, bilingual, and built for real outcomes.",
 
-const translations = {
-    en: {
-        // Nav
-        nav_features: "Features",
-        nav_about: "About",
-        nav_pricing: "Pricing",
-        nav_download: "Download",
-        nav_contact: "Contact",
+    skip_to_content: "Skip to content",
+    brand_subtitle: "Khadhami Academy",
+    lang_toggle: "العربية",
+    toggle_menu: "Toggle navigation menu",
+    toggle_language: "Switch language",
+    toggle_theme: "Switch light or dark theme",
 
-        // Hero
-        hero_badge: "🚀  #1 Educational Platform for Future Innovators",
-        hero_title_1: "Where Kids Master",
-        hero_title_2: "Technology",
-        hero_subtitle: "The premier bilingual academy empowering the next generation with coding, robotics, AI, and hands-on STEM education — all in a safe, child-friendly environment.",
-        hero_cta_primary: "Download Free",
-        hero_cta_secondary: "Explore Features",
+    nav_features: "Features",
+    nav_pathways: "Pathways",
+    nav_safety: "Safety",
+    nav_pricing: "Pricing",
+    nav_faq: "FAQ",
+    nav_legal: "Legal",
+    nav_get_app: "Get the app",
 
-        // Features
-        features_badge: "Features",
-        features_title: "Everything Your Child Needs to Thrive",
-        features_subtitle: "A complete learning ecosystem designed with care, built with precision.",
-        feat_live_title: "Live Classrooms",
-        feat_live_desc: "Real-time interactive sessions with educators. Camera, mic, screen share, whiteboard, emoji reactions — a full virtual classroom experience.",
-        feat_code_title: "Code Playground",
-        feat_code_desc: "Built-in code editor supporting Python and Web (HTML/CSS/JS) with live preview, syntax highlighting, and project management.",
-        feat_video_title: "HD Video Lessons",
-        feat_video_desc: "Hundreds of curated lessons across programming, math, science, Arabic, English, and Islamic studies — all in stunning HD quality.",
-        feat_offline_title: "Offline Learning",
-        feat_offline_desc: "Download lessons and learn anywhere, anytime — no internet required. Perfect for areas with limited connectivity.",
-        feat_progress_title: "Progress Tracking",
-        feat_progress_desc: "Visual dashboard with learning streaks, achievements, daily goals, and detailed statistics to keep learners motivated.",
-        feat_parental_title: "Parental Controls",
-        feat_parental_desc: "PIN-protected settings, daily screen time limits, content restrictions, and a parent trackboard for complete peace of mind.",
+    hero_eyebrow: "Future skills, built with precision",
+    hero_title: "Global-caliber learning for <span class='highlight'>future innovators</span>",
+    hero_subtitle: "اكاديمية الخضمي gives families a safe and premium platform for coding, AI, robotics, and STEM mastery.",
+    hero_cta_primary: "Download the app",
+    hero_cta_secondary: "Explore platform",
 
-        // How It Works
-        steps_badge: "How It Works",
-        steps_title: "Start Learning in 3 Simple Steps",
-        steps_subtitle: "Getting started takes less than 2 minutes.",
-        step1_title: "Create Account",
-        step1_desc: "Sign up as a Student, Educator, or Guest. Parental consent built-in for under-18 learners.",
-        step2_title: "Explore Content",
-        step2_desc: "Browse lessons by subject, join live classrooms, or open the Code Playground to start coding.",
-        step3_title: "Learn & Grow",
-        step3_desc: "Track your progress, earn achievements, set daily goals, and watch your skills transform.",
+    store_google_meta: "GET IT ON",
+    store_apple_meta: "Download on the",
 
-        // Vision & Mission
-        vm_badge: "Our Story",
-        vm_title: "Built on Purpose, Driven by Vision",
-        vision_title: "Our Vision",
-        vision_desc: "To forge a generation of innovators who don't just consume technology, but master it. We envision a future where coding and robotics are as fundamental as reading and writing.",
-        mission_title: "Our Mission",
-        mission_desc: "To democratize elite technical education. We blend the precision of industrial engineering with the creativity of childhood, empowering kids to build the future.",
+    preview_tagline: "Performance-driven learning platform",
+    kpi_students: "Active learners",
+    kpi_lessons: "Learning lessons",
+    kpi_satisfaction: "Parent satisfaction",
+    feed_item_1: "Live Class: Python Fundamentals",
+    feed_status_live: "Live",
+    feed_item_2: "Robotics Lab Challenge",
+    feed_status_new: "New",
+    feed_item_3: "AI for Young Innovators",
+    feed_status_hot: "Hot",
 
-        // Philosophy
-        phil_badge: "Our DNA",
-        phil_title: "Excellence by Design",
-        phil_subtitle: "Our educational approach is rooted in proven engineering and management methodologies.",
-        kaizen_title: "Kaizen",
-        kaizen_subtitle: "Continuous Improvement",
-        kaizen_desc: "Mastery is a journey of small, consistent daily steps — not overnight success.",
-        agile_title: "Agile",
-        agile_subtitle: "Adaptability",
-        agile_desc: "Our curriculum adapts to the learner's pace, encouraging experimentation and rapid iteration.",
-        sixsigma_title: "Six Sigma",
-        sixsigma_subtitle: "Quality",
-        sixsigma_desc: "\"Zero defects\" in understanding — no student is left behind with foundational gaps.",
-        lean_title: "Lean",
-        lean_subtitle: "Learning",
-        lean_desc: "Maximum value, minimum waste. We focus on high-impact skills that matter in the real world.",
+    proof_students: "Learners progressing weekly",
+    proof_tracks: "Structured pathways",
+    proof_frameworks: "Learning frameworks",
+    proof_support: "Technical support readiness",
 
-        // Stats
-        stats_students: "Active Learners",
-        stats_lessons: "Video Lessons",
-        stats_countries: "Countries",
-        stats_hours: "Hours of Content",
+    features_eyebrow: "Platform capabilities",
+    features_title: "Everything needed for elite digital learning",
+    features_subtitle: "From live classes to structured mastery analytics, every part of the experience is built for outcomes.",
+    feature_1_title: "Live Classrooms",
+    feature_1_desc: "Interactive sessions with real educators, whiteboards, and instant feedback.",
+    feature_2_title: "Code Playground",
+    feature_2_desc: "Practice Python and web coding directly inside the platform with guided projects.",
+    feature_3_title: "AI and Robotics Labs",
+    feature_3_desc: "Hands-on tracks that connect theory with real engineering problem-solving.",
+    feature_4_title: "Parental Controls",
+    feature_4_desc: "Family-safe controls including content boundaries and time management.",
+    feature_5_title: "Offline Learning",
+    feature_5_desc: "Download selected lessons and continue learning without internet disruptions.",
+    feature_6_title: "Progress Intelligence",
+    feature_6_desc: "Visual dashboards track mastery, consistency, and growth opportunities.",
 
-        // Pricing
-        pricing_badge: "Pricing",
-        pricing_title: "Simple, Transparent Pricing",
-        pricing_subtitle: "Start free, upgrade when you're ready.",
-        pricing_free: "Free",
-        pricing_free_price: "$0",
-        pricing_free_period: "forever",
-        pricing_pro: "Pro",
-        pricing_pro_price: "$4.99",
-        pricing_pro_period: "/month",
-        pricing_ribbon: "Most Popular",
-        pricing_cta_free: "Get Started",
-        pricing_cta_pro: "Upgrade to Pro",
-        feat_p_lessons: "Access to free lessons library",
-        feat_p_classroom: "Join live classrooms",
-        feat_p_progress: "Basic progress tracking",
-        feat_p_comments: "Comments & ratings",
-        feat_p_offline: "Download for offline viewing",
-        feat_p_code: "Full Code Playground access",
-        feat_p_all: "Unlimited access to all lessons",
-        feat_p_hd: "HD quality streaming",
-        feat_p_adfree: "Ad-free experience",
-        feat_p_support: "Priority support",
+    pathways_eyebrow: "Learning architecture",
+    pathways_title: "Engineered with globally trusted methods",
+    pathways_subtitle: "Our curriculum is intentionally built around execution frameworks used by top-performing organizations.",
+    method_kaizen: "Small, continuous improvements that compound into long-term mastery.",
+    method_agile: "Fast feedback loops and adaptive learning plans for every student.",
+    method_sixsigma: "Quality-first delivery that reduces gaps and reinforces fundamentals.",
+    method_lean: "Focus on high-impact skills, remove noise, maximize learning value.",
 
-        // Founder
-        founder_badge: "Leadership",
-        founder_title: "Meet the Founder",
-        founder_name: "Hayl Al-Khadhami",
-        founder_role: "Founder & CEO | Automation Engineer & AI Researcher",
-        founder_bio: "A visionary educator and PhD researcher in Manufacturing Automation, specialized in Industrial Control Systems, Deep Learning, and Computer Vision. Guided by the principles of Industry 4.0, Hayl is dedicated to engineering the next generation of global problem solvers.",
-        founder_location: "Xi'an, China",
+    timeline_title: "How growth is managed",
+    timeline_step_1_title: "Assess",
+    timeline_step_1_desc: "Initial baseline and skill-map creation.",
+    timeline_step_2_title: "Plan",
+    timeline_step_2_desc: "Personalized pathway with weekly goals.",
+    timeline_step_3_title: "Execute",
+    timeline_step_3_desc: "Live classes, labs, and guided project cycles.",
+    timeline_step_4_title: "Optimize",
+    timeline_step_4_desc: "Data-informed iteration with family visibility.",
 
-        // CTA
-        cta_title: "Ready to Shape the Future?",
-        cta_subtitle: "Download Khadhami Academy today and give your child the tools to become tomorrow's innovator.",
-        cta_available: "Available on",
+    safety_eyebrow: "Trust and compliance",
+    safety_title: "Safety, privacy, and child protection by default",
+    safety_subtitle: "We design every workflow around child protection principles, transparent policies, and accountable operations.",
+    safety_1: "Parental consent flows for minors",
+    safety_2: "Clear data handling and retention policy",
+    safety_3: "Moderated communication surfaces",
+    safety_4: "Account deletion and data removal process",
 
-        // Footer
-        footer_brand_desc: "The premier educational platform for coding, robotics, and STEM learning. Empowering the next generation of innovators.",
-        footer_product: "Product",
-        footer_company: "Company",
-        footer_legal: "Legal",
-        footer_link_features: "Features",
-        footer_link_pricing: "Pricing",
-        footer_link_download: "Download",
-        footer_link_changelog: "Changelog",
-        footer_link_about: "About Us",
-        footer_link_contact: "Contact",
-        footer_link_careers: "Careers",
-        footer_link_blog: "Blog",
-        footer_link_privacy: "Privacy Policy",
-        footer_link_terms: "Terms of Service",
-        footer_link_cookies: "Cookie Policy",
-        footer_link_licenses: "Licenses",
-        footer_copyright: "© 2026 Khadhami Academy. All rights reserved.",
+    legal_cta_title: "Publish-ready legal center",
+    legal_cta_desc: "Access all policies required for publishing and trust review workflows.",
+    link_privacy: "Privacy Policy",
+    link_terms: "Terms of Service",
+    link_cookies: "Cookie Policy",
+    link_child_safety: "Child Safety Policy",
+    link_data_deletion: "Data Deletion",
 
-        // Store Buttons
-        store_google_label: "GET IT ON",
-        store_google_store: "Google Play",
-        store_apple_label: "Download on the",
-        store_apple_store: "App Store",
+    pricing_eyebrow: "Simple pricing",
+    pricing_title: "Start free, scale when ready",
+    pricing_subtitle: "Pricing is transparent and designed to support steady learning growth.",
+    plan_free_title: "Starter",
+    plan_free_period: "forever",
+    plan_free_1: "Core lessons access",
+    plan_free_2: "Selected live sessions",
+    plan_free_3: "Basic progress tracking",
+    plan_free_cta: "Start free",
+    plan_pro_badge: "Most popular",
+    plan_pro_title: "Pro",
+    plan_pro_period: "per month",
+    plan_pro_1: "Unlimited premium content",
+    plan_pro_2: "Full code and AI labs",
+    plan_pro_3: "Offline downloads",
+    plan_pro_4: "Priority support",
+    plan_pro_cta: "Upgrade to Pro",
 
-        // Misc
-        lang_toggle: "العربية",
-        theme_toggle_light: "Light mode",
-        theme_toggle_dark: "Dark mode",
-    },
+    faq_eyebrow: "Questions",
+    faq_title: "Frequently asked questions",
+    faq_q1: "Is the platform suitable for beginners?",
+    faq_a1: "Yes. Learning pathways start from fundamentals and adapt to student pace.",
+    faq_q2: "How is child safety handled?",
+    faq_a2: "We use moderated interactions, parental controls, and policy-based protections for minors.",
+    faq_q3: "Can learners study offline?",
+    faq_a3: "Yes. Selected lessons can be downloaded for offline access in supported plans.",
+    faq_q4: "Where can I read legal policies?",
+    faq_a4: "You can access Privacy Policy, Terms, Cookies, Child Safety, and Data Deletion pages in the legal center.",
 
-    ar: {
-        // Nav
-        nav_features: "المميزات",
-        nav_about: "من نحن",
-        nav_pricing: "الأسعار",
-        nav_download: "تحميل",
-        nav_contact: "تواصل",
+    download_eyebrow: "Launch now",
+    download_title: "Ready to build your child’s future advantage?",
+    download_subtitle: "Download اكاديمية الخضمي and start a world-class learning journey today.",
+    download_google: "Get it on Google Play",
+    download_apple: "Download on App Store",
 
-        // Hero
-        hero_badge: "🚀  المنصة التعليمية رقم 1 لمبتكري المستقبل",
-        hero_title_1: "حيث يتقن الأطفال",
-        hero_title_2: "التكنولوجيا",
-        hero_subtitle: "الأكاديمية الثنائية اللغة الرائدة التي تمكّن الجيل القادم من البرمجة والروبوتات والذكاء الاصطناعي والتعليم التقني — في بيئة آمنة ومناسبة للأطفال.",
-        hero_cta_primary: "تحميل مجاني",
-        hero_cta_secondary: "استكشف المميزات",
+    legal_eyebrow: "Legal and publishing",
+    legal_title: "Everything required for public release",
+    legal_card_privacy: "How user data is collected, used, protected, and retained.",
+    legal_card_terms: "Service rules, account obligations, subscriptions, and liability terms.",
+    legal_card_cookies: "Cookie categories, preferences, and browser control options.",
+    legal_card_child_safety: "Safeguards, moderation model, and parent reporting channels.",
+    legal_card_data_deletion: "Account deletion and personal data removal requests.",
 
-        // Features
-        features_badge: "المميزات",
-        features_title: "كل ما يحتاجه طفلك للتفوق",
-        features_subtitle: "نظام تعليمي متكامل مصمم بعناية، مبني بدقة.",
-        feat_live_title: "الفصول المباشرة",
-        feat_live_desc: "جلسات تفاعلية بالوقت الحقيقي مع المعلمين. كاميرا، مايك، مشاركة الشاشة، سبورة بيضاء، تفاعلات — تجربة فصل افتراضي كاملة.",
-        feat_code_title: "ملعب البرمجة",
-        feat_code_desc: "محرر أكواد مدمج يدعم Python وتطوير الويب (HTML/CSS/JS) مع معاينة مباشرة وإدارة المشاريع.",
-        feat_video_title: "دروس فيديو HD",
-        feat_video_desc: "مئات الدروس المنتقاة في البرمجة والرياضيات والعلوم والعربية والإنجليزية والدراسات الإسلامية — بجودة عالية.",
-        feat_offline_title: "التعلم بدون إنترنت",
-        feat_offline_desc: "حمّل الدروس وتعلم في أي مكان وزمان — بدون حاجة للإنترنت. مثالي للمناطق ذات الاتصال المحدود.",
-        feat_progress_title: "تتبع التقدم",
-        feat_progress_desc: "لوحة بصرية مع سلاسل التعلم والإنجازات والأهداف اليومية والإحصائيات التفصيلية لتحفيز المتعلمين.",
-        feat_parental_title: "الرقابة الأبوية",
-        feat_parental_desc: "إعدادات محمية برمز PIN، حدود وقت يومية، قيود محتوى، ولوحة متابعة للوالدين لراحة بال كاملة.",
+    footer_tagline: "Engineering the next generation of innovators.",
+    footer_product: "Product",
+    footer_legal: "Legal",
+    footer_contact: "Contact",
+    copyright_prefix: "Copyright",
+    copyright_text: "Khadhami Academy. All rights reserved.",
 
-        // How It Works
-        steps_badge: "كيف يعمل",
-        steps_title: "ابدأ التعلم في 3 خطوات بسيطة",
-        steps_subtitle: "البدء يستغرق أقل من دقيقتين.",
-        step1_title: "أنشئ حسابك",
-        step1_desc: "سجل كطالب أو معلم أو زائر. موافقة ولي الأمر مدمجة لمن هم دون 18 عاماً.",
-        step2_title: "استكشف المحتوى",
-        step2_desc: "تصفح الدروس حسب المادة، انضم للفصول المباشرة، أو افتح ملعب البرمجة.",
-        step3_title: "تعلّم وتطوّر",
-        step3_desc: "تتبع تقدمك، اكسب إنجازات، حدد أهدافاً يومية، وشاهد مهاراتك تتحول.",
+    cookie_aria: "Cookie consent",
+    cookie_message: "We use essential and analytics cookies to improve learning performance and platform quality.",
+    cookie_decline: "Decline",
+    cookie_accept: "Accept"
+  },
 
-        // Vision & Mission
-        vm_badge: "قصتنا",
-        vm_title: "بُنيت بهدف، مدفوعة برؤية",
-        vision_title: "رؤيتنا",
-        vision_desc: "بناء جيل من المبتكرين الذين لا يكتفون باستهلاك التكنولوجيا، بل يتقنون صناعتها. نطمح لمستقبل تكون فيه البرمجة والروبوتات مهارات أساسية كالقراءة والكتابة.",
-        mission_title: "مهمتنا",
-        mission_desc: "دمقرطة التعليم التقني النخبوي. نمزج دقة الهندسة والبرمجة مع إبداع الطفولة، لتمكين الأطفال من بناء المستقبل.",
+  ar: {
+    meta_title: "اكاديمية الخضمي | تعلم متقدم لأبناء المستقبل",
+    meta_description: "اكاديمية الخضمي منصة تعليمية حديثة للبرمجة والذكاء الاصطناعي والروبوتات والعلوم التقنية، آمنة ومصممة بنتائج واضحة.",
 
-        // Philosophy
-        phil_badge: "فلسفتنا",
-        phil_title: "الجودة بتصميم هندسي",
-        phil_subtitle: "نهجنا التعليمي متجذر في منهجيات الهندسة والإدارة المثبتة.",
-        kaizen_title: "كايزن",
-        kaizen_subtitle: "التحسين المستمر",
-        kaizen_desc: "الإتقان رحلة من الخطوات الصغيرة والمستمرة — وليس نجاحاً بين عشية وضحاها.",
-        agile_title: "أجايل",
-        agile_subtitle: "المرونة والرشاقة",
-        agile_desc: "يتكيف منهجنا مع وتيرة المتعلم، مشجعاً التجريب والتطوير السريع.",
-        sixsigma_title: "سيكس سيجما",
-        sixsigma_subtitle: "الجودة الشاملة",
-        sixsigma_desc: "\"صفر عيوب\" في الفهم — لا نترك أي طالب مع فجوات في الأساسيات.",
-        lean_title: "لين",
-        lean_subtitle: "التعلم الرشيق",
-        lean_desc: "أقصى قيمة، أقل هدر. نركز على المهارات عالية التأثير في العالم الحقيقي.",
+    skip_to_content: "تخطي إلى المحتوى",
+    brand_subtitle: "Khadhami Academy",
+    lang_toggle: "English",
+    toggle_menu: "فتح أو إغلاق قائمة التنقل",
+    toggle_language: "تغيير اللغة",
+    toggle_theme: "تبديل الوضع الفاتح أو الداكن",
 
-        // Stats
-        stats_students: "متعلم نشط",
-        stats_lessons: "درس فيديو",
-        stats_countries: "دولة",
-        stats_hours: "ساعة محتوى",
+    nav_features: "المزايا",
+    nav_pathways: "المسارات",
+    nav_safety: "الأمان",
+    nav_pricing: "الأسعار",
+    nav_faq: "الأسئلة",
+    nav_legal: "السياسات",
+    nav_get_app: "تحميل التطبيق",
 
-        // Pricing
-        pricing_badge: "الأسعار",
-        pricing_title: "تسعير بسيط وشفاف",
-        pricing_subtitle: "ابدأ مجاناً، ثم ترقّ عندما تكون جاهزاً.",
-        pricing_free: "مجاني",
-        pricing_free_price: "$0",
-        pricing_free_period: "للأبد",
-        pricing_pro: "برو",
-        pricing_pro_price: "$4.99",
-        pricing_pro_period: "/شهر",
-        pricing_ribbon: "الأكثر شعبية",
-        pricing_cta_free: "ابدأ الآن",
-        pricing_cta_pro: "ترقّ إلى برو",
-        feat_p_lessons: "وصول لمكتبة الدروس المجانية",
-        feat_p_classroom: "انضمام للفصول المباشرة",
-        feat_p_progress: "تتبع تقدم أساسي",
-        feat_p_comments: "تعليقات وتقييمات",
-        feat_p_offline: "تحميل للمشاهدة بدون إنترنت",
-        feat_p_code: "وصول كامل لملعب البرمجة",
-        feat_p_all: "وصول غير محدود لجميع الدروس",
-        feat_p_hd: "بث بجودة عالية",
-        feat_p_adfree: "تجربة خالية من الإعلانات",
-        feat_p_support: "دعم فني متميز",
+    hero_eyebrow: "مهارات المستقبل، بتصميم هندسي",
+    hero_title: "تجربة تعليم عالمية لصنّاع <span class='highlight'>ابتكار المستقبل</span>",
+    hero_subtitle: "اكاديمية الخضمي تقدم للأسر منصة آمنة ومتميزة لتعلم البرمجة والذكاء الاصطناعي والروبوتات والعلوم التقنية.",
+    hero_cta_primary: "تحميل التطبيق",
+    hero_cta_secondary: "استكشف المنصة",
 
-        // Founder
-        founder_badge: "القيادة",
-        founder_title: "تعرف على المؤسس",
-        founder_name: "هايل الخضمي",
-        founder_role: "المؤسس والمدير التنفيذي | مهندس أتمتة وباحث ذكاء اصطناعي",
-        founder_bio: "رائد تربوي وباحث دكتوراه في أتمتة التصنيع، متخصص في أنظمة التحكم الصناعي والتعلم العميق. مسترشداً بمبادئ \"الصناعة 4.0\"، يكرس هايل جهوده لهندسة الجيل القادم من قادة التكنولوجيا عالمياً.",
-        founder_location: "شيان، الصين",
+    store_google_meta: "حمّل من",
+    store_apple_meta: "تنزيل عبر",
 
-        // CTA
-        cta_title: "مستعد لصنع المستقبل؟",
-        cta_subtitle: "حمّل أكاديمية الخضمي اليوم وامنح طفلك الأدوات ليصبح مبتكر الغد.",
-        cta_available: "متوفر على",
+    preview_tagline: "منصة تعليم مبنية على الأداء",
+    kpi_students: "متعلم نشط",
+    kpi_lessons: "درس تعليمي",
+    kpi_satisfaction: "رضا أولياء الأمور",
+    feed_item_1: "فصل مباشر: أساسيات Python",
+    feed_status_live: "مباشر",
+    feed_item_2: "تحدي مختبر الروبوتات",
+    feed_status_new: "جديد",
+    feed_item_3: "الذكاء الاصطناعي للمبتكرين الصغار",
+    feed_status_hot: "مميز",
 
-        // Footer
-        footer_brand_desc: "المنصة التعليمية الرائدة للبرمجة والروبوتات وتعليم العلوم والتكنولوجيا. تمكين الجيل القادم من المبتكرين.",
-        footer_product: "المنتج",
-        footer_company: "الشركة",
-        footer_legal: "قانوني",
-        footer_link_features: "المميزات",
-        footer_link_pricing: "الأسعار",
-        footer_link_download: "تحميل",
-        footer_link_changelog: "سجل التغييرات",
-        footer_link_about: "من نحن",
-        footer_link_contact: "تواصل معنا",
-        footer_link_careers: "وظائف",
-        footer_link_blog: "المدونة",
-        footer_link_privacy: "سياسة الخصوصية",
-        footer_link_terms: "شروط الخدمة",
-        footer_link_cookies: "سياسة الكوكيز",
-        footer_link_licenses: "التراخيص",
-        footer_copyright: "© 2026 أكاديمية الخضمي. جميع الحقوق محفوظة.",
+    proof_students: "متعلمين يتقدمون أسبوعيا",
+    proof_tracks: "مسارات تعليمية منظمة",
+    proof_frameworks: "أطر تعلم منهجية",
+    proof_support: "جاهزية الدعم التقني",
 
-        // Store Buttons
-        store_google_label: "احصل عليه من",
-        store_google_store: "Google Play",
-        store_apple_label: "حمله من",
-        store_apple_store: "App Store",
+    features_eyebrow: "قدرات المنصة",
+    features_title: "كل ما يلزم لتعلم تقني متقدم",
+    features_subtitle: "من الفصول المباشرة إلى تحليلات الإتقان، كل جزء في التجربة مبني لتحقيق نتائج فعلية.",
+    feature_1_title: "الفصول المباشرة",
+    feature_1_desc: "جلسات تفاعلية مع معلمين حقيقيين وسبورات وملاحظات فورية.",
+    feature_2_title: "ملعب البرمجة",
+    feature_2_desc: "تدرب على Python وتطوير الويب داخل المنصة بمشاريع موجهة.",
+    feature_3_title: "مختبرات الذكاء والروبوتات",
+    feature_3_desc: "مسارات عملية تربط المفاهيم بالتطبيق الهندسي الحقيقي.",
+    feature_4_title: "الرقابة الأبوية",
+    feature_4_desc: "تحكم أسري آمن يتضمن حدود المحتوى وإدارة وقت الاستخدام.",
+    feature_5_title: "التعلم دون إنترنت",
+    feature_5_desc: "تحميل الدروس المختارة واستكمال التعلم بدون انقطاع.",
+    feature_6_title: "تحليلات التقدم",
+    feature_6_desc: "لوحات متابعة ذكية لقياس الإتقان والاستمرارية وفرص التحسين.",
 
-        // Misc
-        lang_toggle: "English",
-        theme_toggle_light: "الوضع الفاتح",
-        theme_toggle_dark: "الوضع الداكن",
-    }
+    pathways_eyebrow: "معمارية التعلم",
+    pathways_title: "مصممة بأطر عالمية موثوقة",
+    pathways_subtitle: "منهجنا مبني على أنظمة تنفيذ تستخدمها الجهات الأعلى أداء حول العالم.",
+    method_kaizen: "تحسينات صغيرة مستمرة تتراكم لتنتج إتقاناً طويل المدى.",
+    method_agile: "دورات تغذية راجعة سريعة وخطط تعلم مرنة لكل طالب.",
+    method_sixsigma: "تركيز على الجودة لتقليل الفجوات وتعزيز الأساسيات.",
+    method_lean: "تركيز على المهارات الأعلى أثراً وتقليل أي هدر تعليمي.",
+
+    timeline_title: "كيف تتم إدارة النمو",
+    timeline_step_1_title: "Assess",
+    timeline_step_1_desc: "تقييم البداية وبناء خريطة المهارات.",
+    timeline_step_2_title: "Plan",
+    timeline_step_2_desc: "مسار مخصص مع أهداف أسبوعية واضحة.",
+    timeline_step_3_title: "Execute",
+    timeline_step_3_desc: "فصول مباشرة ومختبرات ودورات مشاريع عملية.",
+    timeline_step_4_title: "Optimize",
+    timeline_step_4_desc: "تحسين مستمر بناء على البيانات ومتابعة الأسرة.",
+
+    safety_eyebrow: "الثقة والامتثال",
+    safety_title: "الأمان والخصوصية وحماية الطفل بشكل افتراضي",
+    safety_subtitle: "نصمم كل رحلة تعلم وفق مبادئ حماية الطفل والسياسات الواضحة والمسؤولية التشغيلية.",
+    safety_1: "تدفقات موافقة ولي الأمر للقُصّر",
+    safety_2: "سياسة واضحة لجمع البيانات وحفظها",
+    safety_3: "قنوات تواصل خاضعة للإشراف",
+    safety_4: "آلية حذف الحساب والبيانات الشخصية",
+
+    legal_cta_title: "مركز سياسات جاهز للنشر",
+    legal_cta_desc: "وصول مباشر لكل السياسات المطلوبة للنشر والمراجعات التنظيمية.",
+    link_privacy: "سياسة الخصوصية",
+    link_terms: "شروط الخدمة",
+    link_cookies: "سياسة الكوكيز",
+    link_child_safety: "سياسة سلامة الطفل",
+    link_data_deletion: "حذف البيانات",
+
+    pricing_eyebrow: "أسعار بسيطة",
+    pricing_title: "ابدأ مجاناً ثم طوّر عند الحاجة",
+    pricing_subtitle: "تسعير واضح مصمم لدعم نمو تعليمي مستمر.",
+    plan_free_title: "Starter",
+    plan_free_period: "للأبد",
+    plan_free_1: "وصول إلى الدروس الأساسية",
+    plan_free_2: "جلسات مباشرة مختارة",
+    plan_free_3: "متابعة تقدم أساسية",
+    plan_free_cta: "ابدأ مجاناً",
+    plan_pro_badge: "الأكثر اختياراً",
+    plan_pro_title: "Pro",
+    plan_pro_period: "شهرياً",
+    plan_pro_1: "وصول غير محدود للمحتوى المتميز",
+    plan_pro_2: "مختبرات البرمجة والذكاء كاملة",
+    plan_pro_3: "تحميل الدروس دون إنترنت",
+    plan_pro_4: "دعم ذو أولوية",
+    plan_pro_cta: "الترقية إلى Pro",
+
+    faq_eyebrow: "الأسئلة",
+    faq_title: "الأسئلة الشائعة",
+    faq_q1: "هل المنصة مناسبة للمبتدئين؟",
+    faq_a1: "نعم، المسارات تبدأ من الأساسيات وتتكيّف مع سرعة تعلم الطالب.",
+    faq_q2: "كيف تتم حماية الأطفال داخل المنصة؟",
+    faq_a2: "نطبق إشرافاً على التفاعل، ورقابة أبوية، وسياسات حماية مخصصة للقُصّر.",
+    faq_q3: "هل يمكن التعلم بدون إنترنت؟",
+    faq_a3: "نعم، يمكن تحميل الدروس المختارة للتعلم دون اتصال في الخطط المدعومة.",
+    faq_q4: "أين أجد السياسات القانونية؟",
+    faq_a4: "يمكنك الوصول إلى سياسة الخصوصية والشروط والكوكيز وسلامة الطفل وحذف البيانات من مركز السياسات.",
+
+    download_eyebrow: "ابدأ الآن",
+    download_title: "جاهز لبناء ميزة مستقبلية قوية لطفلك؟",
+    download_subtitle: "حمّل اكاديمية الخضمي وابدأ رحلة تعلم عالمية اليوم.",
+    download_google: "حمّل من Google Play",
+    download_apple: "حمّل من App Store",
+
+    legal_eyebrow: "السياسات والنشر",
+    legal_title: "كل ما يلزم للإطلاق والنشر العام",
+    legal_card_privacy: "كيف نجمع بيانات المستخدم ونستخدمها ونحميها ونحتفظ بها.",
+    legal_card_terms: "قواعد الخدمة والتزامات الحساب والاشتراكات وحدود المسؤولية.",
+    legal_card_cookies: "أنواع الكوكيز وتفضيلات الاستخدام وخيارات التحكم.",
+    legal_card_child_safety: "ضوابط السلامة ونموذج الإشراف وقنوات الإبلاغ.",
+    legal_card_data_deletion: "طلبات حذف الحساب وإزالة البيانات الشخصية.",
+
+    footer_tagline: "نبني جيلاً جديداً من المبتكرين.",
+    footer_product: "المنتج",
+    footer_legal: "السياسات",
+    footer_contact: "التواصل",
+    copyright_prefix: "جميع الحقوق",
+    copyright_text: "محفوظة لاكاديمية الخضمي.",
+
+    cookie_aria: "موافقة استخدام الكوكيز",
+    cookie_message: "نستخدم ملفات تعريف الارتباط الأساسية والتحليلية لتحسين جودة المنصة ونتائج التعلم.",
+    cookie_decline: "رفض",
+    cookie_accept: "موافقة"
+  }
 };
 
-let currentLang = localStorage.getItem('ka-lang') || 'en';
+function detectBrowserLanguage() {
+  const language = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+  return language.startsWith("ar") ? "ar" : "en";
+}
 
-function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('ka-lang', lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+let currentLanguage = detectBrowserLanguage();
 
-    // Update all translatable elements
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            el.textContent = translations[lang][key];
-        }
-    });
+function updateMeta(language) {
+  const content = translations[language];
+  if (!content) return;
 
-    // Update elements with data-i18n-html for innerHTML
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const key = el.getAttribute('data-i18n-html');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerHTML = translations[lang][key];
-        }
-    });
+  document.title = content.meta_title;
 
-    // Update placeholder attributes
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang] && translations[lang][key]) {
-            el.placeholder = translations[lang][key];
-        }
-    });
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.setAttribute("content", content.meta_description);
 
-    // Update aria-label attributes
-    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
-        const key = el.getAttribute('data-i18n-aria');
-        if (translations[lang] && translations[lang][key]) {
-            el.setAttribute('aria-label', translations[lang][key]);
-        }
-    });
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute("content", content.meta_title);
+
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  if (ogDescription) ogDescription.setAttribute("content", content.meta_description);
+
+  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twitterTitle) twitterTitle.setAttribute("content", content.meta_title);
+
+  const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+  if (twitterDescription) twitterDescription.setAttribute("content", content.meta_description);
+}
+
+function setLanguage(language) {
+  currentLanguage = translations[language] ? language : detectBrowserLanguage();
+  const content = translations[currentLanguage];
+  if (!content) return;
+
+  document.documentElement.lang = currentLanguage;
+  document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
+    if (content[key] !== undefined) {
+      element.textContent = content[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-html");
+    if (content[key] !== undefined) {
+      element.innerHTML = content[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-aria");
+    if (content[key] !== undefined) {
+      element.setAttribute("aria-label", content[key]);
+    }
+  });
+
+  updateMeta(currentLanguage);
+
+  document.dispatchEvent(
+    new CustomEvent("ka:language-change", {
+      detail: { language: currentLanguage }
+    })
+  );
 }
 
 function toggleLanguage() {
-    setLanguage(currentLang === 'en' ? 'ar' : 'en');
+  setLanguage(currentLanguage === "ar" ? "en" : "ar");
 }
 
-function getCurrentLang() {
-    return currentLang;
+function getCurrentLanguage() {
+  return currentLanguage;
 }
 
-// Initialize on load
 function initI18n() {
-    setLanguage(currentLang);
+  setLanguage(detectBrowserLanguage());
 }
 
-// Export for use
-window.KAi18n = { initI18n, setLanguage, toggleLanguage, getCurrentLang, translations };
+window.KAi18n = {
+  initI18n,
+  setLanguage,
+  toggleLanguage,
+  getCurrentLanguage,
+  translations
+};

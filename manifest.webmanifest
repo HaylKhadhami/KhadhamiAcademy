@@ -1,0 +1,27 @@
+{
+  "name": "اكاديمية الخضمي",
+  "short_name": "الخضمي",
+  "description": "Khadhami Academy learning platform for coding, robotics, AI, and STEM.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "background_color": "#f4f7fc",
+  "theme_color": "#205090",
+  "icons": [
+    {
+      "src": "/assets/images/app-icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/app-icon.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}

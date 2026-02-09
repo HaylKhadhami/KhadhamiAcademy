@@ -1,0 +1,4 @@
+Contact: mailto:hayl.khadhami@gmail.com
+Expires: 2027-02-09T00:00:00Z
+Preferred-Languages: en, ar
+Policy: https://khadhami.com/privacy-policy.html

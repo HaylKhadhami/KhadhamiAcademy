@@ -420,8 +420,8 @@
 }
 
 .pricing-card .btn {
-  justify-self: stretch;
-  width: 100%;
+  justify-self: center;
+  width: min(100%, 25rem);
   min-width: 0;
   min-height: 3rem;
 }

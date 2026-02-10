@@ -1,4 +1,20 @@
-﻿.site-header {
+@font-face {
+  font-family: "SaudiRiyalSymbol";
+  src: url("../assets/fonts/saudi-riyal-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SaudiRiyalSymbol";
+  src: url("../assets/fonts/saudi-riyal-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -405,11 +421,22 @@
 }
 
 .sar-symbol {
-  display: inline-block;
-  font-weight: 800;
-  font-family: "Noto Sans Arabic", "Noto Sans", "Segoe UI Symbol", "Arial Unicode MS", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.92em;
+  min-width: 0.92em;
   line-height: 1;
   margin-inline-end: 0.15rem;
+}
+
+.sar-symbol::before {
+  content: "\e900";
+  font-family: "SaudiRiyalSymbol", sans-serif;
+  font-weight: 700;
+  font-size: 0.95em;
+  color: currentColor;
+  line-height: 1;
 }
 
 .pricing-card ul {

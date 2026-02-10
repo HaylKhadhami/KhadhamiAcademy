@@ -1,4 +1,4 @@
-﻿const COOKIE_KEY = "ka-cookie-consent";
+const COOKIE_KEY = "ka-cookie-consent";
 
 function initHeaderState() {
   const header = document.querySelector(".site-header");
@@ -54,19 +54,21 @@ function initNavSpy() {
   const links = [...document.querySelectorAll(".nav-menu a[href^='#']")];
   if (!links.length) return;
 
-  const sections = links
+  const entries = links
     .map((link) => {
-      const id = link.getAttribute("href");
-      if (!id || id === "#") return null;
-      const section = document.querySelector(id);
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return null;
+      const section = document.querySelector(href);
       return section ? { link, section } : null;
     })
     .filter(Boolean);
 
-  if (!sections.length) return;
+  if (!entries.length) return;
 
-  const getHeaderOffset = () =>
-    (document.querySelector(".site-header")?.offsetHeight || 0) + 24;
+  const getMarkerOffset = () => {
+    const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
+    return headerHeight + 24;
+  };
 
   const setActive = (activeLink) => {
     links.forEach((link) => {
@@ -74,55 +76,33 @@ function initNavSpy() {
     });
   };
 
-  const updateActiveLink = () => {
-    const marker = getHeaderOffset();
-    const sectionRects = sections.map((item) => ({
-      ...item,
-      rect: item.section.getBoundingClientRect()
-    }));
-    const firstSectionTop = sectionRects[0].rect.top + window.scrollY;
+  const getBounds = () => entries.map(({ link, section }) => {
+    const top = section.offsetTop;
+    const bottom = top + Math.max(section.offsetHeight, 1);
+    return { link, top, bottom };
+  });
 
-    // Keep nav inactive in hero area before the first tracked section.
-    if (window.scrollY + marker < firstSectionTop) {
+  const updateActive = () => {
+    const markerY = window.scrollY + getMarkerOffset();
+    const bounds = getBounds();
+    if (!bounds.length) {
       setActive(null);
       return;
     }
 
-    // Primary match: header marker line is inside the section.
-    let activeEntry = sectionRects.find((entry) => (
-      entry.rect.top <= marker && entry.rect.bottom > marker
-    ));
-
-    // Secondary match: use the most visible section in the viewport.
-    if (!activeEntry) {
-      let bestVisible = 0;
-      let bestDistance = Number.POSITIVE_INFINITY;
-
-      for (const entry of sectionRects) {
-        const visibleTop = Math.max(entry.rect.top, marker);
-        const visibleBottom = Math.min(entry.rect.bottom, window.innerHeight);
-        const visible = Math.max(0, visibleBottom - visibleTop);
-        if (visible <= 0) continue;
-
-        const distance = Math.abs(entry.rect.top - marker);
-        if (visible > bestVisible || (visible === bestVisible && distance < bestDistance)) {
-          bestVisible = visible;
-          bestDistance = distance;
-          activeEntry = entry;
-        }
-      }
+    if (markerY < bounds[0].top) {
+      setActive(null);
+      return;
     }
 
-    // Final fallback: last section whose top passed the marker.
-    if (!activeEntry) {
-      for (const entry of sectionRects) {
-        if (entry.rect.top <= marker) {
-          activeEntry = entry;
-        }
-      }
+    const active = bounds.find((entry) => markerY >= entry.top && markerY < entry.bottom);
+    if (active) {
+      setActive(active.link);
+      return;
     }
 
-    setActive(activeEntry ? activeEntry.link : null);
+    const atPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+    setActive(atPageBottom ? bounds[bounds.length - 1].link : null);
   };
 
   let ticking = false;
@@ -130,274 +110,135 @@ function initNavSpy() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
-      updateActiveLink();
+      updateActive();
       ticking = false;
     });
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", updateActiveLink);
-  window.addEventListener("hashchange", updateActiveLink);
+  window.addEventListener("resize", updateActive);
+  window.addEventListener("hashchange", updateActive);
+  window.addEventListener("load", updateActive);
 
   links.forEach((link) => {
     link.addEventListener("click", () => {
-      // Immediate visual feedback, then correct state after scroll settles.
       setActive(link);
-      requestAnimationFrame(updateActiveLink);
+      window.setTimeout(updateActive, 140);
     });
   });
 
-  updateActiveLink();
+  updateActive();
 }
 
-function initShowcaseTabs() {
-  const tabList = document.querySelector("[data-showcase-tabs]");
-  if (!tabList) return;
+function initShowcaseMini() {
+  const shell = document.querySelector("[data-showcase-mini]");
+  if (!shell) return;
 
-  const tabs = [...tabList.querySelectorAll("[data-showcase-tab]")];
-  const panels = [...document.querySelectorAll("[data-showcase-panel]")];
-  if (!tabs.length || !panels.length) return;
+  const track = shell.querySelector("[data-showcase-track]");
+  const previousButton = shell.querySelector("[data-showcase-prev]");
+  const nextButton = shell.querySelector("[data-showcase-next]");
+  const autoplayButton = shell.querySelector("[data-showcase-autoplay]");
+  const slides = track ? [...track.querySelectorAll(".mini-shot")] : [];
+  if (!track || !slides.length) return;
 
-  let activeIndex = 0;
-  let autoRotateId = null;
-  const showcaseSection = document.getElementById("showcase");
-  const showcaseShell = tabList.closest(".showcase-shell");
-  const interactionTarget = showcaseShell || tabList;
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let sectionInView = false;
-  let isPausedByInteraction = false;
+  let currentIndex = 0;
+  let autoplayTimer = null;
 
-  const stopAutoRotate = () => {
-    if (!autoRotateId) return;
-    clearInterval(autoRotateId);
-    autoRotateId = null;
+  const normalizeIndex = (index) => (index + slides.length) % slides.length;
+
+  const scrollToIndex = (index, behavior = "smooth") => {
+    currentIndex = normalizeIndex(index);
+    slides[currentIndex].scrollIntoView({
+      behavior,
+      block: "nearest",
+      inline: "start"
+    });
   };
 
-  const startAutoRotate = () => {
-    if (autoRotateId || reducedMotionQuery.matches || !sectionInView || isPausedByInteraction) return;
-    autoRotateId = setInterval(() => {
-      const nextIndex = (activeIndex + 1) % tabs.length;
-      activateTab(tabs[nextIndex]);
-    }, 5500);
+  const updateCurrentIndexFromScroll = () => {
+    const trackLeft = track.getBoundingClientRect().left;
+    let bestIndex = currentIndex;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    slides.forEach((slide, index) => {
+      const distance = Math.abs(slide.getBoundingClientRect().left - trackLeft);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIndex = index;
+      }
+    });
+
+    currentIndex = bestIndex;
   };
 
-  const activateTab = (targetTab, options = {}) => {
-    const { focus = false } = options;
-    const targetKey = targetTab.getAttribute("data-showcase-tab");
-    activeIndex = tabs.indexOf(targetTab);
+  let scrollTicking = false;
+  track.addEventListener(
+    "scroll",
+    () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        updateCurrentIndexFromScroll();
+        scrollTicking = false;
+      });
+    },
+    { passive: true }
+  );
 
-    tabs.forEach((tab) => {
-      const isActive = tab === targetTab;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
-      tab.tabIndex = isActive ? 0 : -1;
-    });
-
-    panels.forEach((panel) => {
-      const isActive = panel.getAttribute("data-showcase-panel") === targetKey;
-      panel.classList.toggle("active", isActive);
-      panel.hidden = !isActive;
-    });
-
-    if (focus) {
-      targetTab.focus();
+  const stopAutoplay = () => {
+    if (!autoplayTimer) return;
+    clearInterval(autoplayTimer);
+    autoplayTimer = null;
+    if (autoplayButton) {
+      autoplayButton.disabled = false;
+      autoplayButton.removeAttribute("aria-busy");
     }
   };
 
-  const moveFocus = (currentIndex, delta) => {
-    const nextIndex = (currentIndex + delta + tabs.length) % tabs.length;
-    activateTab(tabs[nextIndex], { focus: true });
-  };
+  const startAutoplay = () => {
+    if (!autoplayButton || autoplayTimer || reducedMotionQuery.matches) return;
+    autoplayButton.disabled = true;
+    autoplayButton.setAttribute("aria-busy", "true");
 
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => {
-      isPausedByInteraction = true;
-      stopAutoRotate();
-      activateTab(tab);
-    });
-    tab.addEventListener("keydown", (event) => {
-      const isRtl = document.documentElement.dir === "rtl";
-      const nextKey = isRtl ? "ArrowLeft" : "ArrowRight";
-      const previousKey = isRtl ? "ArrowRight" : "ArrowLeft";
-
-      if (event.key === nextKey) {
-        event.preventDefault();
-        isPausedByInteraction = true;
-        stopAutoRotate();
-        moveFocus(index, 1);
-      } else if (event.key === previousKey) {
-        event.preventDefault();
-        isPausedByInteraction = true;
-        stopAutoRotate();
-        moveFocus(index, -1);
-      } else if (event.key === "Home") {
-        event.preventDefault();
-        isPausedByInteraction = true;
-        stopAutoRotate();
-        activateTab(tabs[0], { focus: true });
-      } else if (event.key === "End") {
-        event.preventDefault();
-        isPausedByInteraction = true;
-        stopAutoRotate();
-        activateTab(tabs[tabs.length - 1], { focus: true });
+    let steps = 0;
+    const maxSteps = Math.max(1, slides.length - 1);
+    autoplayTimer = window.setInterval(() => {
+      steps += 1;
+      scrollToIndex(currentIndex + 1);
+      if (steps >= maxSteps) {
+        stopAutoplay();
       }
-    });
-  });
-
-  const interactionStart = () => {
-    isPausedByInteraction = true;
-    stopAutoRotate();
+    }, 4200);
   };
 
-  const interactionEnd = () => {
-    isPausedByInteraction = false;
-    startAutoRotate();
-  };
-
-  interactionTarget.addEventListener("pointerenter", interactionStart);
-  interactionTarget.addEventListener("pointerleave", interactionEnd);
-  interactionTarget.addEventListener("focusin", interactionStart);
-  interactionTarget.addEventListener("focusout", (event) => {
-    if (interactionTarget.contains(event.relatedTarget)) return;
-    interactionEnd();
+  previousButton?.addEventListener("click", () => {
+    stopAutoplay();
+    scrollToIndex(currentIndex - 1);
   });
 
-  if (showcaseSection) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          sectionInView = entry.isIntersecting;
-          if (sectionInView) {
-            startAutoRotate();
-          } else {
-            stopAutoRotate();
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-    sectionObserver.observe(showcaseSection);
-  } else {
-    sectionInView = true;
-    startAutoRotate();
-  }
+  nextButton?.addEventListener("click", () => {
+    stopAutoplay();
+    scrollToIndex(currentIndex + 1);
+  });
+
+  autoplayButton?.addEventListener("click", () => {
+    stopAutoplay();
+    startAutoplay();
+  });
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      stopAutoRotate();
-      return;
-    }
-    startAutoRotate();
-  });
-
-  const initialTab = tabs.find((tab) => tab.classList.contains("active")) || tabs[0];
-  activateTab(initialTab);
-  startAutoRotate();
-}
-
-function initScreenshotLightbox() {
-  const lightbox = document.getElementById("shot-lightbox");
-  if (!lightbox) return;
-
-  const imageNode = document.getElementById("shot-lightbox-image");
-  const captionNode = document.getElementById("shot-lightbox-caption");
-  const closeButtons = [...lightbox.querySelectorAll("[data-shot-lightbox-close]")];
-  const previousButton = lightbox.querySelector("[data-shot-lightbox-prev]");
-  const nextButton = lightbox.querySelector("[data-shot-lightbox-next]");
-  const openableImages = [...document.querySelectorAll("img[data-shot-open='true']")];
-  if (!imageNode || !captionNode || !openableImages.length) return;
-
-  let activeIndex = -1;
-  let previousBodyOverflow = "";
-
-  const updateFromActive = () => {
-    if (activeIndex < 0 || activeIndex >= openableImages.length) return;
-    const sourceImage = openableImages[activeIndex];
-    const figure = sourceImage.closest("figure");
-    const sourceCaption = figure?.querySelector("figcaption")?.textContent?.trim();
-    imageNode.src = sourceImage.currentSrc || sourceImage.src;
-    imageNode.alt = sourceImage.alt || "";
-    captionNode.textContent = sourceCaption || sourceImage.alt || "";
-  };
-
-  const openAt = (index) => {
-    activeIndex = (index + openableImages.length) % openableImages.length;
-    updateFromActive();
-    previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    lightbox.hidden = false;
-    lightbox.setAttribute("aria-hidden", "false");
-  };
-
-  const closeLightbox = () => {
-    lightbox.hidden = true;
-    lightbox.setAttribute("aria-hidden", "true");
-    imageNode.removeAttribute("src");
-    imageNode.alt = "";
-    captionNode.textContent = "";
-    document.body.style.overflow = previousBodyOverflow;
-    activeIndex = -1;
-  };
-
-  const showPrevious = () => {
-    if (activeIndex < 0) return;
-    activeIndex = (activeIndex - 1 + openableImages.length) % openableImages.length;
-    updateFromActive();
-  };
-
-  const showNext = () => {
-    if (activeIndex < 0) return;
-    activeIndex = (activeIndex + 1) % openableImages.length;
-    updateFromActive();
-  };
-
-  openableImages.forEach((image, index) => {
-    image.addEventListener("click", () => openAt(index));
-    image.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      event.preventDefault();
-      openAt(index);
-    });
-    if (!image.hasAttribute("tabindex")) {
-      image.tabIndex = 0;
-    }
-    if (!image.hasAttribute("role")) {
-      image.setAttribute("role", "button");
+      stopAutoplay();
     }
   });
 
-  closeButtons.forEach((button) => button.addEventListener("click", closeLightbox));
-  if (previousButton) previousButton.addEventListener("click", showPrevious);
-  if (nextButton) nextButton.addEventListener("click", showNext);
-
-  document.addEventListener("keydown", (event) => {
-    if (lightbox.hidden) return;
-    const isRtl = document.documentElement.dir === "rtl";
-    const previousKey = isRtl ? "ArrowRight" : "ArrowLeft";
-    const nextKey = isRtl ? "ArrowLeft" : "ArrowRight";
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeLightbox();
-      return;
-    }
-
-    if (event.key === previousKey) {
-      event.preventDefault();
-      showPrevious();
-      return;
-    }
-
-    if (event.key === nextKey) {
-      event.preventDefault();
-      showNext();
-    }
-  });
-
+  window.addEventListener("resize", updateCurrentIndexFromScroll);
   document.addEventListener("ka:language-change", () => {
-    if (lightbox.hidden) return;
-    updateFromActive();
+    window.setTimeout(updateCurrentIndexFromScroll, 60);
   });
+
+  scrollToIndex(0, "auto");
 }
 
 function initCookieBanner() {
@@ -466,8 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeaderState();
   initMobileNav();
   initNavSpy();
-  initShowcaseTabs();
-  initScreenshotLightbox();
+  initShowcaseMini();
   initControls();
   initCookieBanner();
   initFooterYear();

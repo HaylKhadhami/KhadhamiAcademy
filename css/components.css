@@ -407,6 +407,14 @@
   font-family: var(--font-display);
 }
 
+.pricing-card .plan-fit {
+  margin-top: 0.2rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-subtle);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
 .pricing-card .price span {
   font-size: var(--text-sm);
   color: var(--text-subtle);
@@ -418,6 +426,14 @@
   color: var(--text-subtle);
   font-size: var(--text-sm);
   font-weight: 700;
+}
+
+.pricing-note {
+  margin-top: var(--space-5);
+  text-align: center;
+  color: var(--text-subtle);
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
 
 .sar-symbol {

@@ -13,24 +13,18 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .showcase-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .showcase-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .shot-chip {
-    flex-basis: 6.4rem;
-  }
-
-  .phone-shot {
-    max-width: 300px;
-  }
-
   .feature-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .parents-grid,
+  .standards-grid,
+  .voices-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .parents-panel {
+    grid-column: span 2;
   }
 
   .legal-grid {
@@ -87,52 +81,33 @@
     padding-top: var(--space-14);
   }
 
-  .showcase-shell {
-    padding: var(--space-6);
-  }
-
-  .showcase-tabs {
-    margin-bottom: var(--space-5);
-  }
-
-  .showcase-tab {
-    flex: 1 1 calc(50% - var(--space-2));
-    text-align: center;
-  }
-
-  .showcase-reel {
-    margin-top: var(--space-6);
-  }
-
-  .shot-lightbox__dialog {
-    width: min(100% - 1rem, 820px);
-    grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
-  }
-
-  .shot-lightbox__hint {
-    display: none;
-  }
-
   .hero-copy h1 {
     max-width: none;
-  }
-
-  .store-pill {
-    min-width: 0;
-    flex: 1;
-  }
-
-  .preview-metrics {
-    grid-template-columns: 1fr;
   }
 
   .method-grid {
     grid-template-columns: 1fr;
   }
 
+  .parents-grid,
+  .standards-grid,
+  .voices-grid,
   .pricing-grid,
   .legal-grid {
     grid-template-columns: 1fr;
+  }
+
+  .parents-panel {
+    grid-column: span 1;
+  }
+
+  .showcase-mini__actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .showcase-mini__track {
+    grid-auto-columns: minmax(180px, 1fr);
   }
 
   .pricing-card--featured {
@@ -180,40 +155,8 @@
     grid-template-columns: 1fr;
   }
 
-  .showcase-tab {
-    flex-basis: 100%;
-  }
-
-  .showcase-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .showcase-reel__head {
-    text-align: center;
-  }
-
-  .shot-chip {
-    flex-basis: 5.6rem;
-  }
-
-  .shot-lightbox__dialog {
-    width: calc(100% - 0.8rem);
-    gap: 0.55rem;
-    grid-template-columns: 2.2rem minmax(0, 1fr) 2.2rem;
-  }
-
-  .shot-lightbox__figure figcaption {
-    font-size: var(--text-xs);
-  }
-
-  .shot-lightbox__close,
-  .shot-lightbox__nav {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
-  .phone-shot {
-    max-width: min(100%, 340px);
+  .showcase-mini__track {
+    grid-auto-columns: minmax(78%, 1fr);
   }
 
   .footer-grid {
@@ -232,7 +175,6 @@
 @media print {
   .site-header,
   .cookie-banner,
-  .shot-lightbox,
   .hero-cta,
   .nav-actions,
   .store-row,

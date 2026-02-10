@@ -54,30 +54,53 @@ function initNavSpy() {
   const links = [...document.querySelectorAll(".nav-menu a[href^='#']")];
   if (!links.length) return;
 
-  const map = new Map();
-  links.forEach((link) => {
-    const id = link.getAttribute("href");
-    if (!id || id === "#") return;
-    const section = document.querySelector(id);
-    if (section) map.set(section, link);
-  });
+  const sections = links
+    .map((link) => {
+      const id = link.getAttribute("href");
+      if (!id || id === "#") return null;
+      const section = document.querySelector(id);
+      return section ? { link, section } : null;
+    })
+    .filter(Boolean);
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        links.forEach((link) => link.classList.remove("active"));
-        const targetLink = map.get(entry.target);
-        if (targetLink) targetLink.classList.add("active");
-      });
-    },
-    {
-      threshold: 0.3,
-      rootMargin: "-20% 0px -55% 0px"
+  if (!sections.length) return;
+
+  const getHeaderOffset = () =>
+    (document.querySelector(".site-header")?.offsetHeight || 0) + 24;
+
+  const updateActiveLink = () => {
+    const scrollPosition = window.scrollY + getHeaderOffset();
+    let activeLink = null;
+
+    // Keep nav inactive in the hero area before the first tracked section.
+    if (scrollPosition >= sections[0].section.offsetTop) {
+      for (const item of sections) {
+        if (scrollPosition >= item.section.offsetTop) {
+          activeLink = item.link;
+        } else {
+          break;
+        }
+      }
     }
-  );
 
-  map.forEach((_, section) => observer.observe(section));
+    links.forEach((link) => {
+      link.classList.toggle("active", link === activeLink);
+    });
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateActiveLink();
+      ticking = false;
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", updateActiveLink);
+  updateActiveLink();
 }
 
 function initCookieBanner() {

@@ -1,4 +1,5 @@
 ﻿@media (max-width: 1100px) {
+
   .hero-grid,
   .split-layout {
     grid-template-columns: 1fr;
@@ -115,10 +116,6 @@
     transform: none;
   }
 
-  #pricing .pricing-card > .btn.btn--primary {
-    inline-size: 100% !important;
-  }
-
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -183,6 +180,7 @@
 }
 
 @media print {
+
   .site-header,
   .cookie-banner,
   .hero-cta,

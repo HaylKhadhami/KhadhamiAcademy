@@ -414,22 +414,22 @@
 
 .pricing-card {
   padding: var(--space-8);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-4);
 }
 
-.pricing-card .btn {
-  justify-self: center;
-  width: min(100%, 25rem);
-  min-width: 0;
-  min-height: 3rem;
+.pricing-card ul {
+  flex: 1;
+  /* push button to bottom */
 }
 
-#pricing .pricing-card > .btn.btn--primary {
-  inline-size: 25rem !important;
-  max-inline-size: 100% !important;
-  margin-inline: auto;
+.pricing-card .btn {
+  align-self: stretch;
+  width: 100%;
+  min-height: 3.25rem;
+  margin-top: auto;
+  font-size: var(--text-base);
 }
 
 .pricing-card .price {

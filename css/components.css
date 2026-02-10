@@ -76,14 +76,23 @@
   transition: transform var(--transition-base);
 }
 
-.nav-menu a:hover,
 .nav-menu a.active {
   color: var(--text);
 }
 
-.nav-menu a:hover::after,
 .nav-menu a.active::after {
   transform: scaleX(1);
+}
+
+/* Avoid sticky hover highlight on touch/tap devices. */
+@media (hover: hover) and (pointer: fine) {
+  .nav-menu a:hover {
+    color: var(--text);
+  }
+
+  .nav-menu a:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .nav-actions {

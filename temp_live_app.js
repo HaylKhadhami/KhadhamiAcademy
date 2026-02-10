@@ -1,4 +1,4 @@
-﻿const COOKIE_KEY = "ka-cookie-consent";
+﻿﻿const COOKIE_KEY = "ka-cookie-consent";
 
 function initHeaderState() {
   const header = document.querySelector(".site-header");
@@ -68,40 +68,24 @@ function initNavSpy() {
   const getHeaderOffset = () =>
     (document.querySelector(".site-header")?.offsetHeight || 0) + 24;
 
-  const setActive = (activeLink) => {
+  const updateActiveLink = () => {
+    const scrollPosition = window.scrollY + getHeaderOffset();
+    let activeLink = null;
+
+    // Keep nav inactive in the hero area before the first tracked section.
+    if (scrollPosition >= sections[0].section.offsetTop) {
+      for (const item of sections) {
+        if (scrollPosition >= item.section.offsetTop) {
+          activeLink = item.link;
+        } else {
+          break;
+        }
+      }
+    }
+
     links.forEach((link) => {
       link.classList.toggle("active", link === activeLink);
     });
-  };
-
-  const updateActiveLink = () => {
-    const marker = getHeaderOffset();
-    const firstSectionTop = sections[0].section.getBoundingClientRect().top + window.scrollY;
-
-    // Keep nav inactive in hero area before the first tracked section.
-    if (window.scrollY + marker < firstSectionTop) {
-      setActive(null);
-      return;
-    }
-
-    let activeLink = null;
-
-    for (const item of sections) {
-      const rect = item.section.getBoundingClientRect();
-
-      // Primary match: marker is inside this section.
-      if (rect.top <= marker && rect.bottom > marker) {
-        activeLink = item.link;
-        break;
-      }
-
-      // Fallback: marker passed section top; keep latest passed section active.
-      if (rect.top <= marker) {
-        activeLink = item.link;
-      }
-    }
-
-    setActive(activeLink);
   };
 
   let ticking = false;
@@ -116,16 +100,6 @@ function initNavSpy() {
 
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", updateActiveLink);
-  window.addEventListener("hashchange", updateActiveLink);
-
-  links.forEach((link) => {
-    link.addEventListener("click", () => {
-      // Immediate visual feedback, then correct state after scroll settles.
-      setActive(link);
-      requestAnimationFrame(updateActiveLink);
-    });
-  });
-
   updateActiveLink();
 }
 
@@ -199,3 +173,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initCookieBanner();
   initFooterYear();
 });
+

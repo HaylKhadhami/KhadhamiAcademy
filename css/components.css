@@ -501,7 +501,8 @@
 
 .pricing-card--featured {
   background: linear-gradient(165deg, var(--surface) 0%, var(--surface-2) 100%);
-  border-width: 2px;
+  border-width: 1px;
+  box-shadow: 0 0 0 1px rgba(58, 122, 199, 0.38), var(--shadow-sm);
   transform: translateY(-6px);
 }
 

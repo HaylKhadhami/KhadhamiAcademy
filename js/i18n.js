@@ -23,8 +23,8 @@ const translations = {
     nav_legal: "Legal",
     nav_get_app: "Get the app",
 
-    hero_eyebrow: "Future skills, built with precision",
-    hero_title: "Global-caliber learning for <span class='highlight'>future innovators</span>",
+    hero_eyebrow: "Your child’s future starts with the right skills today.",
+    hero_title: "World-class learning that helps your child become an <span class='highlight'>innovator</span>, not just a user.",
     hero_subtitle: "The best investment is investing in your child’s education. اكاديمية الخضمي teaches programming and AI fundamentals, then builds toward robotics and advanced STEM skills.",
     hero_cta_primary: "Download the app",
     hero_cta_secondary: "For parents",
@@ -315,8 +315,8 @@ const translations = {
     nav_legal: "السياسات",
     nav_get_app: "تحميل التطبيق",
 
-    hero_eyebrow: "مهارات المستقبل، بتصميم هندسي",
-    hero_title: "تجربة تعليم عالمية لصنّاع <span class='highlight'>ابتكار المستقبل</span>",
+    hero_eyebrow: "مستقبل طفلك يبدأ بمهارات صحيحة اليوم.",
+    hero_title: "تعليم عالمي يساعد طفلك ليصبح <span class='highlight'>صانع ابتكار</span>، لا مجرد مستخدم.",
     hero_subtitle: "أفضل الاستثمارات الناجحة هي الاستثمار في تعليم الطفل. اكاديمية الخضمي تبدأ مع الطفل من تعليم أساسيات البرمجة والذكاء الاصطناعي ثم تتدرج إلى الروبوتات ومهارات STEM المتقدمة.",
     hero_cta_primary: "تحميل التطبيق",
     hero_cta_secondary: "للأهل",

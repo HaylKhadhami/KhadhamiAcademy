@@ -115,6 +115,10 @@
     transform: none;
   }
 
+  #pricing .pricing-card > .btn.btn--primary {
+    inline-size: 100% !important;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }

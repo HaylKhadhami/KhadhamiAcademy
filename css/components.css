@@ -426,6 +426,12 @@
   min-height: 3rem;
 }
 
+#pricing .pricing-card > .btn.btn--primary {
+  inline-size: 25rem !important;
+  max-inline-size: 100% !important;
+  margin-inline: auto;
+}
+
 .pricing-card .price {
   color: var(--text);
   font-size: var(--text-2xl);

@@ -312,6 +312,7 @@
   width: 100%;
   aspect-ratio: 9 / 19.5;
   object-fit: cover;
+  object-position: top center;
   border-bottom: 1px solid var(--border);
 }
 

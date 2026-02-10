@@ -424,17 +424,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 0.92em;
-  min-width: 0.92em;
+  width: 1.22em;
+  min-width: 1.22em;
   line-height: 1;
-  margin-inline-end: 0.15rem;
+  margin-inline-end: 0.22rem;
 }
 
 .sar-symbol::before {
   content: "\e900";
   font-family: "SaudiRiyalSymbol", sans-serif;
   font-weight: 700;
-  font-size: 0.95em;
+  font-size: 1.34em;
   color: currentColor;
   line-height: 1;
 }

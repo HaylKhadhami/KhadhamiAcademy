@@ -135,91 +135,145 @@ function initShowcaseMini() {
   if (!shell) return;
 
   const track = shell.querySelector("[data-showcase-track]");
+  const viewport = shell.querySelector("[data-showcase-viewport]");
   const previousButton = shell.querySelector("[data-showcase-prev]");
   const nextButton = shell.querySelector("[data-showcase-next]");
   const autoplayButton = shell.querySelector("[data-showcase-autoplay]");
+  const dotsNode = shell.querySelector("[data-showcase-dots]");
   const slides = track ? [...track.querySelectorAll(".mini-shot")] : [];
-  if (!track || !slides.length) return;
+  if (!track || !viewport || !slides.length) return;
 
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   let currentIndex = 0;
+  let perView = 1;
+  let maxIndex = 0;
+  let slideWidth = 0;
+  let gapWidth = 0;
   let autoplayTimer = null;
 
-  const normalizeIndex = (index) => (index + slides.length) % slides.length;
+  const readGapWidth = () => {
+    const styles = window.getComputedStyle(track);
+    const rawValue = styles.gap || styles.columnGap || "0";
+    const parsed = Number.parseFloat(rawValue);
+    return Number.isFinite(parsed) ? parsed : 0;
+  };
 
-  const scrollToIndex = (index, behavior = "smooth") => {
-    currentIndex = normalizeIndex(index);
-    slides[currentIndex].scrollIntoView({
-      behavior,
-      block: "nearest",
-      inline: "start"
+  const getPerView = () => {
+    const width = viewport.clientWidth;
+    if (width >= 1120) return 3;
+    if (width >= 720) return 2;
+    return 1;
+  };
+
+  const updateDots = () => {
+    if (!dotsNode) return;
+    const steps = maxIndex + 1;
+    if (steps <= 1) {
+      dotsNode.innerHTML = "";
+      return;
+    }
+
+    if (dotsNode.children.length !== steps) {
+      dotsNode.innerHTML = Array.from({ length: steps }, () => '<span class="showcase-mini__dot"></span>').join("");
+    }
+
+    [...dotsNode.children].forEach((dot, index) => {
+      dot.classList.toggle("is-active", index === currentIndex);
     });
   };
 
-  const updateCurrentIndexFromScroll = () => {
-    const trackLeft = track.getBoundingClientRect().left;
-    let bestIndex = currentIndex;
-    let bestDistance = Number.POSITIVE_INFINITY;
-
-    slides.forEach((slide, index) => {
-      const distance = Math.abs(slide.getBoundingClientRect().left - trackLeft);
-      if (distance < bestDistance) {
-        bestDistance = distance;
-        bestIndex = index;
-      }
-    });
-
-    currentIndex = bestIndex;
+  const updateControls = () => {
+    if (previousButton) {
+      previousButton.disabled = currentIndex <= 0;
+      previousButton.setAttribute("aria-disabled", previousButton.disabled ? "true" : "false");
+    }
+    if (nextButton) {
+      nextButton.disabled = currentIndex >= maxIndex;
+      nextButton.setAttribute("aria-disabled", nextButton.disabled ? "true" : "false");
+    }
+    if (autoplayButton && !autoplayTimer) {
+      autoplayButton.disabled = maxIndex <= 0;
+      autoplayButton.setAttribute("aria-disabled", autoplayButton.disabled ? "true" : "false");
+    }
   };
 
-  let scrollTicking = false;
-  track.addEventListener(
-    "scroll",
-    () => {
-      if (scrollTicking) return;
-      scrollTicking = true;
+  const renderTrack = (animate = true) => {
+    const offset = (slideWidth + gapWidth) * currentIndex;
+    if (!animate) {
+      track.style.transitionDuration = "0ms";
+    }
+    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    if (!animate) {
       requestAnimationFrame(() => {
-        updateCurrentIndexFromScroll();
-        scrollTicking = false;
+        track.style.removeProperty("transition-duration");
       });
-    },
-    { passive: true }
-  );
+    }
+    updateDots();
+    updateControls();
+  };
+
+  const goToIndex = (nextIndex, options = {}) => {
+    const { animate = true } = options;
+    const boundedIndex = Math.max(0, Math.min(nextIndex, maxIndex));
+    currentIndex = boundedIndex;
+    renderTrack(animate);
+  };
+
+  const layout = (animate = false) => {
+    gapWidth = readGapWidth();
+    perView = Math.min(getPerView(), slides.length);
+    const usableWidth = Math.max(viewport.clientWidth - gapWidth * (perView - 1), 0);
+    slideWidth = usableWidth / perView;
+    slides.forEach((slide) => {
+      slide.style.flexBasis = `${slideWidth}px`;
+      slide.style.width = `${slideWidth}px`;
+    });
+    maxIndex = Math.max(0, slides.length - perView);
+    if (currentIndex > maxIndex) {
+      currentIndex = maxIndex;
+    }
+    renderTrack(animate);
+  };
 
   const stopAutoplay = () => {
     if (!autoplayTimer) return;
     clearInterval(autoplayTimer);
     autoplayTimer = null;
     if (autoplayButton) {
-      autoplayButton.disabled = false;
+      autoplayButton.disabled = maxIndex <= 0;
       autoplayButton.removeAttribute("aria-busy");
     }
+    updateControls();
   };
 
   const startAutoplay = () => {
-    if (!autoplayButton || autoplayTimer || reducedMotionQuery.matches) return;
+    if (!autoplayButton || autoplayTimer || reducedMotionQuery.matches || maxIndex <= 0) return;
+
+    goToIndex(0, { animate: false });
     autoplayButton.disabled = true;
+    autoplayButton.removeAttribute("aria-disabled");
     autoplayButton.setAttribute("aria-busy", "true");
 
+    const maxSteps = Math.max(1, maxIndex);
     let steps = 0;
-    const maxSteps = Math.max(1, slides.length - 1);
+    const stepInterval = Math.max(1800, Math.round(30000 / maxSteps));
     autoplayTimer = window.setInterval(() => {
       steps += 1;
-      scrollToIndex(currentIndex + 1);
+      goToIndex(currentIndex + 1);
       if (steps >= maxSteps) {
         stopAutoplay();
       }
-    }, 4200);
+    }, stepInterval);
   };
 
   previousButton?.addEventListener("click", () => {
     stopAutoplay();
-    scrollToIndex(currentIndex - 1);
+    goToIndex(currentIndex - 1);
   });
 
   nextButton?.addEventListener("click", () => {
     stopAutoplay();
-    scrollToIndex(currentIndex + 1);
+    goToIndex(currentIndex + 1);
   });
 
   autoplayButton?.addEventListener("click", () => {
@@ -233,12 +287,21 @@ function initShowcaseMini() {
     }
   });
 
-  window.addEventListener("resize", updateCurrentIndexFromScroll);
-  document.addEventListener("ka:language-change", () => {
-    window.setTimeout(updateCurrentIndexFromScroll, 60);
+  let resizeTicking = false;
+  window.addEventListener("resize", () => {
+    if (resizeTicking) return;
+    resizeTicking = true;
+    requestAnimationFrame(() => {
+      layout(false);
+      resizeTicking = false;
+    });
   });
 
-  scrollToIndex(0, "auto");
+  document.addEventListener("ka:language-change", () => {
+    window.setTimeout(() => layout(false), 60);
+  });
+
+  layout(false);
 }
 
 function initCookieBanner() {

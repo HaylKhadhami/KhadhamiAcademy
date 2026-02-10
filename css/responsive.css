@@ -106,8 +106,9 @@
     justify-content: center;
   }
 
-  .showcase-mini__track {
-    grid-auto-columns: minmax(180px, 1fr);
+  .showcase-mini__actions .btn {
+    order: 3;
+    width: min(100%, 18rem);
   }
 
   .pricing-card--featured {
@@ -155,8 +156,13 @@
     grid-template-columns: 1fr;
   }
 
-  .showcase-mini__track {
-    grid-auto-columns: minmax(78%, 1fr);
+  .showcase-mini {
+    padding: var(--space-5);
+  }
+
+  .showcase-mini__viewport::before,
+  .showcase-mini__viewport::after {
+    width: 0.7rem;
   }
 
   .footer-grid {

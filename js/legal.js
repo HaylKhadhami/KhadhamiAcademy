@@ -1,12 +1,42 @@
-﻿function detectLegalLanguage() {
+const LEGAL_LANGUAGE_STORAGE_KEY = "ka-language";
+
+function readStoredLegalLanguage() {
+  try {
+    const language = localStorage.getItem(LEGAL_LANGUAGE_STORAGE_KEY);
+    return language === "ar" || language === "en" ? language : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function persistLegalLanguage(language) {
+  try {
+    localStorage.setItem(LEGAL_LANGUAGE_STORAGE_KEY, language);
+  } catch (error) {
+    // Ignore persistence errors (private mode or storage restrictions).
+  }
+}
+
+function detectLegalLanguage() {
+  const storedLanguage = readStoredLegalLanguage();
+  if (storedLanguage) {
+    return storedLanguage;
+  }
+
   const language = (navigator.language || navigator.userLanguage || "en").toLowerCase();
   return language.startsWith("ar") ? "ar" : "en";
 }
 
 let currentLegalLanguage = detectLegalLanguage();
 
-function setLegalLanguage(language) {
+function setLegalLanguage(language, options = {}) {
+  const { persist = true } = options;
   currentLegalLanguage = language === "ar" ? "ar" : "en";
+
+  if (persist) {
+    persistLegalLanguage(currentLegalLanguage);
+  }
+
   document.documentElement.lang = currentLegalLanguage;
   document.documentElement.dir = currentLegalLanguage === "ar" ? "rtl" : "ltr";
 
@@ -49,7 +79,7 @@ function toggleLegalLanguage() {
 
 function initLegalPage() {
   KATheme.initTheme();
-  setLegalLanguage(detectLegalLanguage());
+  setLegalLanguage(detectLegalLanguage(), { persist: false });
 
   const langToggle = document.getElementById("legal-lang-toggle");
   const themeToggle = document.getElementById("legal-theme-toggle");
@@ -61,7 +91,6 @@ function initLegalPage() {
   if (themeToggle) {
     themeToggle.addEventListener("click", () => KATheme.toggleTheme());
   }
-
 }
 
 document.addEventListener("DOMContentLoaded", initLegalPage);

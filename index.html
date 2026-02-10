@@ -35,15 +35,24 @@
   <script>
     (function () {
       var root = document.documentElement;
+      var storedLang = null;
+      var storedTheme = null;
+      try {
+        storedLang = localStorage.getItem('ka-language');
+        storedTheme = localStorage.getItem('ka-theme');
+      } catch (error) {}
       var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-      var lang = browserLang.startsWith('ar') ? 'ar' : 'en';
-      var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var lang = (storedLang === 'ar' || storedLang === 'en')
+        ? storedLang
+        : (browserLang.startsWith('ar') ? 'ar' : 'en');
+      var systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : systemTheme;
       root.lang = lang;
       root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', theme);
       var metaTheme = document.querySelector('meta[name="theme-color"]');
       if (metaTheme) {
-        metaTheme.content = isDark ? '#080f1f' : '#205090';
+        metaTheme.content = theme === 'dark' ? '#080f1f' : '#205090';
       }
     })();
   </script>
@@ -52,11 +61,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Changa:wght@500;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/variables.css?v=20260210b">
-  <link rel="stylesheet" href="css/base.css?v=20260210b">
-  <link rel="stylesheet" href="css/components.css?v=20260210b">
-  <link rel="stylesheet" href="css/sections.css?v=20260210b">
-  <link rel="stylesheet" href="css/responsive.css?v=20260210b">
+  <link rel="stylesheet" href="css/variables.css?v=20260210c">
+  <link rel="stylesheet" href="css/base.css?v=20260210c">
+  <link rel="stylesheet" href="css/components.css?v=20260210c">
+  <link rel="stylesheet" href="css/sections.css?v=20260210c">
+  <link rel="stylesheet" href="css/responsive.css?v=20260210c">
 </head>
 <body>
   <a class="skip-link" href="#main-content" data-i18n="skip_to_content">Skip to content</a>
@@ -430,7 +439,7 @@
             <li data-i18n="safety_1">Parental consent flows for minors</li>
             <li data-i18n="safety_2">Clear data handling and retention policy</li>
             <li data-i18n="safety_3">Moderated communication surfaces</li>
-            <li data-i18n="safety_4">Account deletion and data removal process</li>
+            <li data-i18n="safety_4">Full account deletion and complete personal data removal from database</li>
           </ul>
         </div>
 
@@ -471,7 +480,8 @@
           <article class="pricing-card pricing-card--featured reveal reveal-delay-2">
             <span class="badge" data-i18n="plan_pro_badge">Most popular</span>
             <h3 data-i18n="plan_pro_title">Pro</h3>
-            <p class="price">$4.99 <span data-i18n="plan_pro_period">per month</span></p>
+            <p class="price"><span data-i18n="plan_pro_price_main">$19.99</span> <span data-i18n="plan_pro_period">per month</span></p>
+            <p class="price-alt" data-i18n-html="plan_pro_price_sar">Approx. <span class="sar-symbol" aria-hidden="true">&#xFDFC;</span> 74.96 SAR</p>
             <ul>
               <li data-i18n="plan_pro_1">Unlimited premium content</li>
               <li data-i18n="plan_pro_2">Full code and AI labs</li>
@@ -550,7 +560,7 @@
           </a>
           <a class="legal-card" href="data-deletion.html">
             <h3 data-i18n="link_data_deletion">Data Deletion</h3>
-            <p data-i18n="legal_card_data_deletion">Account deletion and personal data removal requests.</p>
+            <p data-i18n="legal_card_data_deletion">Full account deletion and complete personal data removal from database.</p>
           </a>
         </div>
       </div>
@@ -637,9 +647,9 @@
     }
   </script>
 
-  <script src="js/i18n.js?v=20260210b"></script>
-  <script src="js/theme.js?v=20260210b"></script>
-  <script src="js/animations.js?v=20260210b"></script>
-  <script src="js/app.js?v=20260210b"></script>
+  <script src="js/i18n.js?v=20260210c"></script>
+  <script src="js/theme.js?v=20260210c"></script>
+  <script src="js/animations.js?v=20260210c"></script>
+  <script src="js/app.js?v=20260210c"></script>
 </body>
 </html>

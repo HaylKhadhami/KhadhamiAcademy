@@ -13,14 +13,23 @@
   <script>
     (function () {
       var root = document.documentElement;
+      var storedLang = null;
+      var storedTheme = null;
+      try {
+        storedLang = localStorage.getItem('ka-language');
+        storedTheme = localStorage.getItem('ka-theme');
+      } catch (error) {}
       var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-      var lang = browserLang.startsWith('ar') ? 'ar' : 'en';
-      var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var lang = (storedLang === 'ar' || storedLang === 'en')
+        ? storedLang
+        : (browserLang.startsWith('ar') ? 'ar' : 'en');
+      var systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : systemTheme;
       root.lang = lang;
       root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', theme);
       var metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.content = isDark ? '#080f1f' : '#205090';
+      if (metaTheme) metaTheme.content = theme === 'dark' ? '#080f1f' : '#205090';
     })();
   </script>
 
@@ -28,11 +37,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Changa:wght@500;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/sections.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/variables.css?v=20260210c">
+  <link rel="stylesheet" href="css/base.css?v=20260210c">
+  <link rel="stylesheet" href="css/components.css?v=20260210c">
+  <link rel="stylesheet" href="css/sections.css?v=20260210c">
+  <link rel="stylesheet" href="css/responsive.css?v=20260210c">
 </head>
 <body>
   <header class="site-header">
@@ -85,13 +94,13 @@
 
           <h2>5. What Is Deleted</h2>
           <ul>
-            <li>Profile data and service-linked account data.</li>
-            <li>Learning records associated with the deleted account.</li>
-            <li>Support data where deletion is legally permissible.</li>
+            <li>All profile, identity, and account metadata for the deleted user.</li>
+            <li>All learning records, submissions, progress history, and uploaded content tied to the account.</li>
+            <li>All support conversations and service records linked to that user account.</li>
           </ul>
 
-          <h2>6. What May Be Retained</h2>
-          <p>Certain records may be retained where required for legal compliance, fraud prevention, accounting obligations, or dispute handling.</p>
+          <h2>6. Database and Backup Cleanup</h2>
+          <p>After full account deletion is confirmed, user personal data is removed from the active production database. Backup and replication copies are purged automatically within up to 30 days.</p>
 
           <h2>7. App Store Subscriptions</h2>
           <p>Deleting account data does not automatically cancel subscriptions. Subscription management and cancellation must be completed in Google Play or Apple App Store account settings.</p>
@@ -123,13 +132,13 @@
 
           <h2>5. ما يتم حذفه</h2>
           <ul>
-            <li>بيانات الملف الشخصي المرتبطة بالحساب.</li>
-            <li>سجلات التعلم الخاصة بالحساب المحذوف.</li>
-            <li>بيانات الدعم عند السماح القانوني بالحذف.</li>
+            <li>جميع بيانات الملف الشخصي والهوية وبيانات الحساب المرتبطة بالمستخدم المحذوف.</li>
+            <li>جميع سجلات التعلم والتقدم والمشاركات والملفات المرتبطة بالحساب.</li>
+            <li>جميع محادثات الدعم والسجلات التشغيلية المرتبطة بنفس الحساب.</li>
           </ul>
 
-          <h2>6. ما قد يتم الاحتفاظ به</h2>
-          <p>قد نحتفظ ببعض السجلات عند الضرورة للامتثال القانوني أو منع الاحتيال أو متطلبات المحاسبة أو إدارة النزاعات.</p>
+          <h2>6. تنظيف قاعدة البيانات والنسخ الاحتياطية</h2>
+          <p>بعد تأكيد الحذف الكامل للحساب، تتم إزالة البيانات الشخصية من قاعدة البيانات التشغيلية، ويتم تنظيف النسخ الاحتياطية والنسخ المتماثلة آلياً خلال مدة تصل إلى 30 يوماً.</p>
 
           <h2>7. اشتراكات المتاجر</h2>
           <p>حذف الحساب لا يلغي الاشتراك تلقائياً. يجب إدارة الاشتراك وإلغاؤه من إعدادات Google Play أو App Store.</p>
@@ -147,8 +156,8 @@
     </div>
   </footer>
 
-  <script src="js/theme.js"></script>
-  <script src="js/legal.js"></script>
+  <script src="js/theme.js?v=20260210c"></script>
+  <script src="js/legal.js?v=20260210c"></script>
 </body>
 </html>
 

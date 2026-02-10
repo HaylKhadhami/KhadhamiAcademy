@@ -12,14 +12,23 @@
   <script>
     (function () {
       var root = document.documentElement;
+      var storedLang = null;
+      var storedTheme = null;
+      try {
+        storedLang = localStorage.getItem('ka-language');
+        storedTheme = localStorage.getItem('ka-theme');
+      } catch (error) {}
       var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-      var lang = browserLang.startsWith('ar') ? 'ar' : 'en';
-      var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var lang = (storedLang === 'ar' || storedLang === 'en')
+        ? storedLang
+        : (browserLang.startsWith('ar') ? 'ar' : 'en');
+      var systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : systemTheme;
       root.lang = lang;
       root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', theme);
       var metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.content = isDark ? '#080f1f' : '#205090';
+      if (metaTheme) metaTheme.content = theme === 'dark' ? '#080f1f' : '#205090';
     })();
   </script>
 
@@ -27,11 +36,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Changa:wght@500;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/sections.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/variables.css?v=20260210c">
+  <link rel="stylesheet" href="css/base.css?v=20260210c">
+  <link rel="stylesheet" href="css/components.css?v=20260210c">
+  <link rel="stylesheet" href="css/sections.css?v=20260210c">
+  <link rel="stylesheet" href="css/responsive.css?v=20260210c">
 </head>
 <body>
   <main class="error-shell">

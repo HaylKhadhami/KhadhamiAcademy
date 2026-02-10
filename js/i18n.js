@@ -1,4 +1,6 @@
-﻿const translations = {
+const LANGUAGE_STORAGE_KEY = "ka-language";
+
+const translations = {
   en: {
     meta_title: "Khadhami Academy | Future-Ready Learning for Kids",
     meta_description: "Khadhami Academy is a modern learning platform for coding, AI, robotics, and STEM. Safe by design, bilingual, and built for real outcomes.",
@@ -153,7 +155,7 @@
     safety_1: "Parental consent flows for minors",
     safety_2: "Clear data handling and retention policy",
     safety_3: "Moderated communication surfaces",
-    safety_4: "Account deletion and data removal process",
+    safety_4: "Full account deletion and complete personal data removal from database",
 
     legal_cta_title: "Publish-ready legal center",
     legal_cta_desc: "Access all policies required for publishing and trust review workflows.",
@@ -165,7 +167,7 @@
 
     pricing_eyebrow: "Simple pricing",
     pricing_title: "Start free, scale when ready",
-    pricing_subtitle: "Pricing is transparent and designed to support steady learning growth.",
+    pricing_subtitle: "Pricing is transparent, with clear monthly cost and SAR equivalent.",
     plan_free_title: "Starter",
     plan_free_period: "forever",
     plan_free_1: "Core lessons access",
@@ -174,7 +176,9 @@
     plan_free_cta: "Start free",
     plan_pro_badge: "Most popular",
     plan_pro_title: "Pro",
+    plan_pro_price_main: "$19.99",
     plan_pro_period: "per month",
+    plan_pro_price_sar: "Approx. <span class='sar-symbol' aria-hidden='true'>&#xFDFC;</span> 74.96 SAR",
     plan_pro_1: "Unlimited premium content",
     plan_pro_2: "Full code and AI labs",
     plan_pro_3: "Offline downloads",
@@ -204,7 +208,7 @@
     legal_card_terms: "Service rules, account obligations, subscriptions, and liability terms.",
     legal_card_cookies: "Cookie categories, preferences, and browser control options.",
     legal_card_child_safety: "Safeguards, moderation model, and parent reporting channels.",
-    legal_card_data_deletion: "Account deletion and personal data removal requests.",
+    legal_card_data_deletion: "Full account deletion and complete personal data removal from database.",
 
     footer_tagline: "Engineering the next generation of innovators.",
     footer_product: "Product",
@@ -373,7 +377,7 @@
     safety_1: "تدفقات موافقة ولي الأمر للقُصّر",
     safety_2: "سياسة واضحة لجمع البيانات وحفظها",
     safety_3: "قنوات تواصل خاضعة للإشراف",
-    safety_4: "آلية حذف الحساب والبيانات الشخصية",
+    safety_4: "حذف كامل للحساب وإزالة جميع البيانات الشخصية من قاعدة البيانات",
 
     legal_cta_title: "مركز سياسات جاهز للنشر",
     legal_cta_desc: "وصول مباشر لكل السياسات المطلوبة للنشر والمراجعات التنظيمية.",
@@ -385,7 +389,7 @@
 
     pricing_eyebrow: "أسعار بسيطة",
     pricing_title: "ابدأ مجاناً ثم طوّر عند الحاجة",
-    pricing_subtitle: "تسعير واضح مصمم لدعم نمو تعليمي مستمر.",
+    pricing_subtitle: "تسعير واضح مع تكلفة شهرية ثابتة وإظهار المقابل بالريال السعودي.",
     plan_free_title: "Starter",
     plan_free_period: "للأبد",
     plan_free_1: "وصول إلى الدروس الأساسية",
@@ -394,7 +398,9 @@
     plan_free_cta: "ابدأ مجاناً",
     plan_pro_badge: "الأكثر اختياراً",
     plan_pro_title: "Pro",
+    plan_pro_price_main: "$19.99",
     plan_pro_period: "شهرياً",
+    plan_pro_price_sar: "ما يعادل تقريباً <span class='sar-symbol' aria-hidden='true'>&#xFDFC;</span> 74.96 SAR",
     plan_pro_1: "وصول غير محدود للمحتوى المتميز",
     plan_pro_2: "مختبرات البرمجة والذكاء كاملة",
     plan_pro_3: "تحميل الدروس دون إنترنت",
@@ -424,7 +430,7 @@
     legal_card_terms: "قواعد الخدمة والتزامات الحساب والاشتراكات وحدود المسؤولية.",
     legal_card_cookies: "أنواع الكوكيز وتفضيلات الاستخدام وخيارات التحكم.",
     legal_card_child_safety: "ضوابط السلامة ونموذج الإشراف وقنوات الإبلاغ.",
-    legal_card_data_deletion: "طلبات حذف الحساب وإزالة البيانات الشخصية.",
+    legal_card_data_deletion: "حذف كامل للحساب وإزالة جميع البيانات الشخصية من قاعدة البيانات.",
 
     footer_tagline: "نبني جيلاً جديداً من المبتكرين.",
     footer_product: "المنتج",
@@ -445,7 +451,24 @@ function detectBrowserLanguage() {
   return language.startsWith("ar") ? "ar" : "en";
 }
 
-let currentLanguage = detectBrowserLanguage();
+function readStoredLanguage() {
+  try {
+    const language = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return language === "ar" || language === "en" ? language : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function persistLanguage(language) {
+  try {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  } catch (error) {
+    // Ignore persistence errors (private mode or storage restrictions).
+  }
+}
+
+let currentLanguage = readStoredLanguage() || detectBrowserLanguage();
 
 function updateMeta(language) {
   const content = translations[language];
@@ -469,10 +492,15 @@ function updateMeta(language) {
   if (twitterDescription) twitterDescription.setAttribute("content", content.meta_description);
 }
 
-function setLanguage(language) {
+function setLanguage(language, options = {}) {
+  const { persist = true } = options;
   currentLanguage = translations[language] ? language : detectBrowserLanguage();
   const content = translations[currentLanguage];
   if (!content) return;
+
+  if (persist) {
+    persistLanguage(currentLanguage);
+  }
 
   document.documentElement.lang = currentLanguage;
   document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
@@ -523,7 +551,7 @@ function getCurrentLanguage() {
 }
 
 function initI18n() {
-  setLanguage(detectBrowserLanguage());
+  setLanguage(readStoredLanguage() || detectBrowserLanguage(), { persist: false });
 }
 
 window.KAi18n = {

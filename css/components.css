@@ -359,6 +359,19 @@
   font-family: var(--font-body);
 }
 
+.pricing-card .price-alt {
+  margin-top: -0.4rem;
+  color: var(--text-subtle);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.sar-symbol {
+  display: inline-block;
+  font-weight: 800;
+  margin-inline-end: 0.15rem;
+}
+
 .pricing-card ul {
   display: grid;
   gap: 0.45rem;

@@ -1,4 +1,6 @@
-﻿function initScrollReveal() {
+﻿/* ── Scroll reveal ── */
+
+function initScrollReveal() {
   const elements = document.querySelectorAll(".reveal");
   if (!elements.length) return;
 
@@ -16,6 +18,8 @@
 
   elements.forEach((element) => observer.observe(element));
 }
+
+/* ── Animated counters ── */
 
 function animateCounters() {
   const counters = document.querySelectorAll("[data-count]");
@@ -54,6 +58,8 @@ function animateCounters() {
   counters.forEach((counter) => observer.observe(counter));
 }
 
+/* ── Smooth scroll for anchor links ── */
+
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", (event) => {
@@ -69,6 +75,8 @@ function initSmoothScroll() {
     });
   });
 }
+
+/* ── Hero parallax with floating glows ── */
 
 function initHeroParallax() {
   const glowOne = document.querySelector(".hero-glow--one");
@@ -94,9 +102,83 @@ function initHeroParallax() {
   );
 }
 
+/* ── Scroll progress indicator ── */
+
+function initScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+
+  let ticking = false;
+  const update = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = `${Math.min(progress, 100)}%`;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  update();
+}
+
+/* ── 3D tilt effect on hero preview card ── */
+
+function initHeroTilt() {
+  const card = document.querySelector(".preview-card");
+  if (!card) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  const parent = card.parentElement;
+
+  parent.addEventListener("mousemove", (e) => {
+    const rect = parent.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg) scale3d(1.02, 1.02, 1)`;
+  });
+
+  parent.addEventListener("mouseleave", () => {
+    card.style.transform = "perspective(800px) rotateY(0) rotateX(0) scale3d(1, 1, 1)";
+  });
+
+  card.style.transition = "transform 200ms ease";
+}
+
+/* ── Magnetic hover on CTA buttons ── */
+
+function initMagneticButtons() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  const buttons = document.querySelectorAll(".hero-cta .btn");
+  buttons.forEach((btn) => {
+    btn.addEventListener("mousemove", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translateY(-2px) translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = "";
+    });
+  });
+}
+
 window.KAAnimations = {
   initScrollReveal,
   animateCounters,
   initSmoothScroll,
-  initHeroParallax
+  initHeroParallax,
+  initScrollProgress,
+  initHeroTilt,
+  initMagneticButtons
 };

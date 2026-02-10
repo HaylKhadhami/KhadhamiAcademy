@@ -1,5 +1,7 @@
 const COOKIE_KEY = "ka-cookie-consent";
 
+/* ── Header scroll state ── */
+
 function initHeaderState() {
   const header = document.querySelector(".site-header");
   if (!header) return;
@@ -16,6 +18,8 @@ function initHeaderState() {
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
+/* ── Mobile navigation with focus trap + escape key ── */
+
 function initMobileNav() {
   const toggle = document.getElementById("nav-toggle");
   const menu = document.getElementById("nav-menu");
@@ -31,16 +35,50 @@ function initMobileNav() {
     const isOpen = menu.classList.toggle("open");
     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     document.body.style.overflow = isOpen ? "hidden" : "";
+
+    // Focus first link when opening
+    if (isOpen) {
+      const firstLink = menu.querySelector("a");
+      if (firstLink) firstLink.focus();
+    }
   });
 
   menu.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMenu);
   });
 
+  // Close on outside click
   document.addEventListener("click", (event) => {
     if (!menu.classList.contains("open")) return;
     if (menu.contains(event.target) || toggle.contains(event.target)) return;
     closeMenu();
+  });
+
+  // Escape key to close
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu.classList.contains("open")) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  // Focus trap within mobile nav
+  menu.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab" || !menu.classList.contains("open")) return;
+
+    const focusable = [...menu.querySelectorAll("a, button")];
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   window.addEventListener("resize", () => {
@@ -49,6 +87,8 @@ function initMobileNav() {
     }
   });
 }
+
+/* ── Nav spy with aria-current ── */
 
 function initNavSpy() {
   const links = [...document.querySelectorAll(".nav-menu a[href^='#']")];
@@ -72,7 +112,14 @@ function initNavSpy() {
 
   const setActive = (activeLink) => {
     links.forEach((link) => {
-      link.classList.toggle("active", link === activeLink);
+      const isActive = link === activeLink;
+      link.classList.toggle("active", isActive);
+      // Accessibility: set aria-current on active nav item
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
   };
 
@@ -129,6 +176,8 @@ function initNavSpy() {
 
   updateActive();
 }
+
+/* ── Showcase carousel with touch/swipe + keyboard ── */
 
 function initShowcaseMini() {
   const shell = document.querySelector("[data-showcase-mini]");
@@ -287,6 +336,59 @@ function initShowcaseMini() {
     }
   });
 
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchDeltaX = 0;
+  let isSwiping = false;
+
+  viewport.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchDeltaX = 0;
+    isSwiping = true;
+  }, { passive: true });
+
+  viewport.addEventListener("touchmove", (e) => {
+    if (!isSwiping) return;
+    touchDeltaX = e.touches[0].clientX - touchStartX;
+  }, { passive: true });
+
+  viewport.addEventListener("touchend", () => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    const threshold = slideWidth * 0.2;
+    if (Math.abs(touchDeltaX) > threshold) {
+      // In LTR, swipe left = next, swipe right = prev
+      // In RTL, swipe directions are reversed
+      const isRTL = document.documentElement.dir === "rtl";
+      if (touchDeltaX < 0) {
+        goToIndex(isRTL ? currentIndex - 1 : currentIndex + 1);
+      } else {
+        goToIndex(isRTL ? currentIndex + 1 : currentIndex - 1);
+      }
+      stopAutoplay();
+    }
+  }, { passive: true });
+
+  // Keyboard navigation
+  shell.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault();
+      stopAutoplay();
+      const isRTL = document.documentElement.dir === "rtl";
+      if (e.key === "ArrowRight") {
+        goToIndex(isRTL ? currentIndex - 1 : currentIndex + 1);
+      } else {
+        goToIndex(isRTL ? currentIndex + 1 : currentIndex - 1);
+      }
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      goToIndex(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      goToIndex(maxIndex);
+    }
+  });
+
   let resizeTicking = false;
   window.addEventListener("resize", () => {
     if (resizeTicking) return;
@@ -303,6 +405,8 @@ function initShowcaseMini() {
 
   layout(false);
 }
+
+/* ── Cookie banner ── */
 
 function initCookieBanner() {
   const banner = document.getElementById("cookie-banner");
@@ -324,6 +428,8 @@ function initCookieBanner() {
   decline.addEventListener("click", () => close("declined"));
 }
 
+/* ── Controls (language & theme toggles) ── */
+
 function initControls() {
   const langButton = document.getElementById("lang-toggle");
   const themeButton = document.getElementById("theme-toggle");
@@ -331,6 +437,13 @@ function initControls() {
   if (langButton) {
     langButton.addEventListener("click", () => {
       KAi18n.toggleLanguage();
+      // Announce language change via ARIA live region
+      const liveRegion = document.getElementById("sr-live");
+      if (liveRegion) {
+        const lang = document.documentElement.lang;
+        liveRegion.textContent = lang === "ar" ? "تم التبديل إلى العربية" : "Switched to English";
+        setTimeout(() => { liveRegion.textContent = ""; }, 2000);
+      }
     });
   }
 
@@ -351,12 +464,44 @@ function initControls() {
   });
 }
 
+/* ── Scroll-to-top button ── */
+
+function initScrollTop() {
+  const btn = document.getElementById("scroll-top");
+  if (!btn) return;
+
+  let ticking = false;
+  const update = () => {
+    const show = window.scrollY > 500;
+    btn.classList.toggle("visible", show);
+  };
+
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  update();
+}
+
+/* ── Footer year ── */
+
 function initFooterYear() {
   const yearNode = document.getElementById("year");
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());
   }
 }
+
+/* ── Init all ── */
 
 document.addEventListener("DOMContentLoaded", () => {
   KATheme.initTheme();
@@ -366,6 +511,9 @@ document.addEventListener("DOMContentLoaded", () => {
   KAAnimations.animateCounters();
   KAAnimations.initSmoothScroll();
   KAAnimations.initHeroParallax();
+  KAAnimations.initScrollProgress();
+  KAAnimations.initHeroTilt();
+  KAAnimations.initMagneticButtons();
 
   initHeaderState();
   initMobileNav();
@@ -373,5 +521,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initShowcaseMini();
   initControls();
   initCookieBanner();
+  initScrollTop();
   initFooterYear();
 });

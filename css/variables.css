@@ -36,12 +36,24 @@
   --shadow-sm: 0 8px 22px rgba(10, 22, 45, 0.07);
   --shadow-md: 0 18px 42px rgba(10, 22, 45, 0.11);
   --shadow-lg: 0 32px 78px rgba(10, 22, 45, 0.15);
+  --shadow-glow: 0 0 40px rgba(32, 80, 144, 0.25);
 
   --max-width: 1200px;
   --nav-height: 5rem;
   --transition-fast: 170ms ease;
   --transition-base: 280ms ease;
   --transition-slow: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Animation tokens */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-reveal: 780ms var(--ease-out-expo);
+  --animate-stagger: 80ms;
+
+  /* Glow colors */
+  --glow-primary: rgba(32, 80, 144, 0.35);
+  --glow-accent: rgba(192, 112, 64, 0.3);
 }
 
 [data-theme="light"] {

@@ -71,23 +71,54 @@
     })();
   </script>
 
+  <!-- Resource hints -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://play.google.com">
+  <link rel="dns-prefetch" href="https://apps.apple.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Changa:wght@500;700;800&family=Sora:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Changa:wght@700;800&family=Sora:wght@400;600;700;800&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="css/variables.css?v=20260210c">
-  <link rel="stylesheet" href="css/base.css?v=20260210c">
-  <link rel="stylesheet" href="css/components.css?v=20260210s">
-  <link rel="stylesheet" href="css/sections.css?v=20260210l">
-  <link rel="stylesheet" href="css/responsive.css?v=20260210i">
+  <!-- Preload hero LCP image -->
+  <link rel="preload" as="image" href="assets/images/app-icon-round.webp" type="image/webp">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css?v=20260211b">
+  <link rel="stylesheet" href="css/base.css?v=20260211b">
+  <link rel="stylesheet" href="css/components.css?v=20260211b">
+  <link rel="stylesheet" href="css/sections.css?v=20260211b">
+  <link rel="stylesheet" href="css/responsive.css?v=20260211b">
+
+  <!-- Inline critical CSS for above-fold FOUC prevention -->
+  <style>
+    .hero {
+      min-height: calc(100vh - 5rem)
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px)
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px) scale(.98)
+    }
+  </style>
 
 
 </head>
 
 <body>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content" data-i18n="skip_to_content">Skip to content</a>
+  <div class="sr-live" id="sr-live" aria-live="polite" aria-atomic="true"></div>
 
   <header class="site-header" id="top">
     <nav class="nav container" aria-label="Primary" id="site-nav">
@@ -139,7 +170,7 @@
   </header>
 
   <main id="main-content">
-    <section class="hero section">
+    <section class="hero section section--wave">
       <div class="hero-glow hero-glow--one" aria-hidden="true"></div>
       <div class="hero-glow hero-glow--two" aria-hidden="true"></div>
 
@@ -167,7 +198,7 @@
         <div class="hero-preview reveal reveal-delay-1">
           <div class="preview-card">
             <div class="preview-card__head">
-              <img src="assets/images/app-icon-round.webp" alt="App icon" width="48" height="48">
+              <img src="assets/images/app-icon-round.webp" alt="App icon" width="48" height="48" fetchpriority="high">
               <div>
                 <strong>اكاديمية الخضمي</strong>
                 <p data-i18n="preview_tagline">Performance-driven learning platform</p>
@@ -220,11 +251,11 @@
       </div>
     </section>
 
-    <section class="section section--alt" id="parents">
+    <section class="section section--alt section--wave" id="parents" role="region" aria-labelledby="parents-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="parents_eyebrow">For parents</p>
-          <h2 data-i18n="parents_title">Built for children and trusted by parents</h2>
+          <h2 id="parents-heading" data-i18n="parents_title">Built for children and trusted by parents</h2>
           <p data-i18n="parents_subtitle">Safety, oversight, and measurable learning routines are built into every
             journey.</p>
         </div>
@@ -263,13 +294,14 @@
       </div>
     </section>
 
-    <section class="section" id="features">
+    <section class="section section--wave-alt" id="features" role="region" aria-labelledby="features-heading">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow" data-i18n="features_eyebrow">Platform capabilities</p>
-          <h2 data-i18n="features_title">Everything needed for elite digital learning</h2>
-          <p data-i18n="features_subtitle">From live classes to structured mastery analytics, every part of the
-            experience is built for outcomes.</p>
+          <p class="eyebrow" data-i18n="features_eyebrow">What your child gets</p>
+          <h2 id="features-heading" data-i18n="features_title">Everything your child needs to learn coding and AI with
+            confidence</h2>
+          <p data-i18n="features_subtitle">Every part of the platform is designed to turn fundamentals in programming
+            and AI into measurable long-term value for your child.</p>
         </div>
 
         <div class="feature-grid">
@@ -307,10 +339,10 @@
     <section class="section section--alt" id="pathways">
       <div class="container split-layout">
         <div class="reveal">
-          <p class="eyebrow" data-i18n="pathways_eyebrow">Learning architecture</p>
-          <h2 data-i18n="pathways_title">Engineered with globally trusted methods</h2>
-          <p data-i18n="pathways_subtitle">Our curriculum is intentionally built around execution frameworks used by
-            top-performing organizations.</p>
+          <p class="eyebrow" data-i18n="pathways_eyebrow">How we teach</p>
+          <h2 data-i18n="pathways_title">A proven path to real coding and AI skills</h2>
+          <p data-i18n="pathways_subtitle">Our curriculum starts from clear fundamentals and uses proven teaching
+            methods to deliver consistent, measurable progress.</p>
 
           <div class="method-grid">
             <article class="method-card">
@@ -352,13 +384,14 @@
       </div>
     </section>
 
-    <section class="section" id="standards">
+    <section class="section" id="standards" role="region" aria-labelledby="standards-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="standards_eyebrow">Leadership and standards</p>
-          <h2 data-i18n="standards_title">Built with accountable leadership and clear educational standards</h2>
-          <p data-i18n="standards_subtitle">We prioritize transparent product decisions, curriculum discipline, and
-            measurable learner progression.</p>
+          <h2 id="standards-heading" data-i18n="standards_title">Built with accountable leadership and clear educational
+            standards</h2>
+          <p data-i18n="standards_subtitle">Parents trust us because our decisions, curriculum quality, and safety
+            practices are transparent and accountable.</p>
         </div>
 
         <div class="standards-grid">
@@ -374,32 +407,33 @@
           </article>
           <article class="standards-card reveal reveal-delay-3">
             <h3 data-i18n="standards_card_3_title">Transparent operations</h3>
-            <p data-i18n="standards_card_3_desc">Safety policy, privacy controls, and account data deletion workflows
+            <p data-i18n="standards_card_3_desc">Safety policy, privacy controls, and data deletion options
               are publicly accessible and clearly documented.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="safety">
+    <section class="section" id="safety" role="region" aria-labelledby="safety-heading">
       <div class="container split-layout">
         <div class="reveal">
           <p class="eyebrow" data-i18n="safety_eyebrow">Trust and compliance</p>
-          <h2 data-i18n="safety_title">Safety, privacy, and child protection by default</h2>
-          <p data-i18n="safety_subtitle">We design every workflow around child protection principles, transparent
-            policies, and accountable operations.</p>
+          <h2 id="safety-heading" data-i18n="safety_title">Safety, privacy, and child protection by default</h2>
+          <p data-i18n="safety_subtitle">We protect your investment in your child through clear protection standards,
+            transparent policies, and responsible practices.</p>
 
           <ul class="check-list">
-            <li data-i18n="safety_1">Parental consent flows for minors</li>
+            <li data-i18n="safety_1">Parental consent required for minors</li>
             <li data-i18n="safety_2">Clear data handling and retention policy</li>
-            <li data-i18n="safety_3">Moderated communication surfaces</li>
-            <li data-i18n="safety_4">Full account deletion and complete personal data removal from database</li>
+            <li data-i18n="safety_3">All communication channels are moderated</li>
+            <li data-i18n="safety_4">Full account deletion and complete removal of personal data</li>
           </ul>
         </div>
 
         <aside class="legal-cta reveal reveal-delay-1">
-          <h3 data-i18n="legal_cta_title">Publish-ready legal center</h3>
-          <p data-i18n="legal_cta_desc">Access all policies required for publishing and trust review workflows.</p>
+          <h3 data-i18n="legal_cta_title">Your trust center</h3>
+          <p data-i18n="legal_cta_desc">Full transparency. Every policy, every commitment — clearly documented and
+            always accessible.</p>
           <div class="legal-link-list">
             <a href="privacy-policy.html" data-i18n="link_privacy">Privacy Policy</a>
             <a href="terms-of-service.html" data-i18n="link_terms">Terms of Service</a>
@@ -411,11 +445,11 @@
       </div>
     </section>
 
-    <section class="section section--alt" id="pricing">
+    <section class="section section--alt" id="pricing" role="region" aria-labelledby="pricing-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="pricing_eyebrow">Simple pricing</p>
-          <h2 data-i18n="pricing_title">Start free, then scale with confidence</h2>
+          <h2 id="pricing-heading" data-i18n="pricing_title">Start free, then scale with confidence</h2>
           <p data-i18n="pricing_subtitle">Clear plan fit, transparent billing, and practical value for families.</p>
         </div>
 
@@ -461,11 +495,11 @@
       </div>
     </section>
 
-    <section class="section section--alt" id="showcase">
+    <section class="section section--alt" id="showcase" role="region" aria-labelledby="showcase-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="showcase_eyebrow">Real app experience</p>
-          <h2 data-i18n="showcase_title">Product preview without overload</h2>
+          <h2 id="showcase-heading" data-i18n="showcase_title">See the real app in action</h2>
           <p data-i18n="showcase_subtitle">A lightweight visual tour of the live app. Use the quick controls or run the
             30-second guided preview.</p>
         </div>
@@ -578,11 +612,11 @@
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="section" id="faq" role="region" aria-labelledby="faq-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="faq_eyebrow">Questions</p>
-          <h2 data-i18n="faq_title">Frequently asked questions</h2>
+          <h2 id="faq-heading" data-i18n="faq_title">Frequently asked questions</h2>
         </div>
 
         <div class="faq-list reveal reveal-delay-1">
@@ -627,11 +661,11 @@
       </div>
     </section>
 
-    <section class="section" id="voices">
+    <section class="section" id="voices" role="region" aria-labelledby="voices-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow" data-i18n="voices_eyebrow">Voices and experiences</p>
-          <h2 data-i18n="voices_title">Trusted by families across the region</h2>
+          <h2 id="voices-heading" data-i18n="voices_title">Trusted by families across the region</h2>
           <p data-i18n="voices_subtitle">Parents and educators share their experience with Khadhami Academy.</p>
         </div>
 
@@ -722,11 +756,12 @@
       </div>
     </section>
 
-    <section class="section" id="legal">
+    <section class="section" id="legal" role="region" aria-labelledby="legal-heading">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow" data-i18n="legal_eyebrow">Legal and publishing</p>
-          <h2 data-i18n="legal_title">Everything required for public release</h2>
+          <p class="eyebrow" data-i18n="legal_eyebrow">Policies and trust</p>
+          <h2 id="legal-heading" data-i18n="legal_title">Our commitment to transparency and your family's protection
+          </h2>
         </div>
 
         <div class="legal-grid reveal reveal-delay-1">
@@ -811,6 +846,13 @@
       interactions.</div>
   </noscript>
 
+  <!-- Scroll to top button -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -853,6 +895,12 @@
         "https://play.google.com/store/apps/details?id=com.khadhami.academy",
         "https://apps.apple.com/app/khadhami-academy/id6740044498"
       ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "86",
+        "bestRating": "5"
+      },
       "offers": [
         {
           "@type": "Offer",
@@ -877,10 +925,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Which devices are supported?",
+          "name": "Is the platform suitable for beginners?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Khadhami Academy is available on Android and iOS."
+            "text": "Yes. Learning pathways start from fundamentals and adapt to student pace."
           }
         },
         {
@@ -888,25 +936,85 @@
           "name": "How is child safety handled?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The platform uses moderated interactions, guardian-aware controls, and clear reporting channels."
+            "text": "The platform uses moderated interactions, parental controls, and policy-based protections for minors."
           }
         },
         {
           "@type": "Question",
-          "name": "How do billing and cancellation work?",
+          "name": "Which ages does the app support?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Pro is billed monthly. Families can cancel before renewal to avoid the next charge."
+            "text": "Learning pathways are organized by level so beginners and progressing learners can both follow a suitable track."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which devices are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Khadhami Academy is available on Android and iOS using the official store links."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much weekly time is recommended?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Families can start with short regular sessions and scale gradually based on learner pace and goals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can learners study offline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Selected lessons can be downloaded for offline access in supported plans."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do billing, renewal, and cancellation work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pro is billed monthly. Cancellation should be completed before renewal. Full terms are available in the Terms of Service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where can parents review privacy and child safety policies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Privacy, Child Safety, Cookie Policy, Terms of Service, and Data Deletion pages are available in the legal center."
           }
         }
       ]
     }
   </script>
 
-  <script src="js/i18n.js?v=20260210m"></script>
-  <script src="js/theme.js?v=20260210c"></script>
-  <script src="js/animations.js?v=20260210c"></script>
-  <script src="js/app.js?v=20260210i"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Khadhami Academy",
+      "alternateName": "اكاديمية الخضمي",
+      "url": "https://khadhami.com",
+      "inLanguage": ["en", "ar"]
+    }
+  </script>
+
+  <script src="js/i18n.js?v=20260211b" defer></script>
+  <script src="js/theme.js?v=20260211b" defer></script>
+  <script src="js/animations.js?v=20260211b" defer></script>
+  <script src="js/app.js?v=20260211b" defer></script>
+
+  <!-- Service Worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () { });
+      });
+    }
+  </script>
 
 </body>
 

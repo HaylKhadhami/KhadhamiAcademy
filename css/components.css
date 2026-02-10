@@ -340,6 +340,12 @@
 .feature-card {
   position: relative;
   overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .feature-card::before {
@@ -510,9 +516,11 @@
 
 .pricing-card--featured {
   background: linear-gradient(165deg, var(--surface) 0%, var(--surface-2) 100%);
-  border-width: 1px;
-  box-shadow: 0 0 0 1px rgba(58, 122, 199, 0.38), var(--shadow-sm);
+  border-width: 2px;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(58, 122, 199, 0.38), var(--shadow-md), 0 0 30px var(--glow-primary);
   transform: translateY(-6px);
+  animation: border-glow 4s ease-in-out infinite;
 }
 
 .badge {
@@ -548,6 +556,26 @@
 
 .faq-list p {
   margin-top: var(--space-3);
+}
+
+.faq-list details[open] summary {
+  color: var(--primary-strong);
+}
+
+.faq-list details[open] p {
+  animation: fade-in 300ms var(--ease-out-expo);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .legal-card {

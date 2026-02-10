@@ -8,8 +8,22 @@
   "orientation": "portrait-primary",
   "lang": "ar",
   "dir": "rtl",
+  "id": "/",
+  "categories": ["education", "kids"],
   "background_color": "#f4f7fc",
   "theme_color": "#205090",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.khadhami.academy",
+      "id": "com.khadhami.academy"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/khadhami-academy/id6740044498"
+    }
+  ],
   "icons": [
     {
       "src": "/assets/images/app-icon.png",

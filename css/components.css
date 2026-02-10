@@ -237,6 +237,12 @@
   box-shadow: var(--shadow-sm);
 }
 
+.store-pill__meta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+
 .store-pill__meta {
   color: var(--text-subtle);
   font-size: var(--text-xs);
@@ -246,6 +252,37 @@
 .store-pill__name {
   color: var(--text);
   font-weight: 800;
+}
+
+.store-icon {
+  width: 1.06rem;
+  height: 1.06rem;
+  flex-shrink: 0;
+  display: inline-block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.store-pill .store-icon {
+  color: var(--primary-strong);
+}
+
+.store-btn {
+  gap: 0.48rem;
+}
+
+.store-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+}
+
+.store-pair .store-icon {
+  width: 0.88rem;
+  height: 0.88rem;
 }
 
 .feature-card,

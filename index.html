@@ -63,7 +63,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260210c">
   <link rel="stylesheet" href="css/base.css?v=20260210c">
-  <link rel="stylesheet" href="css/components.css?v=20260210c">
+  <link rel="stylesheet" href="css/components.css?v=20260210d">
   <link rel="stylesheet" href="css/sections.css?v=20260210c">
   <link rel="stylesheet" href="css/responsive.css?v=20260210c">
 </head>
@@ -103,7 +103,20 @@
         <button class="icon-btn" id="theme-toggle" data-i18n-aria="toggle_theme" aria-label="Toggle theme">
           <span class="theme-icon" aria-hidden="true"></span>
         </button>
-        <a class="btn btn--primary btn--sm nav-download" href="#download" data-i18n="nav_get_app">Get the app</a>
+        <a class="btn btn--primary btn--sm nav-download store-btn" href="#download">
+          <span class="store-pair" aria-hidden="true">
+            <svg class="store-icon" viewBox="0 0 24 24" focusable="false">
+              <path d="M4.25 3.75 18.5 12 4.25 20.25z"></path>
+              <path d="M18.5 12h2.75"></path>
+            </svg>
+            <svg class="store-icon" viewBox="0 0 24 24" focusable="false">
+              <path d="m8 4 8 14"></path>
+              <path d="m16 4-8 14"></path>
+              <path d="M6.5 15.5h11"></path>
+            </svg>
+          </span>
+          <span data-i18n="nav_get_app">Get the app</span>
+        </a>
       </div>
     </nav>
   </header>
@@ -120,17 +133,43 @@
           <p class="hero-subtitle" data-i18n="hero_subtitle">اكاديمية الخضمي gives families a safe and premium platform for coding, AI, robotics, and STEM mastery.</p>
 
           <div class="hero-cta">
-            <a href="#download" class="btn btn--primary" data-i18n="hero_cta_primary">Download the app</a>
+            <a href="#download" class="btn btn--primary store-btn">
+              <span class="store-pair" aria-hidden="true">
+                <svg class="store-icon" viewBox="0 0 24 24" focusable="false">
+                  <path d="M4.25 3.75 18.5 12 4.25 20.25z"></path>
+                  <path d="M18.5 12h2.75"></path>
+                </svg>
+                <svg class="store-icon" viewBox="0 0 24 24" focusable="false">
+                  <path d="m8 4 8 14"></path>
+                  <path d="m16 4-8 14"></path>
+                  <path d="M6.5 15.5h11"></path>
+                </svg>
+              </span>
+              <span data-i18n="hero_cta_primary">Download the app</span>
+            </a>
             <a href="#showcase" class="btn btn--ghost" data-i18n="hero_cta_secondary">Explore platform</a>
           </div>
 
           <div class="store-row">
             <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" target="_blank" rel="noopener noreferrer" class="store-pill" aria-label="Google Play">
-              <span class="store-pill__meta" data-i18n="store_google_meta">GET IT ON</span>
+              <span class="store-pill__meta-row">
+                <svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4.25 3.75 18.5 12 4.25 20.25z"></path>
+                  <path d="M18.5 12h2.75"></path>
+                </svg>
+                <span class="store-pill__meta" data-i18n="store_google_meta">GET IT ON</span>
+              </span>
               <span class="store-pill__name">Google Play</span>
             </a>
             <a href="https://apps.apple.com/app/khadhami-academy/id6740044498" target="_blank" rel="noopener noreferrer" class="store-pill" aria-label="App Store">
-              <span class="store-pill__meta" data-i18n="store_apple_meta">Download on the</span>
+              <span class="store-pill__meta-row">
+                <svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="m8 4 8 14"></path>
+                  <path d="m16 4-8 14"></path>
+                  <path d="M6.5 15.5h11"></path>
+                </svg>
+                <span class="store-pill__meta" data-i18n="store_apple_meta">Download on the</span>
+              </span>
               <span class="store-pill__name">App Store</span>
             </a>
           </div>
@@ -528,8 +567,21 @@
         <h2 data-i18n="download_title">Ready to build your child’s future advantage?</h2>
         <p data-i18n="download_subtitle">Download اكاديمية الخضمي and start a world-class learning journey today.</p>
         <div class="hero-cta">
-          <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" target="_blank" rel="noopener noreferrer" class="btn btn--primary" data-i18n="download_google">Get it on Google Play</a>
-          <a href="https://apps.apple.com/app/khadhami-academy/id6740044498" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" data-i18n="download_apple">Download on App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=com.khadhami.academy" target="_blank" rel="noopener noreferrer" class="btn btn--primary store-btn">
+            <svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4.25 3.75 18.5 12 4.25 20.25z"></path>
+              <path d="M18.5 12h2.75"></path>
+            </svg>
+            <span data-i18n="download_google">Get it on Google Play</span>
+          </a>
+          <a href="https://apps.apple.com/app/khadhami-academy/id6740044498" target="_blank" rel="noopener noreferrer" class="btn btn--ghost store-btn">
+            <svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m8 4 8 14"></path>
+              <path d="m16 4-8 14"></path>
+              <path d="M6.5 15.5h11"></path>
+            </svg>
+            <span data-i18n="download_apple">Download on App Store</span>
+          </a>
         </div>
       </div>
     </section>

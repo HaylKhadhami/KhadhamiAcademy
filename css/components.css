@@ -262,18 +262,13 @@
   object-fit: contain;
 }
 
-.store-icon--btn {
-  filter: brightness(0) invert(1);
-  opacity: 0.96;
-}
-
-.store-icon--pill {
-  opacity: 0.9;
-}
-
-[data-theme="dark"] .store-icon--pill {
-  filter: brightness(0) invert(0.92);
-  opacity: 0.95;
+.store-icon--brand {
+  filter: none !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  mix-blend-mode: normal !important;
 }
 
 .store-btn {

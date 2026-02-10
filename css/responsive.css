@@ -28,8 +28,8 @@
     grid-column: span 2;
   }
 
-  .legal-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .legal-grid>* {
+    flex: 0 1 calc((100% - var(--space-4)) / 2);
   }
 
   .footer-grid {
@@ -94,8 +94,8 @@
   .standards-grid,
   .voices-grid,
   .pricing-grid,
-  .legal-grid {
-    grid-template-columns: 1fr;
+  .legal-grid>* {
+    flex: 1 1 100%;
   }
 
   .parents-panel {

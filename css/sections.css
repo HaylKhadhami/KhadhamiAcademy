@@ -418,8 +418,8 @@
 
 .split-layout {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   gap: var(--space-8);
 }
 
@@ -501,9 +501,15 @@
 }
 
 .legal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-4);
+}
+
+.legal-grid>* {
+  flex: 0 1 calc((100% - var(--space-4) * 2) / 3);
+  min-width: 240px;
 }
 
 .policy-shell {

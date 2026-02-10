@@ -198,6 +198,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
+  line-height: 1.15;
   border-radius: 0.95rem;
   border: 1px solid transparent;
   padding: 0.72rem 1.1rem;
@@ -289,17 +290,33 @@
 
 .store-btn {
   gap: 0.48rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  text-align: center;
 }
 
 .store-pair {
   display: inline-flex;
   align-items: center;
   gap: 0.22rem;
+  flex-shrink: 0;
 }
 
 .store-pair .store-icon {
   width: 1rem;
   height: 1rem;
+  display: block;
+}
+
+.store-btn .store-icon {
+  display: block;
+}
+
+.store-btn span:not(.store-pair) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .feature-card,

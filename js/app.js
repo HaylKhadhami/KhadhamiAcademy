@@ -76,7 +76,11 @@ function initNavSpy() {
 
   const updateActiveLink = () => {
     const marker = getHeaderOffset();
-    const firstSectionTop = sections[0].section.getBoundingClientRect().top + window.scrollY;
+    const sectionRects = sections.map((item) => ({
+      ...item,
+      rect: item.section.getBoundingClientRect()
+    }));
+    const firstSectionTop = sectionRects[0].rect.top + window.scrollY;
 
     // Keep nav inactive in hero area before the first tracked section.
     if (window.scrollY + marker < firstSectionTop) {
@@ -84,24 +88,41 @@ function initNavSpy() {
       return;
     }
 
-    let activeLink = null;
+    // Primary match: header marker line is inside the section.
+    let activeEntry = sectionRects.find((entry) => (
+      entry.rect.top <= marker && entry.rect.bottom > marker
+    ));
 
-    for (const item of sections) {
-      const rect = item.section.getBoundingClientRect();
+    // Secondary match: use the most visible section in the viewport.
+    if (!activeEntry) {
+      let bestVisible = 0;
+      let bestDistance = Number.POSITIVE_INFINITY;
 
-      // Primary match: marker is inside this section.
-      if (rect.top <= marker && rect.bottom > marker) {
-        activeLink = item.link;
-        break;
-      }
+      for (const entry of sectionRects) {
+        const visibleTop = Math.max(entry.rect.top, marker);
+        const visibleBottom = Math.min(entry.rect.bottom, window.innerHeight);
+        const visible = Math.max(0, visibleBottom - visibleTop);
+        if (visible <= 0) continue;
 
-      // Fallback: marker passed section top; keep latest passed section active.
-      if (rect.top <= marker) {
-        activeLink = item.link;
+        const distance = Math.abs(entry.rect.top - marker);
+        if (visible > bestVisible || (visible === bestVisible && distance < bestDistance)) {
+          bestVisible = visible;
+          bestDistance = distance;
+          activeEntry = entry;
+        }
       }
     }
 
-    setActive(activeLink);
+    // Final fallback: last section whose top passed the marker.
+    if (!activeEntry) {
+      for (const entry of sectionRects) {
+        if (entry.rect.top <= marker) {
+          activeEntry = entry;
+        }
+      }
+    }
+
+    setActive(activeEntry ? activeEntry.link : null);
   };
 
   let ticking = false;

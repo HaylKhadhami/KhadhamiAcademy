@@ -89,10 +89,6 @@
   .nav-menu a:hover {
     color: var(--text);
   }
-
-  .nav-menu a:hover::after {
-    transform: scaleX(1);
-  }
 }
 
 .nav-actions {

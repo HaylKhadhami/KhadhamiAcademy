@@ -158,9 +158,33 @@ function initShowcaseTabs() {
   const panels = [...document.querySelectorAll("[data-showcase-panel]")];
   if (!tabs.length || !panels.length) return;
 
+  let activeIndex = 0;
+  let autoRotateId = null;
+  const showcaseSection = document.getElementById("showcase");
+  const showcaseShell = tabList.closest(".showcase-shell");
+  const interactionTarget = showcaseShell || tabList;
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let sectionInView = false;
+  let isPausedByInteraction = false;
+
+  const stopAutoRotate = () => {
+    if (!autoRotateId) return;
+    clearInterval(autoRotateId);
+    autoRotateId = null;
+  };
+
+  const startAutoRotate = () => {
+    if (autoRotateId || reducedMotionQuery.matches || !sectionInView || isPausedByInteraction) return;
+    autoRotateId = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % tabs.length;
+      activateTab(tabs[nextIndex]);
+    }, 5500);
+  };
+
   const activateTab = (targetTab, options = {}) => {
     const { focus = false } = options;
     const targetKey = targetTab.getAttribute("data-showcase-tab");
+    activeIndex = tabs.indexOf(targetTab);
 
     tabs.forEach((tab) => {
       const isActive = tab === targetTab;
@@ -186,7 +210,11 @@ function initShowcaseTabs() {
   };
 
   tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => activateTab(tab));
+    tab.addEventListener("click", () => {
+      isPausedByInteraction = true;
+      stopAutoRotate();
+      activateTab(tab);
+    });
     tab.addEventListener("keydown", (event) => {
       const isRtl = document.documentElement.dir === "rtl";
       const nextKey = isRtl ? "ArrowLeft" : "ArrowRight";
@@ -194,22 +222,182 @@ function initShowcaseTabs() {
 
       if (event.key === nextKey) {
         event.preventDefault();
+        isPausedByInteraction = true;
+        stopAutoRotate();
         moveFocus(index, 1);
       } else if (event.key === previousKey) {
         event.preventDefault();
+        isPausedByInteraction = true;
+        stopAutoRotate();
         moveFocus(index, -1);
       } else if (event.key === "Home") {
         event.preventDefault();
+        isPausedByInteraction = true;
+        stopAutoRotate();
         activateTab(tabs[0], { focus: true });
       } else if (event.key === "End") {
         event.preventDefault();
+        isPausedByInteraction = true;
+        stopAutoRotate();
         activateTab(tabs[tabs.length - 1], { focus: true });
       }
     });
   });
 
+  const interactionStart = () => {
+    isPausedByInteraction = true;
+    stopAutoRotate();
+  };
+
+  const interactionEnd = () => {
+    isPausedByInteraction = false;
+    startAutoRotate();
+  };
+
+  interactionTarget.addEventListener("pointerenter", interactionStart);
+  interactionTarget.addEventListener("pointerleave", interactionEnd);
+  interactionTarget.addEventListener("focusin", interactionStart);
+  interactionTarget.addEventListener("focusout", (event) => {
+    if (interactionTarget.contains(event.relatedTarget)) return;
+    interactionEnd();
+  });
+
+  if (showcaseSection) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          sectionInView = entry.isIntersecting;
+          if (sectionInView) {
+            startAutoRotate();
+          } else {
+            stopAutoRotate();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    sectionObserver.observe(showcaseSection);
+  } else {
+    sectionInView = true;
+    startAutoRotate();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoRotate();
+      return;
+    }
+    startAutoRotate();
+  });
+
   const initialTab = tabs.find((tab) => tab.classList.contains("active")) || tabs[0];
   activateTab(initialTab);
+  startAutoRotate();
+}
+
+function initScreenshotLightbox() {
+  const lightbox = document.getElementById("shot-lightbox");
+  if (!lightbox) return;
+
+  const imageNode = document.getElementById("shot-lightbox-image");
+  const captionNode = document.getElementById("shot-lightbox-caption");
+  const closeButtons = [...lightbox.querySelectorAll("[data-shot-lightbox-close]")];
+  const previousButton = lightbox.querySelector("[data-shot-lightbox-prev]");
+  const nextButton = lightbox.querySelector("[data-shot-lightbox-next]");
+  const openableImages = [...document.querySelectorAll("img[data-shot-open='true']")];
+  if (!imageNode || !captionNode || !openableImages.length) return;
+
+  let activeIndex = -1;
+  let previousBodyOverflow = "";
+
+  const updateFromActive = () => {
+    if (activeIndex < 0 || activeIndex >= openableImages.length) return;
+    const sourceImage = openableImages[activeIndex];
+    const figure = sourceImage.closest("figure");
+    const sourceCaption = figure?.querySelector("figcaption")?.textContent?.trim();
+    imageNode.src = sourceImage.currentSrc || sourceImage.src;
+    imageNode.alt = sourceImage.alt || "";
+    captionNode.textContent = sourceCaption || sourceImage.alt || "";
+  };
+
+  const openAt = (index) => {
+    activeIndex = (index + openableImages.length) % openableImages.length;
+    updateFromActive();
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    lightbox.hidden = false;
+    lightbox.setAttribute("aria-hidden", "false");
+  };
+
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    lightbox.setAttribute("aria-hidden", "true");
+    imageNode.removeAttribute("src");
+    imageNode.alt = "";
+    captionNode.textContent = "";
+    document.body.style.overflow = previousBodyOverflow;
+    activeIndex = -1;
+  };
+
+  const showPrevious = () => {
+    if (activeIndex < 0) return;
+    activeIndex = (activeIndex - 1 + openableImages.length) % openableImages.length;
+    updateFromActive();
+  };
+
+  const showNext = () => {
+    if (activeIndex < 0) return;
+    activeIndex = (activeIndex + 1) % openableImages.length;
+    updateFromActive();
+  };
+
+  openableImages.forEach((image, index) => {
+    image.addEventListener("click", () => openAt(index));
+    image.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openAt(index);
+    });
+    if (!image.hasAttribute("tabindex")) {
+      image.tabIndex = 0;
+    }
+    if (!image.hasAttribute("role")) {
+      image.setAttribute("role", "button");
+    }
+  });
+
+  closeButtons.forEach((button) => button.addEventListener("click", closeLightbox));
+  if (previousButton) previousButton.addEventListener("click", showPrevious);
+  if (nextButton) nextButton.addEventListener("click", showNext);
+
+  document.addEventListener("keydown", (event) => {
+    if (lightbox.hidden) return;
+    const isRtl = document.documentElement.dir === "rtl";
+    const previousKey = isRtl ? "ArrowRight" : "ArrowLeft";
+    const nextKey = isRtl ? "ArrowLeft" : "ArrowRight";
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeLightbox();
+      return;
+    }
+
+    if (event.key === previousKey) {
+      event.preventDefault();
+      showPrevious();
+      return;
+    }
+
+    if (event.key === nextKey) {
+      event.preventDefault();
+      showNext();
+    }
+  });
+
+  document.addEventListener("ka:language-change", () => {
+    if (lightbox.hidden) return;
+    updateFromActive();
+  });
 }
 
 function initCookieBanner() {
@@ -279,6 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileNav();
   initNavSpy();
   initShowcaseTabs();
+  initScreenshotLightbox();
   initControls();
   initCookieBanner();
   initFooterYear();

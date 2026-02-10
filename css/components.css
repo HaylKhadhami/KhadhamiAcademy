@@ -259,15 +259,21 @@
   height: 1.06rem;
   flex-shrink: 0;
   display: inline-block;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  object-fit: contain;
 }
 
-.store-pill .store-icon {
-  color: var(--primary-strong);
+.store-icon--btn {
+  filter: brightness(0) invert(1);
+  opacity: 0.96;
+}
+
+.store-icon--pill {
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .store-icon--pill {
+  filter: brightness(0) invert(0.92);
+  opacity: 0.95;
 }
 
 .store-btn {
@@ -281,8 +287,8 @@
 }
 
 .store-pair .store-icon {
-  width: 0.88rem;
-  height: 0.88rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .feature-card,
@@ -406,6 +412,8 @@
 .sar-symbol {
   display: inline-block;
   font-weight: 800;
+  font-family: "Noto Sans Arabic", "Noto Sans", "Segoe UI Symbol", "Arial Unicode MS", sans-serif;
+  line-height: 1;
   margin-inline-end: 0.15rem;
 }
 

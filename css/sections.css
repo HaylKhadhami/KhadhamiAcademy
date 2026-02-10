@@ -345,6 +345,215 @@
   box-shadow: var(--shadow-md);
 }
 
+[data-shot-open] {
+  cursor: zoom-in;
+}
+
+.showcase-panel.active .shot-card {
+  animation: shotCardRise 380ms ease both;
+}
+
+.showcase-panel.active .shot-card:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.showcase-panel.active .shot-card:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.showcase-reel {
+  margin-top: var(--space-8);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.showcase-reel__head {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.showcase-reel__head h3 {
+  color: var(--text);
+  font-size: var(--text-xl);
+}
+
+.showcase-reel__head p {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.shot-rail {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, var(--surface) 0%, var(--surface-2) 100%);
+  padding-block: 0.7rem;
+}
+
+.shot-rail::before,
+.shot-rail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shot-rail::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+
+.shot-rail::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
+}
+
+.shot-rail__track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: max-content;
+  animation: shotRailScroll 48s linear infinite;
+}
+
+.shot-rail--reverse .shot-rail__track {
+  animation-direction: reverse;
+  animation-duration: 54s;
+}
+
+.shot-rail:hover .shot-rail__track {
+  animation-play-state: paused;
+}
+
+.shot-chip {
+  flex: 0 0 7rem;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.shot-chip img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 9 / 19.5;
+  object-fit: cover;
+  display: block;
+}
+
+.shot-chip:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.shot-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: grid;
+  place-items: center;
+}
+
+.shot-lightbox[hidden] {
+  display: none;
+}
+
+.shot-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  margin: 0;
+  background: rgba(5, 10, 22, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.shot-lightbox__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 980px);
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+  grid-template-areas:
+    "prev figure next"
+    ". hint .";
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.shot-lightbox__figure {
+  grid-area: figure;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.shot-lightbox__figure img {
+  width: 100%;
+  max-height: min(78vh, 900px);
+  object-fit: contain;
+  background: linear-gradient(140deg, var(--surface) 0%, var(--surface-2) 100%);
+}
+
+.shot-lightbox__figure figcaption {
+  padding: 0.8rem 1rem;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.shot-lightbox__close,
+.shot-lightbox__nav {
+  border: 1px solid var(--border);
+  background: var(--surface-glass);
+  color: var(--text);
+  border-radius: var(--radius-pill);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.shot-lightbox__close {
+  position: absolute;
+  top: -0.65rem;
+  inset-inline-end: -0.65rem;
+  z-index: 2;
+}
+
+.shot-lightbox__nav--prev {
+  grid-area: prev;
+}
+
+.shot-lightbox__nav--next {
+  grid-area: next;
+}
+
+.shot-lightbox__close:hover,
+.shot-lightbox__nav:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+  background: var(--surface);
+}
+
+.shot-lightbox__hint {
+  grid-area: hint;
+  text-align: center;
+  color: #dce7ff;
+  font-size: var(--text-xs);
+}
+
 @keyframes showcaseFade {
   from {
     opacity: 0;
@@ -354,6 +563,28 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes shotCardRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shotRailScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(-50% - 0.375rem), 0, 0);
   }
 }
 

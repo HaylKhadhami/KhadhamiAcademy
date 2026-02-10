@@ -423,6 +423,15 @@
   gap: var(--space-8);
 }
 
+#pathways .split-layout {
+  align-items: stretch;
+}
+
+#pathways .timeline-card {
+  align-self: stretch;
+  height: 100%;
+}
+
 .method-grid {
   margin-top: var(--space-7);
   display: grid;

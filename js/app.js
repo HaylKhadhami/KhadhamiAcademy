@@ -150,6 +150,68 @@ function initNavSpy() {
   updateActiveLink();
 }
 
+function initShowcaseTabs() {
+  const tabList = document.querySelector("[data-showcase-tabs]");
+  if (!tabList) return;
+
+  const tabs = [...tabList.querySelectorAll("[data-showcase-tab]")];
+  const panels = [...document.querySelectorAll("[data-showcase-panel]")];
+  if (!tabs.length || !panels.length) return;
+
+  const activateTab = (targetTab, options = {}) => {
+    const { focus = false } = options;
+    const targetKey = targetTab.getAttribute("data-showcase-tab");
+
+    tabs.forEach((tab) => {
+      const isActive = tab === targetTab;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.getAttribute("data-showcase-panel") === targetKey;
+      panel.classList.toggle("active", isActive);
+      panel.hidden = !isActive;
+    });
+
+    if (focus) {
+      targetTab.focus();
+    }
+  };
+
+  const moveFocus = (currentIndex, delta) => {
+    const nextIndex = (currentIndex + delta + tabs.length) % tabs.length;
+    activateTab(tabs[nextIndex], { focus: true });
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activateTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      const isRtl = document.documentElement.dir === "rtl";
+      const nextKey = isRtl ? "ArrowLeft" : "ArrowRight";
+      const previousKey = isRtl ? "ArrowRight" : "ArrowLeft";
+
+      if (event.key === nextKey) {
+        event.preventDefault();
+        moveFocus(index, 1);
+      } else if (event.key === previousKey) {
+        event.preventDefault();
+        moveFocus(index, -1);
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        activateTab(tabs[0], { focus: true });
+      } else if (event.key === "End") {
+        event.preventDefault();
+        activateTab(tabs[tabs.length - 1], { focus: true });
+      }
+    });
+  });
+
+  const initialTab = tabs.find((tab) => tab.classList.contains("active")) || tabs[0];
+  activateTab(initialTab);
+}
+
 function initCookieBanner() {
   const banner = document.getElementById("cookie-banner");
   const accept = document.getElementById("cookie-accept");
@@ -216,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeaderState();
   initMobileNav();
   initNavSpy();
+  initShowcaseTabs();
   initControls();
   initCookieBanner();
   initFooterYear();

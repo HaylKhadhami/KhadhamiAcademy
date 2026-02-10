@@ -13,6 +13,18 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .showcase-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .phone-shot {
+    max-width: 300px;
+  }
+
   .feature-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -69,6 +81,19 @@
 
   .hero {
     padding-top: var(--space-14);
+  }
+
+  .showcase-shell {
+    padding: var(--space-6);
+  }
+
+  .showcase-tabs {
+    margin-bottom: var(--space-5);
+  }
+
+  .showcase-tab {
+    flex: 1 1 calc(50% - var(--space-2));
+    text-align: center;
   }
 
   .hero-copy h1 {
@@ -136,6 +161,18 @@
 
   .feature-grid {
     grid-template-columns: 1fr;
+  }
+
+  .showcase-tab {
+    flex-basis: 100%;
+  }
+
+  .showcase-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .phone-shot {
+    max-width: min(100%, 340px);
   }
 
   .footer-grid {

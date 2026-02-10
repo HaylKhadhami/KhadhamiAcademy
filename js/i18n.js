@@ -11,6 +11,7 @@
     toggle_theme: "Switch light or dark theme",
 
     nav_features: "Features",
+    nav_experience: "Experience",
     nav_pathways: "Pathways",
     nav_safety: "Safety",
     nav_pricing: "Pricing",
@@ -42,6 +43,75 @@
     proof_tracks: "Structured pathways",
     proof_frameworks: "Learning frameworks",
     proof_support: "Technical support readiness",
+
+    showcase_eyebrow: "Real app experience",
+    showcase_title: "Inside the actual product families use every day",
+    showcase_subtitle: "Explore authentic screenshots from the live application across learning, coding, safety, and progress journeys.",
+    showcase_tabs_aria: "App screenshot categories",
+    showcase_tab_learning: "Learning flow",
+    showcase_tab_coding: "Coding labs",
+    showcase_tab_safety: "Safety and onboarding",
+    showcase_tab_progress: "Progress and profile",
+
+    showcase_learning_title: "Daily learning flow built for consistency",
+    showcase_learning_desc: "The learner journey is designed for momentum, from lesson discovery to class participation and guided review.",
+    showcase_learning_point_1: "Clear next-step recommendations for every learner.",
+    showcase_learning_point_2: "Quick access to live classrooms and structured modules.",
+    showcase_learning_point_3: "Readable interface for both students and parents.",
+
+    showcase_coding_title: "Hands-on coding labs with instant feedback",
+    showcase_coding_desc: "Students write real code, run it directly, and iterate quickly with project-based guidance.",
+    showcase_coding_point_1: "Integrated editors for Python and web development.",
+    showcase_coding_point_2: "Output panels to verify logic and debug faster.",
+    showcase_coding_point_3: "Built-in progression from fundamentals to practical projects.",
+
+    showcase_safety_title: "Onboarding and controls designed for child safety",
+    showcase_safety_desc: "Identity, account setup, and settings flows align with parent visibility and safer usage standards.",
+    showcase_safety_point_1: "Structured onboarding for both adults and minors.",
+    showcase_safety_point_2: "Professional settings center for responsible account control.",
+    showcase_safety_point_3: "Consistent UX that reduces mistakes and improves trust.",
+
+    showcase_progress_title: "Progress insights and personalized learning context",
+    showcase_progress_desc: "Students and families can track growth, review material, and navigate personalized content from one place.",
+    showcase_progress_point_1: "Performance visibility through dashboard-driven metrics.",
+    showcase_progress_point_2: "Profile and identity areas tailored for each learner.",
+    showcase_progress_point_3: "Media players and snippets to reinforce retention.",
+
+    shot_home_caption: "Home dashboard with key learning widgets.",
+    shot_home_alt: "Home dashboard with key learning widgets.",
+    shot_home_2_caption: "Secondary home experience with personalized modules.",
+    shot_home_2_alt: "Secondary home experience with personalized modules.",
+    shot_about_caption: "About screen highlighting academy value and mission.",
+    shot_about_alt: "About screen highlighting academy value and mission.",
+    shot_live_caption: "Live classroom listing for active sessions.",
+    shot_live_alt: "Live classroom listing for active sessions.",
+
+    shot_python_output_caption: "Python editor with code execution output.",
+    shot_python_output_alt: "Python editor with code execution output.",
+    shot_code_editor_caption: "Code editor interface for lesson-based exercises.",
+    shot_code_editor_alt: "Code editor interface for lesson-based exercises.",
+    shot_web_editor_caption: "Web code editor workspace for HTML and CSS practice.",
+    shot_web_editor_alt: "Web code editor workspace for HTML and CSS practice.",
+    shot_web_output_caption: "Web editor with rendered output preview.",
+    shot_web_output_alt: "Web editor with rendered output preview.",
+
+    shot_signup_under18_caption: "Under-18 signup flow with guardian context.",
+    shot_signup_under18_alt: "Under-18 signup flow with guardian context.",
+    shot_login_caption: "Secure login interface.",
+    shot_login_alt: "Secure login interface.",
+    shot_signup_caption: "Standard signup workflow for account creation.",
+    shot_signup_alt: "Standard signup workflow for account creation.",
+    shot_settings_caption: "Settings panel with detailed account controls.",
+    shot_settings_alt: "Settings panel with detailed account controls.",
+
+    shot_progress_caption: "Progress dashboard with learning analytics.",
+    shot_progress_alt: "Progress dashboard with learning analytics.",
+    shot_profile_caption: "User profile and account details screen.",
+    shot_profile_alt: "User profile and account details screen.",
+    shot_playlist_caption: "Playlist player for lesson playback.",
+    shot_playlist_alt: "Playlist player for lesson playback.",
+    shot_snippets_caption: "Snippets player for short learning clips.",
+    shot_snippets_alt: "Snippets player for short learning clips.",
 
     features_eyebrow: "Platform capabilities",
     features_title: "Everything needed for elite digital learning",
@@ -161,6 +231,7 @@
     toggle_theme: "تبديل الوضع الفاتح أو الداكن",
 
     nav_features: "المزايا",
+    nav_experience: "التجربة",
     nav_pathways: "المسارات",
     nav_safety: "الأمان",
     nav_pricing: "الأسعار",
@@ -192,6 +263,75 @@
     proof_tracks: "مسارات تعليمية منظمة",
     proof_frameworks: "أطر تعلم منهجية",
     proof_support: "جاهزية الدعم التقني",
+
+    showcase_eyebrow: "تجربة التطبيق الحقيقية",
+    showcase_title: "داخل المنتج الحقيقي الذي تستخدمه الأسر يومياً",
+    showcase_subtitle: "استعرض لقطات فعلية من التطبيق المباشر عبر مسارات التعلم والبرمجة والأمان والتقدم.",
+    showcase_tabs_aria: "تصنيفات لقطات التطبيق",
+    showcase_tab_learning: "رحلة التعلم",
+    showcase_tab_coding: "مختبرات البرمجة",
+    showcase_tab_safety: "الأمان والانضمام",
+    showcase_tab_progress: "التقدم والملف الشخصي",
+
+    showcase_learning_title: "رحلة تعلم يومية مبنية على الاستمرارية",
+    showcase_learning_desc: "تجربة الطالب مصممة للحفاظ على الزخم من اكتشاف الدروس إلى المشاركة في الفصول والمراجعة الموجهة.",
+    showcase_learning_point_1: "توصيات واضحة للخطوة التالية لكل متعلم.",
+    showcase_learning_point_2: "وصول سريع للفصول المباشرة والوحدات المنظمة.",
+    showcase_learning_point_3: "واجهة واضحة للطلاب وأولياء الأمور.",
+
+    showcase_coding_title: "مختبرات برمجة عملية مع تغذية راجعة فورية",
+    showcase_coding_desc: "الطلاب يكتبون كوداً حقيقياً ويشغلونه مباشرة ويتطورون بسرعة عبر تعلم قائم على المشاريع.",
+    showcase_coding_point_1: "محررات مدمجة للـ Python وتطوير الويب.",
+    showcase_coding_point_2: "نوافذ مخرجات لفحص المنطق وتسريع التصحيح.",
+    showcase_coding_point_3: "تدرج واضح من الأساسيات إلى المشاريع التطبيقية.",
+
+    showcase_safety_title: "انضمام وإعدادات مصممة لحماية الطفل",
+    showcase_safety_desc: "تدفقات الهوية وإنشاء الحساب والإعدادات متوافقة مع وضوح المتابعة الأسرية ومعايير الاستخدام الآمن.",
+    showcase_safety_point_1: "انضمام منظم للبالغين والقُصّر.",
+    showcase_safety_point_2: "مركز إعدادات احترافي للتحكم المسؤول بالحساب.",
+    showcase_safety_point_3: "تجربة متسقة تقلل الأخطاء وتعزز الثقة.",
+
+    showcase_progress_title: "رؤى تقدم وسياق تعلم مخصص",
+    showcase_progress_desc: "الطلاب والأسر يتابعون النمو ويستعرضون المحتوى ويتنقلون في تجربة شخصية من مكان واحد.",
+    showcase_progress_point_1: "وضوح الأداء عبر مؤشرات مبنية على لوحة متابعة.",
+    showcase_progress_point_2: "مساحات ملف وهوية مخصصة لكل متعلم.",
+    showcase_progress_point_3: "مشغلات وسائط ومقاطع قصيرة لتعزيز الاستيعاب.",
+
+    shot_home_caption: "لوحة رئيسية تضم أهم عناصر التعلم.",
+    shot_home_alt: "لوحة رئيسية تضم أهم عناصر التعلم.",
+    shot_home_2_caption: "واجهة رئيسية بديلة بمحتوى مخصص.",
+    shot_home_2_alt: "واجهة رئيسية بديلة بمحتوى مخصص.",
+    shot_about_caption: "صفحة تعريف توضح قيمة الأكاديمية ورسالتها.",
+    shot_about_alt: "صفحة تعريف توضح قيمة الأكاديمية ورسالتها.",
+    shot_live_caption: "قائمة الفصول المباشرة والجلسات النشطة.",
+    shot_live_alt: "قائمة الفصول المباشرة والجلسات النشطة.",
+
+    shot_python_output_caption: "محرر Python مع مخرجات تشغيل مباشرة.",
+    shot_python_output_alt: "محرر Python مع مخرجات تشغيل مباشرة.",
+    shot_code_editor_caption: "واجهة محرر كود لتمارين الدروس.",
+    shot_code_editor_alt: "واجهة محرر كود لتمارين الدروس.",
+    shot_web_editor_caption: "مساحة محرر ويب لتدريب HTML وCSS.",
+    shot_web_editor_alt: "مساحة محرر ويب لتدريب HTML وCSS.",
+    shot_web_output_caption: "محرر ويب مع معاينة للمخرجات.",
+    shot_web_output_alt: "محرر ويب مع معاينة للمخرجات.",
+
+    shot_signup_under18_caption: "تدفق تسجيل خاص بمن هم دون 18 مع سياق ولي الأمر.",
+    shot_signup_under18_alt: "تدفق تسجيل خاص بمن هم دون 18 مع سياق ولي الأمر.",
+    shot_login_caption: "واجهة تسجيل دخول آمنة.",
+    shot_login_alt: "واجهة تسجيل دخول آمنة.",
+    shot_signup_caption: "تدفق تسجيل قياسي لإنشاء الحساب.",
+    shot_signup_alt: "تدفق تسجيل قياسي لإنشاء الحساب.",
+    shot_settings_caption: "لوحة إعدادات بتفاصيل تحكم متقدمة.",
+    shot_settings_alt: "لوحة إعدادات بتفاصيل تحكم متقدمة.",
+
+    shot_progress_caption: "لوحة تقدم تعرض تحليلات التعلم.",
+    shot_progress_alt: "لوحة تقدم تعرض تحليلات التعلم.",
+    shot_profile_caption: "شاشة الملف الشخصي وتفاصيل الحساب.",
+    shot_profile_alt: "شاشة الملف الشخصي وتفاصيل الحساب.",
+    shot_playlist_caption: "مشغل قوائم تشغيل للدروس.",
+    shot_playlist_alt: "مشغل قوائم تشغيل للدروس.",
+    shot_snippets_caption: "مشغل مقاطع قصيرة للتعلم السريع.",
+    shot_snippets_alt: "مشغل مقاطع قصيرة للتعلم السريع.",
 
     features_eyebrow: "قدرات المنصة",
     features_title: "كل ما يلزم لتعلم تقني متقدم",
@@ -348,6 +488,13 @@ function setLanguage(language) {
     const key = element.getAttribute("data-i18n-html");
     if (content[key] !== undefined) {
       element.innerHTML = content[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-alt");
+    if (content[key] !== undefined) {
+      element.setAttribute("alt", content[key]);
     }
   });
 

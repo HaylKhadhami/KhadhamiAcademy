@@ -248,7 +248,15 @@ function initShowcaseMini() {
 
   const renderTrack = (animate = true) => {
     const slide = slides[currentIndex];
-    const offset = slide ? slide.offsetLeft : (slideWidth + gapWidth) * currentIndex;
+    let offset = slide ? slide.offsetLeft : (slideWidth + gapWidth) * currentIndex;
+    // Cap offset so the last slide is fully visible (never clip the right edge)
+    const lastSlide = slides[slides.length - 1];
+    if (lastSlide) {
+      const maxOffset = lastSlide.offsetLeft + lastSlide.offsetWidth - viewport.clientWidth;
+      if (maxOffset > 0 && offset > maxOffset) {
+        offset = maxOffset;
+      }
+    }
     if (!animate) {
       track.style.transitionDuration = "0ms";
     }

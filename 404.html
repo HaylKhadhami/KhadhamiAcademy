@@ -3,6 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
+  <script>
+    /* Redirect old .html URLs to clean URLs — runs before any rendering */
+    (function () {
+      var p = window.location.pathname;
+      if (p.endsWith('.html') && p !== '/404.html') {
+        window.location.replace(p.replace(/\.html$/, '/') + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#205090">
@@ -302,17 +311,6 @@
     <div class="card-footer" id="footer"></div>
   </main>
 
-  <script>
-    /* Redirect old .html URLs to clean URLs */
-    (function () {
-      var p = window.location.pathname;
-      if (p.endsWith('.html') && p !== '/404.html') {
-        var clean = p.replace(/\.html$/, '/');
-        window.location.replace(clean + window.location.search + window.location.hash);
-        return;
-      }
-    })();
-  </script>
   <script>
     (function () {
       'use strict';

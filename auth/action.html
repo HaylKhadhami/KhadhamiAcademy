@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#205090">
+    <title>Khadhami Academy</title>
+    <link rel="icon" href="/assets/images/app-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Sora:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --font-en: "Sora", "Segoe UI", system-ui, sans-serif;
+            --font-ar: "Cairo", "Segoe UI", system-ui, sans-serif;
+            --radius: 1.125rem;
+            --radius-sm: 0.625rem;
+            --radius-pill: 999px;
+            --transition: 280ms ease;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --success: #10b981;
+            --success-soft: rgba(16, 185, 129, 0.12);
+            --error: #ef4444;
+            --error-soft: rgba(239, 68, 68, 0.12);
+            --warn: #f59e0b;
+        }
+
+        [data-theme="light"] {
+            --bg: #f0f4fb;
+            --surface: #ffffff;
+            --surface-2: #f7f9ff;
+            --text: #0a1630;
+            --text-muted: #4a5f85;
+            --text-subtle: #7486a8;
+            --primary: #205090;
+            --primary-hover: #18437b;
+            --primary-soft: rgba(32, 80, 144, 0.10);
+            --accent: #c07040;
+            --border: rgba(20, 49, 94, 0.12);
+            --input-bg: #f4f7fc;
+            --shadow: 0 20px 50px rgba(10, 22, 45, 0.10);
+            --glow-1: rgba(32, 80, 144, 0.22);
+            --glow-2: rgba(192, 112, 64, 0.18);
+        }
+
+        [data-theme="dark"] {
+            --bg: #080f1f;
+            --surface: #111f3a;
+            --surface-2: #142444;
+            --text: #edf2fd;
+            --text-muted: #b7c5e1;
+            --text-subtle: #8ea2c9;
+            --primary: #5f95da;
+            --primary-hover: #79aae8;
+            --primary-soft: rgba(95, 149, 218, 0.15);
+            --accent: #d59057;
+            --border: rgba(142, 168, 211, 0.18);
+            --input-bg: #0d1a30;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            --glow-1: rgba(95, 149, 218, 0.18);
+            --glow-2: rgba(213, 144, 87, 0.14);
+        }
+
+        html {
+            font-size: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-en);
+            font-size: 1rem;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            padding: 1.5rem;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        [dir="rtl"] body,
+        [dir="rtl"] {
+            font-family: var(--font-ar);
+        }
+
+        /* ── Background glows ── */
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow--1 {
+            width: 340px;
+            height: 340px;
+            background: var(--glow-1);
+            top: -120px;
+            inset-inline-start: -80px;
+        }
+
+        .bg-glow--2 {
+            width: 280px;
+            height: 280px;
+            background: var(--glow-2);
+            bottom: -100px;
+            inset-inline-end: -60px;
+        }
+
+        /* ── Theme toggle ── */
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            inset-inline-end: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            transition: background var(--transition), border-color var(--transition);
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-soft);
+            border-color: var(--primary);
+        }
+
+        /* ── Card ── */
+        .auth-card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            animation: card-in 650ms var(--ease-out) both;
+        }
+
+        @keyframes card-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+        }
+
+        .auth-logo {
+            width: 68px;
+            height: 68px;
+            border-radius: 16px;
+            margin: 0 auto 1.5rem;
+            object-fit: contain;
+        }
+
+        .auth-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .auth-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin: 0 0 1.5rem;
+            line-height: 1.7;
+        }
+
+        /* ── States ── */
+        .state {
+            display: none;
+        }
+
+        .state.active {
+            display: block;
+            animation: state-in 420ms var(--ease-out) both;
+        }
+
+        @keyframes state-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        /* ── Loading dots ── */
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.45rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .loading-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: dot-pulse 1.4s ease-in-out infinite;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dot-pulse {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0.55);
+                opacity: 0.35;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ── Animated SVG icons ── */
+        .icon-result {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 1.25rem;
+            display: block;
+        }
+
+        .icon-result .icon-circle {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-dasharray: 201;
+            stroke-dashoffset: 201;
+            animation: draw-circle 600ms ease forwards;
+        }
+
+        .icon-success .icon-circle {
+            stroke: var(--success);
+        }
+
+        .icon-error .icon-circle {
+            stroke: var(--error);
+        }
+
+        .icon-result .icon-check {
+            fill: none;
+            stroke: var(--success);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: draw-mark 380ms ease 480ms forwards;
+        }
+
+        .icon-result .icon-x {
+            stroke: var(--error);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-dasharray: 28;
+            stroke-dashoffset: 28;
+            animation: draw-mark 300ms ease 480ms forwards;
+        }
+
+        @keyframes draw-circle {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes draw-mark {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* ── Email badge ── */
+        .email-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-pill);
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            direction: ltr;
+        }
+
+        /* ── Form ── */
+        .form-group {
+            text-align: start;
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 3rem;
+            padding: 0 1rem;
+            padding-inline-end: 2.75rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+        }
+
+        .form-input.has-error {
+            border-color: var(--error);
+        }
+
+        .form-input.has-error:focus {
+            box-shadow: 0 0 0 3px var(--error-soft);
+        }
+
+        .toggle-pwd {
+            position: absolute;
+            inset-inline-end: 0.65rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-subtle);
+            padding: 0.25rem;
+            line-height: 1;
+            transition: color 150ms ease;
+        }
+
+        .toggle-pwd:hover {
+            color: var(--text);
+        }
+
+        .toggle-pwd svg {
+            display: block;
+        }
+
+        /* ── Strength meter ── */
+        .strength-meter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+            height: 1.2rem;
+        }
+
+        .strength-track {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 2px;
+            width: 0;
+            transition: width 300ms ease, background 300ms ease;
+        }
+
+        .strength-fill[data-level="1"] {
+            width: 33%;
+            background: var(--error);
+        }
+
+        .strength-fill[data-level="2"] {
+            width: 66%;
+            background: var(--warn);
+        }
+
+        .strength-fill[data-level="3"] {
+            width: 100%;
+            background: var(--success);
+        }
+
+        .strength-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            min-width: 2.8rem;
+            text-align: end;
+        }
+
+        .strength-label[data-level="1"] {
+            color: var(--error);
+        }
+
+        .strength-label[data-level="2"] {
+            color: var(--warn);
+        }
+
+        .strength-label[data-level="3"] {
+            color: var(--success);
+        }
+
+        .form-error {
+            font-size: 0.78rem;
+            color: var(--error);
+            margin-top: 0.3rem;
+            min-height: 1em;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            padding: 0 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.92rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background var(--transition), transform 100ms ease, box-shadow var(--transition);
+            width: 100%;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 18px var(--primary-soft);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-soft);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn+.btn {
+            margin-top: 0.65rem;
+        }
+
+        .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 600ms linear infinite;
+            margin-inline-end: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .btn.is-loading .btn-spinner {
+            display: block;
+        }
+
+        .btn.is-loading .btn-label {
+            opacity: 0.75;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── Footer ── */
+        .auth-footer {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.78rem;
+            color: var(--text-subtle);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .auth-card {
+                padding: 2rem 1.5rem;
+                border-radius: 1rem;
+            }
+
+            .auth-logo {
+                width: 56px;
+                height: 56px;
+                border-radius: 14px;
+            }
+
+            .auth-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* ── Noscript ── */
+        .noscript-msg {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow bg-glow--1"></div>
+    <div class="bg-glow bg-glow--2"></div>
+
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <span id="theme-icon">🌙</span>
+    </button>
+
+    <main class="auth-card" role="main">
+        <img src="/assets/images/app-icon-round.webp" alt="Khadhami Academy" class="auth-logo"
+            onerror="this.src='/assets/images/app-icon.png'">
+
+        <!-- ▸ Loading -->
+        <div id="state-loading" class="state active">
+            <div class="loading-dots"><span></span><span></span><span></span></div>
+            <p class="auth-desc" id="loading-text"></p>
+        </div>
+
+        <!-- ▸ Verify Email — Success -->
+        <div id="state-verify-success" class="state">
+            <svg class="icon-result icon-success" viewBox="0 0 72 72">
+                <circle class="icon-circle" cx="36" cy="36" r="32" />
+                <polyline class="icon-check" points="22,38 32,48 50,26" />
+            </svg>
+            <h1 class="auth-title" id="verify-title"></h1>
+            <p class="auth-desc" id="verify-desc"></p>
+            <a href="/" class="btn btn-primary" id="verify-cta"></a>
+        </div>
+
+        <!-- ▸ Reset Password — Form -->
+        <div id="state-reset-form" class="state">
+            <h1 class="auth-title" id="reset-title"></h1>
+            <div class="email-badge" id="reset-email-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M22 7l-10 7L2 7" />
+                </svg>
+                <span id="reset-email"></span>
+            </div>
+            <form id="reset-form" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="new-password" id="lbl-new-pwd"></label>
+                    <div class="input-wrap">
+                        <input type="password" class="form-input" id="new-password" autocomplete="new-password" required
+                            minlength="8">
+                        <button type="button" class="toggle-pwd" data-target="new-password"
+                            aria-label="Toggle visibility">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="strength-meter" id="strength-meter" style="display:none">
+                        <div class="strength-track">
+                            <div class="strength-fill" id="strength-fill"></div>
+                        </div>
+                        <span class="strength-label" id="strength-label"></span>
+                    </div>
+                    <div class="form-error" id="err-pwd"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="confirm-password" id="lbl-confirm-pwd"></label>
+                    <div class="input-wrap">
+                        <input type="password" class="form-input" id="confirm-password" autocomplete="new-password"
+                            required>
+                        <button type="button" class="toggle-pwd" data-target="confirm-password"
+                            aria-label="Toggle visibility">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="form-error" id="err-confirm"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="reset-submit">
+                    <span class="btn-spinner"></span>
+                    <span class="btn-label" id="reset-submit-label"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- ▸ Reset Password — Success -->
+        <div id="state-reset-success" class="state">
+            <svg class="icon-result icon-success" viewBox="0 0 72 72">
+                <circle class="icon-circle" cx="36" cy="36" r="32" />
+                <polyline class="icon-check" points="22,38 32,48 50,26" />
+            </svg>
+            <h1 class="auth-title" id="reset-ok-title"></h1>
+            <p class="auth-desc" id="reset-ok-desc"></p>
+            <a href="/" class="btn btn-primary" id="reset-ok-cta"></a>
+        </div>
+
+        <!-- ▸ Recover Email — Success -->
+        <div id="state-recover-success" class="state">
+            <svg class="icon-result icon-success" viewBox="0 0 72 72">
+                <circle class="icon-circle" cx="36" cy="36" r="32" />
+                <polyline class="icon-check" points="22,38 32,48 50,26" />
+            </svg>
+            <h1 class="auth-title" id="recover-title"></h1>
+            <p class="auth-desc" id="recover-desc"></p>
+            <div class="email-badge" id="recover-email-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M22 7l-10 7L2 7" />
+                </svg>
+                <span id="recover-email"></span>
+            </div>
+            <a href="/" class="btn btn-primary" id="recover-cta"></a>
+        </div>
+
+        <!-- ▸ Error -->
+        <div id="state-error" class="state">
+            <svg class="icon-result icon-error" viewBox="0 0 72 72">
+                <circle class="icon-circle" cx="36" cy="36" r="32" />
+                <line class="icon-x" x1="26" y1="26" x2="46" y2="46" />
+                <line class="icon-x" x1="46" y1="26" x2="26" y2="46" />
+            </svg>
+            <h1 class="auth-title" id="error-title"></h1>
+            <p class="auth-desc" id="error-desc"></p>
+            <a href="/" class="btn btn-outline" id="error-cta"></a>
+        </div>
+
+        <div class="auth-footer" id="auth-footer"></div>
+    </main>
+
+    <noscript>
+        <div class="noscript-msg">
+            <p>JavaScript is required to complete this action. Please enable JavaScript and reload the page.</p>
+            <p>يجب تمكين JavaScript لإتمام هذا الإجراء. يرجى تمكين JavaScript وإعادة تحميل الصفحة.</p>
+        </div>
+    </noscript>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+        import {
+            getAuth,
+            applyActionCode,
+            verifyPasswordResetCode,
+            confirmPasswordReset,
+            checkActionCode
+        } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+
+        /* ── i18n ── */
+        const S = {
+            en: {
+                loading_verify: 'Verifying your email\u2026',
+                loading_reset: 'Preparing password reset\u2026',
+                loading_recover: 'Recovering your email\u2026',
+                loading_default: 'Processing\u2026',
+                verify_title: 'Email verified!',
+                verify_desc: 'Your email address has been verified successfully. You can now close this page and return to the app.',
+                reset_title: 'Reset your password',
+                new_password: 'New password',
+                confirm_password: 'Confirm password',
+                reset_submit: 'Update password',
+                str_weak: 'Weak',
+                str_fair: 'Fair',
+                str_strong: 'Strong',
+                err_short: 'At least 8 characters required',
+                err_mismatch: 'Passwords don\u2019t match',
+                reset_ok_title: 'Password updated!',
+                reset_ok_desc: 'Your password has been updated successfully. You can now sign in with your new password.',
+                recover_title: 'Email recovered!',
+                recover_desc: 'Your email address has been restored to this account.',
+                error_title: 'Something went wrong',
+                error_expired: 'This link has expired or has already been used. Please request a new one from the app.',
+                error_invalid: 'This link is invalid. Please check the link or request a new one.',
+                error_generic: 'An unexpected error occurred. Please try again later.',
+                error_weak_pwd: 'Password is too weak. Please choose a stronger one.',
+                btn_home: 'Go to Khadhami Academy',
+                btn_app: 'Return to App',
+                footer: '\u00a9 {y} Khadhami Academy',
+                title_verify: 'Verify Email \u2014 Khadhami Academy',
+                title_reset: 'Reset Password \u2014 Khadhami Academy',
+                title_recover: 'Recover Email \u2014 Khadhami Academy',
+                title_default: 'Account Action \u2014 Khadhami Academy',
+            },
+            ar: {
+                loading_verify: '\u062c\u0627\u0631\u064d \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
+                loading_reset: '\u062c\u0627\u0631\u064d \u062a\u062c\u0647\u064a\u0632 \u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u2026',
+                loading_recover: '\u062c\u0627\u0631\u064d \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
+                loading_default: '\u062c\u0627\u0631\u064d \u0627\u0644\u0645\u0639\u0627\u0644\u062c\u0629\u2026',
+                verify_title: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
+                verify_desc: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u0625\u063a\u0644\u0627\u0642 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
+                reset_title: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                new_password: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629',
+                confirm_password: '\u062a\u0623\u0643\u064a\u062f \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                reset_submit: '\u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                str_weak: '\u0636\u0639\u064a\u0641\u0629',
+                str_fair: '\u0645\u062a\u0648\u0633\u0637\u0629',
+                str_strong: '\u0642\u0648\u064a\u0629',
+                err_short: '\u064a\u062c\u0628 \u0623\u0646 \u062a\u0643\u0648\u0646 8 \u0623\u062d\u0631\u0641 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644',
+                err_mismatch: '\u0643\u0644\u0645\u062a\u0627 \u0627\u0644\u0645\u0631\u0648\u0631 \u063a\u064a\u0631 \u0645\u062a\u0637\u0627\u0628\u0642\u062a\u064a\u0646',
+                reset_ok_title: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631!',
+                reset_ok_desc: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 \u0628\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629.',
+                recover_title: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
+                recover_desc: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0644\u0647\u0630\u0627 \u0627\u0644\u062d\u0633\u0627\u0628.',
+                error_title: '\u062d\u062f\u062b \u062e\u0637\u0623',
+                error_expired: '\u0627\u0646\u062a\u0647\u062a \u0635\u0644\u0627\u062d\u064a\u0629 \u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u062a\u0645 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0647. \u064a\u0631\u062c\u0649 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f \u0645\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
+                error_invalid: '\u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u063a\u064a\u0631 \u0635\u0627\u0644\u062d. \u064a\u0631\u062c\u0649 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f.',
+                error_generic: '\u062d\u062f\u062b \u062e\u0637\u0623 \u063a\u064a\u0631 \u0645\u062a\u0648\u0642\u0639. \u064a\u0631\u062c\u0649 \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649.',
+                error_weak_pwd: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0636\u0639\u064a\u0641\u0629 \u062c\u062f\u0627\u064b. \u064a\u0631\u062c\u0649 \u0627\u062e\u062a\u064a\u0627\u0631 \u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u0623\u0642\u0648\u0649.',
+                btn_home: '\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                btn_app: '\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642',
+                footer: '\u00a9 {y} \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                title_verify: '\u062a\u0623\u0643\u064a\u062f \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                title_reset: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                title_recover: '\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                title_default: '\u0625\u062c\u0631\u0627\u0621 \u0627\u0644\u062d\u0633\u0627\u0628 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+            }
+        };
+
+        /* ── URL params ── */
+        const P = new URLSearchParams(location.search);
+        const mode = P.get('mode');
+        const oobCode = P.get('oobCode');
+        const apiKey = P.get('apiKey');
+        const continueUrl = P.get('continueUrl');
+        const langParam = P.get('lang');
+
+        /* ── Language ── */
+        const lang = (langParam === 'ar' || (!langParam && navigator.language?.startsWith('ar'))) ? 'ar' : 'en';
+        const t = (k) => S[lang]?.[k] || S.en[k] || k;
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+        /* ── Page title ── */
+        const titleKeys = { verifyEmail: 'title_verify', resetPassword: 'title_reset', recoverEmail: 'title_recover' };
+        document.title = t(titleKeys[mode] || 'title_default');
+
+        /* ── Theme ── */
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)');
+        const saved = localStorage.getItem('ka-auth-theme');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('ka-auth-theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (icon) icon.textContent = theme === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
+            document.querySelector('meta[name="theme-color"]')?.setAttribute('content',
+                theme === 'dark' ? '#080f1f' : '#205090');
+        }
+
+        setTheme(saved || (prefersDark.matches ? 'dark' : 'light'));
+        document.getElementById('theme-toggle')?.addEventListener('click', () => {
+            setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+
+        /* ── Footer ── */
+        document.getElementById('auth-footer').textContent = t('footer').replace('{y}', new Date().getFullYear());
+
+        /* ── Loading text ── */
+        const loadingKeys = { verifyEmail: 'loading_verify', resetPassword: 'loading_reset', recoverEmail: 'loading_recover' };
+        document.getElementById('loading-text').textContent = t(loadingKeys[mode] || 'loading_default');
+
+        /* ── State manager ── */
+        function showState(id) {
+            document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+            document.getElementById(id)?.classList.add('active');
+        }
+
+        /* ── Set CTA link ── */
+        function setCta(el, label) {
+            if (!el) return;
+            if (continueUrl) {
+                el.href = continueUrl;
+                el.textContent = t('btn_app');
+            } else {
+                el.textContent = label || t('btn_home');
+            }
+        }
+
+        /* ── Error display ── */
+        function showError(err) {
+            const code = err?.code || '';
+            let msg = t('error_generic');
+            if (code.includes('expired') || code.includes('invalid-action-code')) msg = t('error_expired');
+            else if (code.includes('invalid') || code.includes('not-found') || code.includes('user-not-found')) msg = t('error_invalid');
+
+            document.getElementById('error-title').textContent = t('error_title');
+            document.getElementById('error-desc').textContent = msg;
+            setCta(document.getElementById('error-cta'));
+            showState('state-error');
+        }
+
+        /* ── Password strength ── */
+        function getStrength(pwd) {
+            if (!pwd) return 0;
+            let s = 0;
+            if (pwd.length >= 8) s++;
+            if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) s++;
+            if (/\d/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) s++;
+            return Math.min(s, 3);
+        }
+        const strengthKeys = { 1: 'str_weak', 2: 'str_fair', 3: 'str_strong' };
+
+        /* ── Password form setup ── */
+        function initResetForm(email) {
+            document.getElementById('reset-title').textContent = t('reset_title');
+            document.getElementById('reset-email').textContent = email;
+            document.getElementById('lbl-new-pwd').textContent = t('new_password');
+            document.getElementById('lbl-confirm-pwd').textContent = t('confirm_password');
+            document.getElementById('reset-submit-label').textContent = t('reset_submit');
+
+            const newPwd = document.getElementById('new-password');
+            const confirmPwd = document.getElementById('confirm-password');
+            const meter = document.getElementById('strength-meter');
+            const fill = document.getElementById('strength-fill');
+            const slabel = document.getElementById('strength-label');
+            const errPwd = document.getElementById('err-pwd');
+            const errConfirm = document.getElementById('err-confirm');
+            const submitBtn = document.getElementById('reset-submit');
+
+            /* Toggle visibility */
+            document.querySelectorAll('.toggle-pwd').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const inp = document.getElementById(btn.dataset.target);
+                    inp.type = inp.type === 'password' ? 'text' : 'password';
+                });
+            });
+
+            /* Strength meter */
+            newPwd.addEventListener('input', () => {
+                const v = newPwd.value;
+                if (v.length > 0) {
+                    meter.style.display = 'flex';
+                    const lvl = getStrength(v);
+                    fill.setAttribute('data-level', lvl);
+                    slabel.setAttribute('data-level', lvl);
+                    slabel.textContent = t(strengthKeys[lvl] || '');
+                } else {
+                    meter.style.display = 'none';
+                }
+                errPwd.textContent = '';
+                newPwd.classList.remove('has-error');
+            });
+
+            confirmPwd.addEventListener('input', () => {
+                errConfirm.textContent = '';
+                confirmPwd.classList.remove('has-error');
+            });
+
+            /* Submit */
+            document.getElementById('reset-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const pwd = newPwd.value;
+                const confirm = confirmPwd.value;
+                let valid = true;
+
+                if (pwd.length < 8) {
+                    errPwd.textContent = t('err_short');
+                    newPwd.classList.add('has-error');
+                    valid = false;
+                }
+                if (pwd !== confirm) {
+                    errConfirm.textContent = t('err_mismatch');
+                    confirmPwd.classList.add('has-error');
+                    valid = false;
+                }
+                if (!valid) return;
+
+                submitBtn.classList.add('is-loading');
+                submitBtn.disabled = true;
+
+                try {
+                    await confirmPasswordReset(auth, oobCode, pwd);
+                    document.getElementById('reset-ok-title').textContent = t('reset_ok_title');
+                    document.getElementById('reset-ok-desc').textContent = t('reset_ok_desc');
+                    setCta(document.getElementById('reset-ok-cta'));
+                    showState('state-reset-success');
+                } catch (err) {
+                    submitBtn.classList.remove('is-loading');
+                    submitBtn.disabled = false;
+                    if (err?.code === 'auth/weak-password') {
+                        errPwd.textContent = t('error_weak_pwd');
+                        newPwd.classList.add('has-error');
+                    } else {
+                        showError(err);
+                    }
+                }
+            });
+        }
+
+        /* ── Firebase init & action handler ── */
+        let auth;
+
+        async function handleAction() {
+            if (!oobCode || !apiKey) {
+                showError({ code: 'auth/invalid-action-code' });
+                return;
+            }
+
+            try {
+                const app = initializeApp({ apiKey });
+                auth = getAuth(app);
+            } catch (err) {
+                showError(err);
+                return;
+            }
+
+            try {
+                switch (mode) {
+                    case 'verifyEmail': {
+                        await applyActionCode(auth, oobCode);
+                        document.getElementById('verify-title').textContent = t('verify_title');
+                        document.getElementById('verify-desc').textContent = t('verify_desc');
+                        setCta(document.getElementById('verify-cta'));
+                        showState('state-verify-success');
+                        break;
+                    }
+
+                    case 'resetPassword': {
+                        const email = await verifyPasswordResetCode(auth, oobCode);
+                        initResetForm(email);
+                        showState('state-reset-form');
+                        document.getElementById('new-password').focus();
+                        break;
+                    }
+
+                    case 'recoverEmail': {
+                        const info = await checkActionCode(auth, oobCode);
+                        await applyActionCode(auth, oobCode);
+                        const restored = info?.data?.email || '';
+                        document.getElementById('recover-title').textContent = t('recover_title');
+                        document.getElementById('recover-desc').textContent = t('recover_desc');
+                        if (restored) {
+                            document.getElementById('recover-email').textContent = restored;
+                        } else {
+                            document.getElementById('recover-email-wrap').style.display = 'none';
+                        }
+                        setCta(document.getElementById('recover-cta'));
+                        showState('state-recover-success');
+                        break;
+                    }
+
+                    default:
+                        showError({ code: 'auth/invalid-action-code' });
+                }
+            } catch (err) {
+                console.error('Auth action error:', err);
+                showError(err);
+            }
+        }
+
+        handleAction();
+    </script>
+</body>
+
+</html>

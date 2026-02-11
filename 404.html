@@ -206,23 +206,6 @@
       line-height: 1.7;
     }
 
-    .url-badge {
-      display: inline-block;
-      max-width: 100%;
-      padding: 0.35rem 0.85rem;
-      border-radius: var(--radius-pill);
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      color: var(--text-subtle);
-      font-size: 0.78rem;
-      font-family: "Fira Code", monospace, sans-serif;
-      direction: ltr;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      word-break: break-all;
-      overflow-wrap: anywhere;
-    }
-
     .btn {
       display: inline-flex;
       align-items: center;
@@ -311,7 +294,7 @@
     <div class="error-code">404</div>
     <h1 class="card-title" id="title"></h1>
     <p class="card-desc" id="desc"></p>
-    <div class="url-badge" id="url-badge"></div>
+
 
     <a href="/" class="btn btn-primary" id="cta-home"></a>
     <button class="btn btn-outline" id="cta-back" onclick="history.back()"></button>
@@ -356,7 +339,7 @@
       /* Populate */
       document.getElementById('title').textContent = t('title');
       document.getElementById('desc').textContent = t('desc');
-      document.getElementById('url-badge').textContent = location.pathname;
+
       document.getElementById('cta-home').textContent = t('cta_home');
       document.getElementById('cta-back').textContent = t('cta_back');
       document.getElementById('footer').textContent = t('footer').replace('{y}', new Date().getFullYear());

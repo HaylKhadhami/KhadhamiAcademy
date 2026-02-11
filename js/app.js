@@ -247,7 +247,8 @@ function initShowcaseMini() {
   };
 
   const renderTrack = (animate = true) => {
-    const offset = (slideWidth + gapWidth) * currentIndex;
+    const slide = slides[currentIndex];
+    const offset = slide ? slide.offsetLeft : (slideWidth + gapWidth) * currentIndex;
     if (!animate) {
       track.style.transitionDuration = "0ms";
     }

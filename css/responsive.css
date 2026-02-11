@@ -93,7 +93,10 @@
   .parents-grid,
   .standards-grid,
   .voices-grid,
-  .pricing-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
   .legal-grid>* {
     flex: 1 1 100%;
   }

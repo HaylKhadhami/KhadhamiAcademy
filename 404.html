@@ -1,55 +1,383 @@
 ﻿<!DOCTYPE html>
 <html lang="en" dir="ltr" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 | Khadhami Academy</title>
-  <meta name="description" content="Page not found.">
-  <meta name="robots" content="noindex,follow">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#205090">
-  <link rel="icon" type="image/png" href="assets/images/app-icon.png">
+  <title>Page Not Found — Khadhami Academy</title>
+  <link rel="icon" href="/assets/images/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Sora:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-en: "Sora", "Segoe UI", system-ui, sans-serif;
+      --font-ar: "Cairo", "Segoe UI", system-ui, sans-serif;
+      --radius: 1.125rem;
+      --radius-sm: 0.625rem;
+      --radius-pill: 999px;
+      --transition: 280ms ease;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg: #f0f4fb;
+      --surface: #ffffff;
+      --text: #0a1630;
+      --text-muted: #4a5f85;
+      --text-subtle: #7486a8;
+      --primary: #205090;
+      --primary-hover: #18437b;
+      --primary-soft: rgba(32, 80, 144, 0.10);
+      --border: rgba(20, 49, 94, 0.12);
+      --shadow: 0 20px 50px rgba(10, 22, 45, 0.10);
+      --glow-1: rgba(32, 80, 144, 0.22);
+      --glow-2: rgba(192, 112, 64, 0.18);
+      --code-bg: #f4f7fc;
+    }
+
+    [data-theme="dark"] {
+      --bg: #080f1f;
+      --surface: #111f3a;
+      --text: #edf2fd;
+      --text-muted: #b7c5e1;
+      --text-subtle: #8ea2c9;
+      --primary: #5f95da;
+      --primary-hover: #79aae8;
+      --primary-soft: rgba(95, 149, 218, 0.15);
+      --border: rgba(142, 168, 211, 0.18);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --glow-1: rgba(95, 149, 218, 0.18);
+      --glow-2: rgba(213, 144, 87, 0.14);
+      --code-bg: #0d1a30;
+    }
+
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-en);
+      font-size: 1rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      padding: 1.5rem;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    [dir="rtl"] body,
+    [dir="rtl"] {
+      font-family: var(--font-ar);
+    }
+
+    .bg-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow--1 {
+      width: 340px;
+      height: 340px;
+      background: var(--glow-1);
+      top: -120px;
+      inset-inline-start: -80px;
+    }
+
+    .bg-glow--2 {
+      width: 280px;
+      height: 280px;
+      background: var(--glow-2);
+      bottom: -100px;
+      inset-inline-end: -60px;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      inset-inline-end: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      transition: background var(--transition), border-color var(--transition);
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      animation: card-in 650ms var(--ease-out) both;
+    }
+
+    @keyframes card-in {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+      }
+    }
+
+    .card-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      margin: 0 auto 1.25rem;
+      object-fit: contain;
+    }
+
+    .error-code {
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--primary), var(--text-muted));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0.5rem 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 1.5rem;
+      line-height: 1.7;
+    }
+
+    .url-badge {
+      display: inline-block;
+      max-width: 100%;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      color: var(--text-subtle);
+      font-size: 0.78rem;
+      font-family: "Fira Code", monospace, sans-serif;
+      direction: ltr;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      padding: 0 1.5rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--transition), transform 100ms ease, box-shadow var(--transition);
+      width: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 18px var(--primary-soft);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      margin-top: 0.65rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .card-footer {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+
+      .card {
+        padding: 2rem 1.5rem;
+        border-radius: 1rem;
+      }
+
+      .error-code {
+        font-size: 4rem;
+      }
+
+      .card-title {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-glow bg-glow--1"></div>
+  <div class="bg-glow bg-glow--2"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+    <span id="theme-icon"></span>
+  </button>
+
+  <main class="card" role="main">
+    <img src="/assets/images/app-icon-round.webp" alt="Khadhami Academy" class="card-logo"
+      onerror="this.src='/assets/images/app-icon.png'">
+
+    <div class="error-code">404</div>
+    <h1 class="card-title" id="title"></h1>
+    <p class="card-desc" id="desc"></p>
+    <div class="url-badge" id="url-badge"></div>
+
+    <a href="/" class="btn btn-primary" id="cta-home"></a>
+    <button class="btn btn-outline" id="cta-back" onclick="history.back()"></button>
+
+    <div class="card-footer" id="footer"></div>
+  </main>
 
   <script>
     (function () {
-      var root = document.documentElement;
+      'use strict';
+
+      var S = {
+        en: {
+          title: 'Page not found',
+          desc: 'The page you\u2019re looking for doesn\u2019t exist or has been moved.',
+          cta_home: 'Go to Khadhami Academy',
+          cta_back: 'Go back',
+          footer: '\u00a9 {y} Khadhami Academy',
+          page_title: 'Page Not Found \u2014 Khadhami Academy'
+        },
+        ar: {
+          title: '\u0627\u0644\u0635\u0641\u062d\u0629 \u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f\u0629',
+          desc: '\u0627\u0644\u0635\u0641\u062d\u0629 \u0627\u0644\u062a\u064a \u062a\u0628\u062d\u062b \u0639\u0646\u0647\u0627 \u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f\u0629 \u0623\u0648 \u062a\u0645 \u0646\u0642\u0644\u0647\u0627.',
+          cta_home: '\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+          cta_back: '\u0627\u0644\u0631\u062c\u0648\u0639',
+          footer: '\u00a9 {y} \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+          page_title: '\u0627\u0644\u0635\u0641\u062d\u0629 \u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f\u0629 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a'
+        }
+      };
+
+      /* Language: localStorage (synced with main site) → browser */
       var storedLang = null;
-      var storedTheme = null;
-      try {
-        storedLang = localStorage.getItem('ka-language');
-        storedTheme = localStorage.getItem('ka-theme');
-      } catch (error) {}
-      var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-      var lang = (storedLang === 'ar' || storedLang === 'en')
-        ? storedLang
-        : (browserLang.startsWith('ar') ? 'ar' : 'en');
-      var systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      var theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : systemTheme;
-      root.lang = lang;
-      root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      root.setAttribute('data-theme', theme);
-      var metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.content = theme === 'dark' ? '#080f1f' : '#205090';
+      try { storedLang = localStorage.getItem('ka-language'); } catch (e) { }
+      var lang = storedLang === 'ar' || storedLang === 'en' ? storedLang
+        : (navigator.language && navigator.language.startsWith('ar')) ? 'ar' : 'en';
+      function t(k) { return (S[lang] && S[lang][k]) || S.en[k] || k; }
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.title = t('page_title');
+
+      /* Populate */
+      document.getElementById('title').textContent = t('title');
+      document.getElementById('desc').textContent = t('desc');
+      document.getElementById('url-badge').textContent = location.pathname;
+      document.getElementById('cta-home').textContent = t('cta_home');
+      document.getElementById('cta-back').textContent = t('cta_back');
+      document.getElementById('footer').textContent = t('footer').replace('{y}', new Date().getFullYear());
+
+      /* Theme (synced with main site) */
+      var savedTheme = null;
+      try { savedTheme = localStorage.getItem('ka-theme'); } catch (e) { }
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        try { localStorage.setItem('ka-theme', theme); } catch (e) { }
+        var icon = document.getElementById('theme-icon');
+        if (icon) icon.textContent = theme === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#080f1f' : '#205090');
+      }
+      setTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      });
     })();
   </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Changa:wght@500;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/variables.css?v=20260210c">
-  <link rel="stylesheet" href="css/base.css?v=20260210c">
-  <link rel="stylesheet" href="css/components.css?v=20260210c">
-  <link rel="stylesheet" href="css/sections.css?v=20260210c">
-  <link rel="stylesheet" href="css/responsive.css?v=20260210c">
-</head>
-<body>
-  <main class="error-shell">
-    <div>
-      <img src="assets/images/app-icon-round.webp" alt="Khadhami Academy" width="74" height="74" style="margin: 0 auto 1rem auto; border-radius: 1rem;">
-      <h1>404</h1>
-      <p>The page you requested could not be found.</p>
-      <a class="btn btn--primary" href="index.html">Back to Home</a>
-    </div>
-  </main>
 </body>
+
 </html>

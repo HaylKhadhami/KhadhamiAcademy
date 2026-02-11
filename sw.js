@@ -6,7 +6,7 @@
 const CACHE_VERSION = 'ka-v3';
 const PRECACHE_URLS = [
     '/',
-    '/index.html',
+    
     '/css/variables.css',
     '/css/base.css',
     '/css/components.css',

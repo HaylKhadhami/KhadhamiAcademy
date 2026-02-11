@@ -319,6 +319,16 @@
   justify-content: center;
 }
 
+/* Split layout: icon — text — icon */
+.store-btn--split {
+  gap: 0.5rem;
+}
+
+.store-btn--split .store-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
 .feature-card,
 .method-card,
 .timeline-card,

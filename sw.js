@@ -3,7 +3,7 @@
    Cache-first for static assets, network-first for HTML.
    ───────────────────────────────────────────── */
 
-const CACHE_VERSION = 'ka-v2';
+const CACHE_VERSION = 'ka-v3';
 const PRECACHE_URLS = [
     '/',
     '/index.html',

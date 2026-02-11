@@ -249,12 +249,15 @@ function initShowcaseMini() {
   const renderTrack = (animate = true) => {
     const slide = slides[currentIndex];
     let offset = slide ? slide.offsetLeft : (slideWidth + gapWidth) * currentIndex;
-    // Cap offset so the last slide is fully visible (never clip the right edge)
-    const lastSlide = slides[slides.length - 1];
-    if (lastSlide) {
-      const maxOffset = lastSlide.offsetLeft + lastSlide.offsetWidth - viewport.clientWidth;
-      if (maxOffset > 0 && offset > maxOffset) {
-        offset = maxOffset;
+    // When at the last scroll position, align the track so the very last
+    // slide's trailing edge is flush with the viewport edge.
+    if (currentIndex >= maxIndex && maxIndex > 0) {
+      const lastSlide = slides[slides.length - 1];
+      if (lastSlide) {
+        const endOffset = lastSlide.offsetLeft + lastSlide.offsetWidth - viewport.clientWidth;
+        if (endOffset > 0) {
+          offset = endOffset;
+        }
       }
     }
     if (!animate) {

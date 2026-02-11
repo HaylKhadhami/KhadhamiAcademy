@@ -802,8 +802,13 @@
             var continueUrl = P.get('continueUrl');
             var langParam = P.get('lang');
 
-            /* ── Language ── */
-            var lang = (langParam === 'ar' || (!langParam && navigator.language && navigator.language.startsWith('ar'))) ? 'ar' : 'en';
+            /* ── Language: URL param → localStorage (synced with main site) → browser ── */
+            var storedLang = null;
+            try { storedLang = localStorage.getItem('ka-language'); } catch (e) { }
+            var lang = langParam === 'ar' ? 'ar'
+                : langParam === 'en' ? 'en'
+                    : storedLang === 'ar' || storedLang === 'en' ? storedLang
+                        : (navigator.language && navigator.language.startsWith('ar')) ? 'ar' : 'en';
             function t(k) { return (S[lang] && S[lang][k]) || S.en[k] || k; }
 
             document.documentElement.lang = lang;
@@ -815,12 +820,13 @@
 
             /* ── Theme ── */
             var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            /* Read from same key as main site's theme.js */
             var savedTheme = null;
-            try { savedTheme = localStorage.getItem('ka-auth-theme'); } catch (e) { }
+            try { savedTheme = localStorage.getItem('ka-theme'); } catch (e) { }
 
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
-                try { localStorage.setItem('ka-auth-theme', theme); } catch (e) { }
+                try { localStorage.setItem('ka-theme', theme); } catch (e) { }
                 var icon = document.getElementById('theme-icon');
                 if (icon) icon.textContent = theme === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
                 var meta = document.querySelector('meta[name="theme-color"]');

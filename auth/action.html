@@ -41,14 +41,12 @@
         [data-theme="light"] {
             --bg: #f0f4fb;
             --surface: #ffffff;
-            --surface-2: #f7f9ff;
             --text: #0a1630;
             --text-muted: #4a5f85;
             --text-subtle: #7486a8;
             --primary: #205090;
             --primary-hover: #18437b;
             --primary-soft: rgba(32, 80, 144, 0.10);
-            --accent: #c07040;
             --border: rgba(20, 49, 94, 0.12);
             --input-bg: #f4f7fc;
             --shadow: 0 20px 50px rgba(10, 22, 45, 0.10);
@@ -59,14 +57,12 @@
         [data-theme="dark"] {
             --bg: #080f1f;
             --surface: #111f3a;
-            --surface-2: #142444;
             --text: #edf2fd;
             --text-muted: #b7c5e1;
             --text-subtle: #8ea2c9;
             --primary: #5f95da;
             --primary-hover: #79aae8;
             --primary-soft: rgba(95, 149, 218, 0.15);
-            --accent: #d59057;
             --border: rgba(142, 168, 211, 0.18);
             --input-bg: #0d1a30;
             --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
@@ -545,15 +541,6 @@
             color: var(--text-subtle);
         }
 
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
         /* ── Responsive ── */
         @media (max-width: 480px) {
             body {
@@ -576,10 +563,9 @@
             }
         }
 
-        /* ── Noscript ── */
         .noscript-msg {
             max-width: 440px;
-            margin: 0 auto;
+            margin: 2rem auto;
             padding: 2rem;
             text-align: center;
             background: var(--surface);
@@ -594,20 +580,20 @@
     <div class="bg-glow bg-glow--2"></div>
 
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
-        <span id="theme-icon">🌙</span>
+        <span id="theme-icon"></span>
     </button>
 
     <main class="auth-card" role="main">
         <img src="/assets/images/app-icon-round.webp" alt="Khadhami Academy" class="auth-logo"
             onerror="this.src='/assets/images/app-icon.png'">
 
-        <!-- ▸ Loading -->
+        <!-- Loading -->
         <div id="state-loading" class="state active">
             <div class="loading-dots"><span></span><span></span><span></span></div>
             <p class="auth-desc" id="loading-text"></p>
         </div>
 
-        <!-- ▸ Verify Email — Success -->
+        <!-- Verify Email Success -->
         <div id="state-verify-success" class="state">
             <svg class="icon-result icon-success" viewBox="0 0 72 72">
                 <circle class="icon-circle" cx="36" cy="36" r="32" />
@@ -618,7 +604,7 @@
             <a href="/" class="btn btn-primary" id="verify-cta"></a>
         </div>
 
-        <!-- ▸ Reset Password — Form -->
+        <!-- Reset Password Form -->
         <div id="state-reset-form" class="state">
             <h1 class="auth-title" id="reset-title"></h1>
             <div class="email-badge" id="reset-email-wrap">
@@ -675,7 +661,7 @@
             </form>
         </div>
 
-        <!-- ▸ Reset Password — Success -->
+        <!-- Reset Password Success -->
         <div id="state-reset-success" class="state">
             <svg class="icon-result icon-success" viewBox="0 0 72 72">
                 <circle class="icon-circle" cx="36" cy="36" r="32" />
@@ -686,7 +672,7 @@
             <a href="/" class="btn btn-primary" id="reset-ok-cta"></a>
         </div>
 
-        <!-- ▸ Recover Email — Success -->
+        <!-- Recover Email Success -->
         <div id="state-recover-success" class="state">
             <svg class="icon-result icon-success" viewBox="0 0 72 72">
                 <circle class="icon-circle" cx="36" cy="36" r="32" />
@@ -705,7 +691,7 @@
             <a href="/" class="btn btn-primary" id="recover-cta"></a>
         </div>
 
-        <!-- ▸ Error -->
+        <!-- Error -->
         <div id="state-error" class="state">
             <svg class="icon-result icon-error" viewBox="0 0 72 72">
                 <circle class="icon-circle" cx="36" cy="36" r="32" />
@@ -722,325 +708,361 @@
 
     <noscript>
         <div class="noscript-msg">
-            <p>JavaScript is required to complete this action. Please enable JavaScript and reload the page.</p>
-            <p>يجب تمكين JavaScript لإتمام هذا الإجراء. يرجى تمكين JavaScript وإعادة تحميل الصفحة.</p>
+            <p>JavaScript is required to complete this action.</p>
+            <p>يجب تمكين JavaScript لإتمام هذا الإجراء.</p>
         </div>
     </noscript>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-        import {
-            getAuth,
-            applyActionCode,
-            verifyPasswordResetCode,
-            confirmPasswordReset,
-            checkActionCode
-        } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+    <script>
+        /* ═══════════════════════════════════════════════
+           Firebase Auth Action Handler
+           Uses REST API directly — zero SDK dependencies
+           ═══════════════════════════════════════════════ */
 
-        /* ── i18n ── */
-        const S = {
-            en: {
-                loading_verify: 'Verifying your email\u2026',
-                loading_reset: 'Preparing password reset\u2026',
-                loading_recover: 'Recovering your email\u2026',
-                loading_default: 'Processing\u2026',
-                verify_title: 'Email verified!',
-                verify_desc: 'Your email address has been verified successfully. You can now close this page and return to the app.',
-                reset_title: 'Reset your password',
-                new_password: 'New password',
-                confirm_password: 'Confirm password',
-                reset_submit: 'Update password',
-                str_weak: 'Weak',
-                str_fair: 'Fair',
-                str_strong: 'Strong',
-                err_short: 'At least 8 characters required',
-                err_mismatch: 'Passwords don\u2019t match',
-                reset_ok_title: 'Password updated!',
-                reset_ok_desc: 'Your password has been updated successfully. You can now sign in with your new password.',
-                recover_title: 'Email recovered!',
-                recover_desc: 'Your email address has been restored to this account.',
-                error_title: 'Something went wrong',
-                error_expired: 'This link has expired or has already been used. Please request a new one from the app.',
-                error_invalid: 'This link is invalid. Please check the link or request a new one.',
-                error_generic: 'An unexpected error occurred. Please try again later.',
-                error_weak_pwd: 'Password is too weak. Please choose a stronger one.',
-                btn_home: 'Go to Khadhami Academy',
-                btn_app: 'Return to App',
-                footer: '\u00a9 {y} Khadhami Academy',
-                title_verify: 'Verify Email \u2014 Khadhami Academy',
-                title_reset: 'Reset Password \u2014 Khadhami Academy',
-                title_recover: 'Recover Email \u2014 Khadhami Academy',
-                title_default: 'Account Action \u2014 Khadhami Academy',
-            },
-            ar: {
-                loading_verify: '\u062c\u0627\u0631\u064d \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
-                loading_reset: '\u062c\u0627\u0631\u064d \u062a\u062c\u0647\u064a\u0632 \u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u2026',
-                loading_recover: '\u062c\u0627\u0631\u064d \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
-                loading_default: '\u062c\u0627\u0631\u064d \u0627\u0644\u0645\u0639\u0627\u0644\u062c\u0629\u2026',
-                verify_title: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
-                verify_desc: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u0625\u063a\u0644\u0627\u0642 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
-                reset_title: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
-                new_password: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629',
-                confirm_password: '\u062a\u0623\u0643\u064a\u062f \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
-                reset_submit: '\u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
-                str_weak: '\u0636\u0639\u064a\u0641\u0629',
-                str_fair: '\u0645\u062a\u0648\u0633\u0637\u0629',
-                str_strong: '\u0642\u0648\u064a\u0629',
-                err_short: '\u064a\u062c\u0628 \u0623\u0646 \u062a\u0643\u0648\u0646 8 \u0623\u062d\u0631\u0641 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644',
-                err_mismatch: '\u0643\u0644\u0645\u062a\u0627 \u0627\u0644\u0645\u0631\u0648\u0631 \u063a\u064a\u0631 \u0645\u062a\u0637\u0627\u0628\u0642\u062a\u064a\u0646',
-                reset_ok_title: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631!',
-                reset_ok_desc: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 \u0628\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629.',
-                recover_title: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
-                recover_desc: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0644\u0647\u0630\u0627 \u0627\u0644\u062d\u0633\u0627\u0628.',
-                error_title: '\u062d\u062f\u062b \u062e\u0637\u0623',
-                error_expired: '\u0627\u0646\u062a\u0647\u062a \u0635\u0644\u0627\u062d\u064a\u0629 \u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u062a\u0645 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0647. \u064a\u0631\u062c\u0649 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f \u0645\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
-                error_invalid: '\u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u063a\u064a\u0631 \u0635\u0627\u0644\u062d. \u064a\u0631\u062c\u0649 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f.',
-                error_generic: '\u062d\u062f\u062b \u062e\u0637\u0623 \u063a\u064a\u0631 \u0645\u062a\u0648\u0642\u0639. \u064a\u0631\u062c\u0649 \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649.',
-                error_weak_pwd: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0636\u0639\u064a\u0641\u0629 \u062c\u062f\u0627\u064b. \u064a\u0631\u062c\u0649 \u0627\u062e\u062a\u064a\u0627\u0631 \u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u0623\u0642\u0648\u0649.',
-                btn_home: '\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
-                btn_app: '\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642',
-                footer: '\u00a9 {y} \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
-                title_verify: '\u062a\u0623\u0643\u064a\u062f \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
-                title_reset: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
-                title_recover: '\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
-                title_default: '\u0625\u062c\u0631\u0627\u0621 \u0627\u0644\u062d\u0633\u0627\u0628 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+        (function () {
+            'use strict';
+
+            var API_BASE = 'https://identitytoolkit.googleapis.com/v1';
+
+            /* ── i18n ── */
+            var S = {
+                en: {
+                    loading_verify: 'Verifying your email\u2026',
+                    loading_reset: 'Preparing password reset\u2026',
+                    loading_recover: 'Recovering your email\u2026',
+                    loading_default: 'Processing\u2026',
+                    verify_title: 'Email verified!',
+                    verify_desc: 'Your email address has been verified successfully. You can now close this page and return to the app.',
+                    reset_title: 'Reset your password',
+                    new_password: 'New password',
+                    confirm_password: 'Confirm password',
+                    reset_submit: 'Update password',
+                    str_weak: 'Weak',
+                    str_fair: 'Fair',
+                    str_strong: 'Strong',
+                    err_short: 'At least 8 characters required',
+                    err_mismatch: 'Passwords don\u2019t match',
+                    reset_ok_title: 'Password updated!',
+                    reset_ok_desc: 'Your password has been updated successfully. You can now sign in with your new password.',
+                    recover_title: 'Email recovered!',
+                    recover_desc: 'Your email address has been restored to this account.',
+                    error_title: 'Something went wrong',
+                    error_expired: 'This link has expired or has already been used. Please request a new one from the app.',
+                    error_invalid: 'This link is invalid. Please check the link or request a new one.',
+                    error_generic: 'An unexpected error occurred. Please try again later.',
+                    error_weak_pwd: 'Password is too weak. Please choose a stronger one.',
+                    btn_home: 'Go to Khadhami Academy',
+                    btn_app: 'Return to App',
+                    footer: '\u00a9 {y} Khadhami Academy',
+                    title_verify: 'Verify Email \u2014 Khadhami Academy',
+                    title_reset: 'Reset Password \u2014 Khadhami Academy',
+                    title_recover: 'Recover Email \u2014 Khadhami Academy',
+                    title_default: 'Account Action \u2014 Khadhami Academy'
+                },
+                ar: {
+                    loading_verify: '\u062c\u0627\u0631\u064d \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
+                    loading_reset: '\u062c\u0627\u0631\u064d \u062a\u062c\u0647\u064a\u0632 \u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u2026',
+                    loading_recover: '\u062c\u0627\u0631\u064d \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u2026',
+                    loading_default: '\u062c\u0627\u0631\u064d \u0627\u0644\u0645\u0639\u0627\u0644\u062c\u0629\u2026',
+                    verify_title: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
+                    verify_desc: '\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u0625\u063a\u0644\u0627\u0642 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
+                    reset_title: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                    new_password: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629',
+                    confirm_password: '\u062a\u0623\u0643\u064a\u062f \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                    reset_submit: '\u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+                    str_weak: '\u0636\u0639\u064a\u0641\u0629',
+                    str_fair: '\u0645\u062a\u0648\u0633\u0637\u0629',
+                    str_strong: '\u0642\u0648\u064a\u0629',
+                    err_short: '\u064a\u062c\u0628 \u0623\u0646 \u062a\u0643\u0648\u0646 8 \u0623\u062d\u0631\u0641 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644',
+                    err_mismatch: '\u0643\u0644\u0645\u062a\u0627 \u0627\u0644\u0645\u0631\u0648\u0631 \u063a\u064a\u0631 \u0645\u062a\u0637\u0627\u0628\u0642\u062a\u064a\u0646',
+                    reset_ok_title: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631!',
+                    reset_ok_desc: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0628\u0646\u062c\u0627\u062d. \u064a\u0645\u0643\u0646\u0643 \u0627\u0644\u0622\u0646 \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 \u0628\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629.',
+                    recover_title: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a!',
+                    recover_desc: '\u062a\u0645 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0639\u0646\u0648\u0627\u0646 \u0628\u0631\u064a\u062f\u0643 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0644\u0647\u0630\u0627 \u0627\u0644\u062d\u0633\u0627\u0628.',
+                    error_title: '\u062d\u062f\u062b \u062e\u0637\u0623',
+                    error_expired: '\u0627\u0646\u062a\u0647\u062a \u0635\u0644\u0627\u062d\u064a\u0629 \u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u062a\u0645 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0647. \u064a\u0631\u062c\u0649 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f \u0645\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.',
+                    error_invalid: '\u0647\u0630\u0627 \u0627\u0644\u0631\u0627\u0628\u0637 \u063a\u064a\u0631 \u0635\u0627\u0644\u062d. \u064a\u0631\u062c\u0649 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0631\u0627\u0628\u0637 \u0623\u0648 \u0637\u0644\u0628 \u0631\u0627\u0628\u0637 \u062c\u062f\u064a\u062f.',
+                    error_generic: '\u062d\u062f\u062b \u062e\u0637\u0623 \u063a\u064a\u0631 \u0645\u062a\u0648\u0642\u0639. \u064a\u0631\u062c\u0649 \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649.',
+                    error_weak_pwd: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0636\u0639\u064a\u0641\u0629 \u062c\u062f\u0627\u064b. \u064a\u0631\u062c\u0649 \u0627\u062e\u062a\u064a\u0627\u0631 \u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u0623\u0642\u0648\u0649.',
+                    btn_home: '\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                    btn_app: '\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642',
+                    footer: '\u00a9 {y} \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                    title_verify: '\u062a\u0623\u0643\u064a\u062f \u0627\u0644\u0628\u0631\u064a\u062f \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                    title_reset: '\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                    title_recover: '\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0628\u0631\u064a\u062f \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a',
+                    title_default: '\u0625\u062c\u0631\u0627\u0621 \u0627\u0644\u062d\u0633\u0627\u0628 \u2014 \u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629 \u0627\u0644\u062e\u0636\u0645\u064a'
+                }
+            };
+
+            /* ── URL params ── */
+            var P = new URLSearchParams(location.search);
+            var mode = P.get('mode');
+            var oobCode = P.get('oobCode');
+            var apiKey = P.get('apiKey');
+            var continueUrl = P.get('continueUrl');
+            var langParam = P.get('lang');
+
+            /* ── Language ── */
+            var lang = (langParam === 'ar' || (!langParam && navigator.language && navigator.language.startsWith('ar'))) ? 'ar' : 'en';
+            function t(k) { return (S[lang] && S[lang][k]) || S.en[k] || k; }
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            /* ── Page title ── */
+            var titleKeys = { verifyEmail: 'title_verify', resetPassword: 'title_reset', recoverEmail: 'title_recover' };
+            document.title = t(titleKeys[mode] || 'title_default');
+
+            /* ── Theme ── */
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            var savedTheme = null;
+            try { savedTheme = localStorage.getItem('ka-auth-theme'); } catch (e) { }
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('ka-auth-theme', theme); } catch (e) { }
+                var icon = document.getElementById('theme-icon');
+                if (icon) icon.textContent = theme === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', theme === 'dark' ? '#080f1f' : '#205090');
             }
-        };
 
-        /* ── URL params ── */
-        const P = new URLSearchParams(location.search);
-        const mode = P.get('mode');
-        const oobCode = P.get('oobCode');
-        const apiKey = P.get('apiKey');
-        const continueUrl = P.get('continueUrl');
-        const langParam = P.get('lang');
-
-        /* ── Language ── */
-        const lang = (langParam === 'ar' || (!langParam && navigator.language?.startsWith('ar'))) ? 'ar' : 'en';
-        const t = (k) => S[lang]?.[k] || S.en[k] || k;
-
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-        /* ── Page title ── */
-        const titleKeys = { verifyEmail: 'title_verify', resetPassword: 'title_reset', recoverEmail: 'title_recover' };
-        document.title = t(titleKeys[mode] || 'title_default');
-
-        /* ── Theme ── */
-        const prefersDark = matchMedia('(prefers-color-scheme: dark)');
-        const saved = localStorage.getItem('ka-auth-theme');
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('ka-auth-theme', theme);
-            const icon = document.getElementById('theme-icon');
-            if (icon) icon.textContent = theme === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
-            document.querySelector('meta[name="theme-color"]')?.setAttribute('content',
-                theme === 'dark' ? '#080f1f' : '#205090');
-        }
-
-        setTheme(saved || (prefersDark.matches ? 'dark' : 'light'));
-        document.getElementById('theme-toggle')?.addEventListener('click', () => {
-            setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        });
-
-        /* ── Footer ── */
-        document.getElementById('auth-footer').textContent = t('footer').replace('{y}', new Date().getFullYear());
-
-        /* ── Loading text ── */
-        const loadingKeys = { verifyEmail: 'loading_verify', resetPassword: 'loading_reset', recoverEmail: 'loading_recover' };
-        document.getElementById('loading-text').textContent = t(loadingKeys[mode] || 'loading_default');
-
-        /* ── State manager ── */
-        function showState(id) {
-            document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
-            document.getElementById(id)?.classList.add('active');
-        }
-
-        /* ── Set CTA link ── */
-        function setCta(el, label) {
-            if (!el) return;
-            if (continueUrl) {
-                el.href = continueUrl;
-                el.textContent = t('btn_app');
-            } else {
-                el.textContent = label || t('btn_home');
-            }
-        }
-
-        /* ── Error display ── */
-        function showError(err) {
-            const code = err?.code || '';
-            let msg = t('error_generic');
-            if (code.includes('expired') || code.includes('invalid-action-code')) msg = t('error_expired');
-            else if (code.includes('invalid') || code.includes('not-found') || code.includes('user-not-found')) msg = t('error_invalid');
-
-            document.getElementById('error-title').textContent = t('error_title');
-            document.getElementById('error-desc').textContent = msg;
-            setCta(document.getElementById('error-cta'));
-            showState('state-error');
-        }
-
-        /* ── Password strength ── */
-        function getStrength(pwd) {
-            if (!pwd) return 0;
-            let s = 0;
-            if (pwd.length >= 8) s++;
-            if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) s++;
-            if (/\d/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) s++;
-            return Math.min(s, 3);
-        }
-        const strengthKeys = { 1: 'str_weak', 2: 'str_fair', 3: 'str_strong' };
-
-        /* ── Password form setup ── */
-        function initResetForm(email) {
-            document.getElementById('reset-title').textContent = t('reset_title');
-            document.getElementById('reset-email').textContent = email;
-            document.getElementById('lbl-new-pwd').textContent = t('new_password');
-            document.getElementById('lbl-confirm-pwd').textContent = t('confirm_password');
-            document.getElementById('reset-submit-label').textContent = t('reset_submit');
-
-            const newPwd = document.getElementById('new-password');
-            const confirmPwd = document.getElementById('confirm-password');
-            const meter = document.getElementById('strength-meter');
-            const fill = document.getElementById('strength-fill');
-            const slabel = document.getElementById('strength-label');
-            const errPwd = document.getElementById('err-pwd');
-            const errConfirm = document.getElementById('err-confirm');
-            const submitBtn = document.getElementById('reset-submit');
-
-            /* Toggle visibility */
-            document.querySelectorAll('.toggle-pwd').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const inp = document.getElementById(btn.dataset.target);
-                    inp.type = inp.type === 'password' ? 'text' : 'password';
+            setTheme(savedTheme || (prefersDark.matches ? 'dark' : 'light'));
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function () {
+                    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
                 });
-            });
+            }
 
-            /* Strength meter */
-            newPwd.addEventListener('input', () => {
-                const v = newPwd.value;
-                if (v.length > 0) {
-                    meter.style.display = 'flex';
-                    const lvl = getStrength(v);
-                    fill.setAttribute('data-level', lvl);
-                    slabel.setAttribute('data-level', lvl);
-                    slabel.textContent = t(strengthKeys[lvl] || '');
+            /* ── Footer ── */
+            var footer = document.getElementById('auth-footer');
+            if (footer) footer.textContent = t('footer').replace('{y}', new Date().getFullYear());
+
+            /* ── Loading text ── */
+            var loadingKeys = { verifyEmail: 'loading_verify', resetPassword: 'loading_reset', recoverEmail: 'loading_recover' };
+            var loadingEl = document.getElementById('loading-text');
+            if (loadingEl) loadingEl.textContent = t(loadingKeys[mode] || 'loading_default');
+
+            /* ── State manager ── */
+            function showState(id) {
+                var states = document.querySelectorAll('.state');
+                for (var i = 0; i < states.length; i++) states[i].classList.remove('active');
+                var el = document.getElementById(id);
+                if (el) el.classList.add('active');
+            }
+
+            /* ── Set CTA link ── */
+            function setCta(el) {
+                if (!el) return;
+                if (continueUrl) {
+                    el.href = continueUrl;
+                    el.textContent = t('btn_app');
                 } else {
-                    meter.style.display = 'none';
+                    el.textContent = t('btn_home');
                 }
-                errPwd.textContent = '';
-                newPwd.classList.remove('has-error');
-            });
-
-            confirmPwd.addEventListener('input', () => {
-                errConfirm.textContent = '';
-                confirmPwd.classList.remove('has-error');
-            });
-
-            /* Submit */
-            document.getElementById('reset-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const pwd = newPwd.value;
-                const confirm = confirmPwd.value;
-                let valid = true;
-
-                if (pwd.length < 8) {
-                    errPwd.textContent = t('err_short');
-                    newPwd.classList.add('has-error');
-                    valid = false;
-                }
-                if (pwd !== confirm) {
-                    errConfirm.textContent = t('err_mismatch');
-                    confirmPwd.classList.add('has-error');
-                    valid = false;
-                }
-                if (!valid) return;
-
-                submitBtn.classList.add('is-loading');
-                submitBtn.disabled = true;
-
-                try {
-                    await confirmPasswordReset(auth, oobCode, pwd);
-                    document.getElementById('reset-ok-title').textContent = t('reset_ok_title');
-                    document.getElementById('reset-ok-desc').textContent = t('reset_ok_desc');
-                    setCta(document.getElementById('reset-ok-cta'));
-                    showState('state-reset-success');
-                } catch (err) {
-                    submitBtn.classList.remove('is-loading');
-                    submitBtn.disabled = false;
-                    if (err?.code === 'auth/weak-password') {
-                        errPwd.textContent = t('error_weak_pwd');
-                        newPwd.classList.add('has-error');
-                    } else {
-                        showError(err);
-                    }
-                }
-            });
-        }
-
-        /* ── Firebase init & action handler ── */
-        let auth;
-
-        async function handleAction() {
-            if (!oobCode || !apiKey) {
-                showError({ code: 'auth/invalid-action-code' });
-                return;
             }
 
-            try {
-                const app = initializeApp({ apiKey });
-                auth = getAuth(app);
-            } catch (err) {
-                showError(err);
-                return;
+            /* ── Error display ── */
+            function showError(errMsg) {
+                var msg = t('error_generic');
+                if (typeof errMsg === 'string') {
+                    var upper = errMsg.toUpperCase();
+                    if (upper.indexOf('EXPIRED') !== -1 || upper.indexOf('INVALID_OOB_CODE') !== -1) {
+                        msg = t('error_expired');
+                    } else if (upper.indexOf('INVALID') !== -1 || upper.indexOf('NOT_FOUND') !== -1 || upper.indexOf('USER_NOT_FOUND') !== -1) {
+                        msg = t('error_invalid');
+                    }
+                }
+                document.getElementById('error-title').textContent = t('error_title');
+                document.getElementById('error-desc').textContent = msg;
+                setCta(document.getElementById('error-cta'));
+                showState('state-error');
             }
 
-            try {
-                switch (mode) {
-                    case 'verifyEmail': {
-                        await applyActionCode(auth, oobCode);
-                        document.getElementById('verify-title').textContent = t('verify_title');
-                        document.getElementById('verify-desc').textContent = t('verify_desc');
-                        setCta(document.getElementById('verify-cta'));
-                        showState('state-verify-success');
-                        break;
-                    }
-
-                    case 'resetPassword': {
-                        const email = await verifyPasswordResetCode(auth, oobCode);
-                        initResetForm(email);
-                        showState('state-reset-form');
-                        document.getElementById('new-password').focus();
-                        break;
-                    }
-
-                    case 'recoverEmail': {
-                        const info = await checkActionCode(auth, oobCode);
-                        await applyActionCode(auth, oobCode);
-                        const restored = info?.data?.email || '';
-                        document.getElementById('recover-title').textContent = t('recover_title');
-                        document.getElementById('recover-desc').textContent = t('recover_desc');
-                        if (restored) {
-                            document.getElementById('recover-email').textContent = restored;
-                        } else {
-                            document.getElementById('recover-email-wrap').style.display = 'none';
+            /* ── Firebase REST API helper ── */
+            function firebasePost(endpoint, body) {
+                return fetch(API_BASE + endpoint + '?key=' + encodeURIComponent(apiKey), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                }).then(function (resp) {
+                    return resp.json().then(function (data) {
+                        if (!resp.ok) {
+                            var errMessage = (data.error && data.error.message) || 'UNKNOWN_ERROR';
+                            throw new Error(errMessage);
                         }
-                        setCta(document.getElementById('recover-cta'));
-                        showState('state-recover-success');
-                        break;
+                        return data;
+                    });
+                });
+            }
+
+            /* ── Password strength ── */
+            function getStrength(pwd) {
+                if (!pwd) return 0;
+                var s = 0;
+                if (pwd.length >= 8) s++;
+                if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) s++;
+                if (/\d/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) s++;
+                return Math.min(s, 3);
+            }
+            var strengthKeys = { 1: 'str_weak', 2: 'str_fair', 3: 'str_strong' };
+
+            /* ── Password form setup ── */
+            function initResetForm(email) {
+                document.getElementById('reset-title').textContent = t('reset_title');
+                document.getElementById('reset-email').textContent = email;
+                document.getElementById('lbl-new-pwd').textContent = t('new_password');
+                document.getElementById('lbl-confirm-pwd').textContent = t('confirm_password');
+                document.getElementById('reset-submit-label').textContent = t('reset_submit');
+
+                var newPwd = document.getElementById('new-password');
+                var confirmPwd = document.getElementById('confirm-password');
+                var meter = document.getElementById('strength-meter');
+                var fill = document.getElementById('strength-fill');
+                var slabel = document.getElementById('strength-label');
+                var errPwd = document.getElementById('err-pwd');
+                var errConfirm = document.getElementById('err-confirm');
+                var submitBtn = document.getElementById('reset-submit');
+
+                /* Toggle visibility */
+                var toggles = document.querySelectorAll('.toggle-pwd');
+                for (var i = 0; i < toggles.length; i++) {
+                    (function (btn) {
+                        btn.addEventListener('click', function () {
+                            var inp = document.getElementById(btn.getAttribute('data-target'));
+                            inp.type = inp.type === 'password' ? 'text' : 'password';
+                        });
+                    })(toggles[i]);
+                }
+
+                /* Strength meter */
+                newPwd.addEventListener('input', function () {
+                    var v = newPwd.value;
+                    if (v.length > 0) {
+                        meter.style.display = 'flex';
+                        var lvl = getStrength(v);
+                        fill.setAttribute('data-level', lvl);
+                        slabel.setAttribute('data-level', lvl);
+                        slabel.textContent = t(strengthKeys[lvl] || '');
+                    } else {
+                        meter.style.display = 'none';
                     }
+                    errPwd.textContent = '';
+                    newPwd.classList.remove('has-error');
+                });
+
+                confirmPwd.addEventListener('input', function () {
+                    errConfirm.textContent = '';
+                    confirmPwd.classList.remove('has-error');
+                });
+
+                /* Submit */
+                document.getElementById('reset-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    var pwd = newPwd.value;
+                    var confirm = confirmPwd.value;
+                    var valid = true;
+
+                    if (pwd.length < 8) {
+                        errPwd.textContent = t('err_short');
+                        newPwd.classList.add('has-error');
+                        valid = false;
+                    }
+                    if (pwd !== confirm) {
+                        errConfirm.textContent = t('err_mismatch');
+                        confirmPwd.classList.add('has-error');
+                        valid = false;
+                    }
+                    if (!valid) return;
+
+                    submitBtn.classList.add('is-loading');
+                    submitBtn.disabled = true;
+
+                    firebasePost('/accounts:resetPassword', {
+                        oobCode: oobCode,
+                        newPassword: pwd
+                    }).then(function () {
+                        document.getElementById('reset-ok-title').textContent = t('reset_ok_title');
+                        document.getElementById('reset-ok-desc').textContent = t('reset_ok_desc');
+                        setCta(document.getElementById('reset-ok-cta'));
+                        showState('state-reset-success');
+                    }).catch(function (err) {
+                        submitBtn.classList.remove('is-loading');
+                        submitBtn.disabled = false;
+                        var msg = err.message || '';
+                        if (msg.indexOf('WEAK_PASSWORD') !== -1) {
+                            errPwd.textContent = t('error_weak_pwd');
+                            newPwd.classList.add('has-error');
+                        } else {
+                            showError(msg);
+                        }
+                    });
+                });
+            }
+
+            /* ── Main action handler ── */
+            function handleAction() {
+                if (!oobCode || !apiKey) {
+                    showError('INVALID_OOB_CODE');
+                    return;
+                }
+
+                switch (mode) {
+                    case 'verifyEmail':
+                        firebasePost('/accounts:update', { oobCode: oobCode })
+                            .then(function () {
+                                document.getElementById('verify-title').textContent = t('verify_title');
+                                document.getElementById('verify-desc').textContent = t('verify_desc');
+                                setCta(document.getElementById('verify-cta'));
+                                showState('state-verify-success');
+                            })
+                            .catch(function (err) { showError(err.message); });
+                        break;
+
+                    case 'resetPassword':
+                        firebasePost('/accounts:resetPassword', { oobCode: oobCode })
+                            .then(function (data) {
+                                var email = data.email || '';
+                                initResetForm(email);
+                                showState('state-reset-form');
+                                document.getElementById('new-password').focus();
+                            })
+                            .catch(function (err) { showError(err.message); });
+                        break;
+
+                    case 'recoverEmail':
+                        firebasePost('/accounts:resetPassword', { oobCode: oobCode })
+                            .then(function (data) {
+                                var email = data.email || '';
+                                return firebasePost('/accounts:update', { oobCode: oobCode }).then(function () {
+                                    return email;
+                                });
+                            })
+                            .then(function (email) {
+                                document.getElementById('recover-title').textContent = t('recover_title');
+                                document.getElementById('recover-desc').textContent = t('recover_desc');
+                                if (email) {
+                                    document.getElementById('recover-email').textContent = email;
+                                } else {
+                                    document.getElementById('recover-email-wrap').style.display = 'none';
+                                }
+                                setCta(document.getElementById('recover-cta'));
+                                showState('state-recover-success');
+                            })
+                            .catch(function (err) { showError(err.message); });
+                        break;
 
                     default:
-                        showError({ code: 'auth/invalid-action-code' });
+                        showError('INVALID_OOB_CODE');
                 }
-            } catch (err) {
-                console.error('Auth action error:', err);
-                showError(err);
             }
-        }
 
-        handleAction();
+            /* ── Run ── */
+            handleAction();
+
+        })();
     </script>
 </body>
 

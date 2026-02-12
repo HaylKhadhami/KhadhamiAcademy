@@ -468,6 +468,21 @@
   font-family: var(--font-body);
 }
 
+.pricing-card .price [data-i18n="plan_pro_price_main"] {
+  font-size: var(--text-2xl);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.pricing-card .price [data-i18n="plan_pro_period"] {
+  font-size: var(--text-sm);
+  color: var(--text-subtle);
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
 .pricing-card .price-alt {
   margin-top: -0.4rem;
   color: var(--text-subtle);

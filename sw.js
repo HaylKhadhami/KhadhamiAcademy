@@ -3,7 +3,7 @@
    Cache-first for static assets, network-first for HTML.
    ───────────────────────────────────────────── */
 
-const CACHE_VERSION = 'ka-v3';
+const CACHE_VERSION = 'ka-v4';
 const PRECACHE_URLS = [
     '/',
     
@@ -17,7 +17,7 @@ const PRECACHE_URLS = [
     '/js/animations.js',
     '/js/app.js',
     '/assets/images/app-icon.png',
-    '/assets/images/app-icon-round.webp',
+    '/assets/images/app-icon-round-128.webp',
     '/manifest.webmanifest'
 ];
 

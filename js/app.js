@@ -369,13 +369,10 @@ function initShowcaseMini() {
     isSwiping = false;
     const threshold = slideWidth * 0.2;
     if (Math.abs(touchDeltaX) > threshold) {
-      // In LTR, swipe left = next, swipe right = prev
-      // In RTL, swipe directions are reversed
-      const isRTL = document.documentElement.dir === "rtl";
       if (touchDeltaX < 0) {
-        goToIndex(isRTL ? currentIndex - 1 : currentIndex + 1);
+        goToIndex(currentIndex + 1);
       } else {
-        goToIndex(isRTL ? currentIndex + 1 : currentIndex - 1);
+        goToIndex(currentIndex - 1);
       }
       stopAutoplay();
     }

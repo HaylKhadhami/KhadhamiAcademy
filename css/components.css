@@ -124,7 +124,7 @@
   border: 1px solid var(--border);
   background: var(--surface-glass);
   color: var(--text-muted);
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .icon-btn:hover {
@@ -146,7 +146,7 @@
   inset: 0;
   margin: auto;
   border-radius: 999px;
-  transition: all var(--transition-base);
+  transition: width var(--transition-base), height var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), transform var(--transition-base);
 }
 
 [data-theme="light"] .theme-icon::before {
@@ -204,7 +204,7 @@
   padding: 0.72rem 1.1rem;
   font-weight: 700;
   font-size: var(--text-sm);
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast), filter var(--transition-fast), color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .btn--sm {
@@ -245,7 +245,7 @@
   border: 1px solid var(--border);
   background: var(--surface);
   min-width: 12.7rem;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
 
 .store-pill:hover {
@@ -530,7 +530,6 @@
   border-color: var(--primary);
   box-shadow: 0 0 0 1px rgba(58, 122, 199, 0.38), var(--shadow-md), 0 0 30px var(--glow-primary);
   transform: translateY(-6px);
-  animation: border-glow 4s ease-in-out infinite;
 }
 
 .badge {

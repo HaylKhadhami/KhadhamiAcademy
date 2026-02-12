@@ -78,18 +78,26 @@
   <link rel="dns-prefetch" href="https://apps.apple.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Changa:wght@700;800&family=Sora:wght@400;600;700;800&display=swap"
+    as="style">
   <link
     href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Changa:wght@700;800&family=Sora:wght@400;600;700;800&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Changa:wght@700;800&family=Sora:wght@400;600;700;800&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <!-- Preload hero LCP image -->
   <link rel="preload" as="image" href="assets/images/app-icon-round.webp" type="image/webp">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=20260211b">
+  <link rel="stylesheet" href="css/variables.css?v=20260211c">
   <link rel="stylesheet" href="css/base.css?v=20260211b">
-  <link rel="stylesheet" href="css/components.css?v=20260211b">
-  <link rel="stylesheet" href="css/sections.css?v=20260211c">
+  <link rel="stylesheet" href="css/components.css?v=20260211c">
+  <link rel="stylesheet" href="css/sections.css?v=20260211d">
   <link rel="stylesheet" href="css/responsive.css?v=20260211b">
 
   <!-- Inline critical CSS for above-fold FOUC prevention -->
@@ -203,17 +211,17 @@
 
             <div class="preview-points">
               <article>
-                <h3 data-i18n="preview_point_1_title">Safety-first onboarding</h3>
+                <p class="preview-point-title" data-i18n="preview_point_1_title">Safety-first onboarding</p>
                 <p data-i18n="preview_point_1_desc">Guardian-aware flows and responsible account controls for minors.
                 </p>
               </article>
               <article>
-                <h3 data-i18n="preview_point_2_title">Structured progression</h3>
+                <p class="preview-point-title" data-i18n="preview_point_2_title">Structured progression</p>
                 <p data-i18n="preview_point_2_desc">Clear pathways from fundamentals to advanced project-based learning.
                 </p>
               </article>
               <article>
-                <h3 data-i18n="preview_point_3_title">Bilingual by default</h3>
+                <p class="preview-point-title" data-i18n="preview_point_3_title">Bilingual by default</p>
                 <p data-i18n="preview_point_3_desc">Natural Arabic and English experiences tailored to family
                   preferences.</p>
               </article>

@@ -119,9 +119,13 @@
   background: var(--surface);
 }
 
-.preview-points h3 {
+.preview-points .preview-point-title {
   color: var(--text);
   font-size: var(--text-base);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   margin-bottom: 0.2rem;
 }
 
